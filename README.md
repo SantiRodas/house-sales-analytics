@@ -117,9 +117,13 @@ In this <a href="https://youtu.be/JI9GTY5BCJA">Video</a> we show the functionali
 ## Contributors 
 <br />
   <p align="left">
+    <a href="https://github.com/JuanF2019">Juan Fernando Martinez</a>
+    <br /> <br />
     <a href="https://github.com/gonzalodevarona">Gonzalo de Varona</a>
     <br /> <br />
-    <a href="https://github.com/SebasBarrera">Juan Sebastián Barrera Pulido</a>
+    <a href="https://github.com/AleGarQ">Alejandro Garcia</a>
+    <br /> <br />
+    <a href="https://github.com/SantiRodas">Santiago Rodas</a>
   </p>
 <br />
 
