@@ -1,22 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using HSA.Model;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HSA.UserInterface
 {
     public partial class MainWindow : Form
     {
+
+        private DataSetManager manager;
+
         public MainWindow()
         {
             InitializeComponent();
 
             mainWindowTabs.DrawItem += new DrawItemEventHandler(mainWindowTabs_DrawItem);
+
+            manager = new DataSetManager();
+
+            int page = manager.CurrentPage;
+
+            updatePageInfoLabelsAndButtons(page);
+
+            dataSetDataGridView.DataSource = manager.CurrentPageData;
         }
 
         //Allows vertical tabs, not possible within tab control properties
@@ -53,6 +59,48 @@ namespace HSA.UserInterface
             _stringFlags.Alignment = StringAlignment.Center;
             _stringFlags.LineAlignment = StringAlignment.Center;
             g.DrawString(_tabPage.Text, _tabFont, _textBrush, _tabBounds, new StringFormat(_stringFlags));
+        }
+
+        private void nextPageButton_Click(object sender, EventArgs e)
+        {
+            int page = manager.NextPage();
+            updatePageInfoLabelsAndButtons(page);
+        }
+
+        private void prevousPageButton_Click(object sender, EventArgs e)
+        {
+            int page = manager.PreviousPage();
+            updatePageInfoLabelsAndButtons(page);
+        }
+
+        private void updatePageInfoLabelsAndButtons(int page)
+        {
+            int maxPage = manager.MaxPage;
+            if (page > 0) {               
+                
+                int lowerLimit = manager.LowerLimit;
+                int upperLimit = manager.UpperLimit;
+                int dataCount = manager.DataCount;
+
+                pageNumberLabel.Text = "Page " + page + "/" + maxPage;
+                dataShowingLabel.Text = "Showing " + (lowerLimit + 1) + " to " + (upperLimit) + " of " + dataCount;
+            }
+
+            if (page <= 1)
+            {
+                prevousPageButton.Enabled = false;
+            }
+            else if (page == maxPage)
+            {
+                nextPageButton.Enabled = false;
+            }
+            else
+            {
+                prevousPageButton.Enabled = true;
+                nextPageButton.Enabled = true;
+            }
+
+
         }
     }
 }
