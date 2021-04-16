@@ -1,7 +1,7 @@
 ﻿
 namespace HSA.UserInterface
 {
-    partial class dataViewerControl
+    partial class DataViewerControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -31,24 +31,24 @@ namespace HSA.UserInterface
         {
             this.dataViewerSplitContainer = new System.Windows.Forms.SplitContainer();
             this.dataViewAndFilterSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.endDateLabel = new System.Windows.Forms.Label();
+            this.startDateLabel = new System.Windows.Forms.Label();
+            this.startDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.filteringCriteriaLabel = new System.Windows.Forms.Label();
+            this.searchButton = new System.Windows.Forms.Button();
+            this.stringFilterLabel = new System.Windows.Forms.Label();
+            this.stringFilterTextBox = new System.Windows.Forms.TextBox();
+            this.endDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.toTextBox = new System.Windows.Forms.TextBox();
+            this.fromTextBox = new System.Windows.Forms.TextBox();
+            this.toLabel = new System.Windows.Forms.Label();
+            this.fromLabel = new System.Windows.Forms.Label();
+            this.filterColumnSelector = new System.Windows.Forms.ComboBox();
             this.dataSetDataGridView = new System.Windows.Forms.DataGridView();
             this.dataShowingLabel = new System.Windows.Forms.Label();
             this.pageNumberLabel = new System.Windows.Forms.Label();
             this.prevousPageButton = new System.Windows.Forms.Button();
             this.nextPageButton = new System.Windows.Forms.Button();
-            this.filterColumnSelector = new System.Windows.Forms.ComboBox();
-            this.fromLabel = new System.Windows.Forms.Label();
-            this.toLabel = new System.Windows.Forms.Label();
-            this.fromTextBox = new System.Windows.Forms.TextBox();
-            this.toTextBox = new System.Windows.Forms.TextBox();
-            this.endDatePicker = new System.Windows.Forms.DateTimePicker();
-            this.stringFilterTextBox = new System.Windows.Forms.TextBox();
-            this.stringFilterLabel = new System.Windows.Forms.Label();
-            this.searchButton = new System.Windows.Forms.Button();
-            this.filteringCriteriaLabel = new System.Windows.Forms.Label();
-            this.startDatePicker = new System.Windows.Forms.DateTimePicker();
-            this.startDateLabel = new System.Windows.Forms.Label();
-            this.endDateLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataViewerSplitContainer)).BeginInit();
             this.dataViewerSplitContainer.Panel1.SuspendLayout();
             this.dataViewerSplitContainer.Panel2.SuspendLayout();
@@ -113,6 +113,113 @@ namespace HSA.UserInterface
             this.dataViewAndFilterSplitContainer.SplitterDistance = 85;
             this.dataViewAndFilterSplitContainer.TabIndex = 0;
             // 
+            // endDateLabel
+            // 
+            this.endDateLabel.AutoSize = true;
+            this.endDateLabel.Location = new System.Drawing.Point(300, 58);
+            this.endDateLabel.Name = "endDateLabel";
+            this.endDateLabel.Size = new System.Drawing.Size(66, 13);
+            this.endDateLabel.TabIndex = 12;
+            this.endDateLabel.Text = "Ending Date";
+            // 
+            // startDateLabel
+            // 
+            this.startDateLabel.AutoSize = true;
+            this.startDateLabel.Location = new System.Drawing.Point(4, 58);
+            this.startDateLabel.Name = "startDateLabel";
+            this.startDateLabel.Size = new System.Drawing.Size(69, 13);
+            this.startDateLabel.TabIndex = 11;
+            this.startDateLabel.Text = "Starting Date";
+            // 
+            // startDatePicker
+            // 
+            this.startDatePicker.Location = new System.Drawing.Point(79, 52);
+            this.startDatePicker.Name = "startDatePicker";
+            this.startDatePicker.Size = new System.Drawing.Size(200, 20);
+            this.startDatePicker.TabIndex = 10;
+            // 
+            // filteringCriteriaLabel
+            // 
+            this.filteringCriteriaLabel.AutoSize = true;
+            this.filteringCriteriaLabel.Location = new System.Drawing.Point(767, 17);
+            this.filteringCriteriaLabel.Name = "filteringCriteriaLabel";
+            this.filteringCriteriaLabel.Size = new System.Drawing.Size(78, 13);
+            this.filteringCriteriaLabel.TabIndex = 9;
+            this.filteringCriteriaLabel.Text = "Filtering Criteria";
+            // 
+            // searchButton
+            // 
+            this.searchButton.Location = new System.Drawing.Point(644, 33);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(75, 23);
+            this.searchButton.TabIndex = 8;
+            this.searchButton.Text = "Search";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            // 
+            // stringFilterLabel
+            // 
+            this.stringFilterLabel.AutoSize = true;
+            this.stringFilterLabel.Location = new System.Drawing.Point(446, 20);
+            this.stringFilterLabel.Name = "stringFilterLabel";
+            this.stringFilterLabel.Size = new System.Drawing.Size(56, 13);
+            this.stringFilterLabel.TabIndex = 7;
+            this.stringFilterLabel.Text = "String filter";
+            // 
+            // stringFilterTextBox
+            // 
+            this.stringFilterTextBox.Location = new System.Drawing.Point(517, 17);
+            this.stringFilterTextBox.Name = "stringFilterTextBox";
+            this.stringFilterTextBox.Size = new System.Drawing.Size(100, 20);
+            this.stringFilterTextBox.TabIndex = 6;
+            // 
+            // endDatePicker
+            // 
+            this.endDatePicker.Location = new System.Drawing.Point(372, 52);
+            this.endDatePicker.Name = "endDatePicker";
+            this.endDatePicker.Size = new System.Drawing.Size(200, 20);
+            this.endDatePicker.TabIndex = 5;
+            // 
+            // toTextBox
+            // 
+            this.toTextBox.Location = new System.Drawing.Point(303, 17);
+            this.toTextBox.Name = "toTextBox";
+            this.toTextBox.Size = new System.Drawing.Size(100, 20);
+            this.toTextBox.TabIndex = 4;
+            // 
+            // fromTextBox
+            // 
+            this.fromTextBox.Location = new System.Drawing.Point(79, 17);
+            this.fromTextBox.Name = "fromTextBox";
+            this.fromTextBox.Size = new System.Drawing.Size(100, 20);
+            this.fromTextBox.TabIndex = 3;
+            // 
+            // toLabel
+            // 
+            this.toLabel.AutoSize = true;
+            this.toLabel.Location = new System.Drawing.Point(277, 20);
+            this.toLabel.Name = "toLabel";
+            this.toLabel.Size = new System.Drawing.Size(20, 13);
+            this.toLabel.TabIndex = 2;
+            this.toLabel.Text = "To";
+            // 
+            // fromLabel
+            // 
+            this.fromLabel.AutoSize = true;
+            this.fromLabel.Location = new System.Drawing.Point(40, 20);
+            this.fromLabel.Name = "fromLabel";
+            this.fromLabel.Size = new System.Drawing.Size(33, 13);
+            this.fromLabel.TabIndex = 1;
+            this.fromLabel.Text = "From:";
+            // 
+            // filterColumnSelector
+            // 
+            this.filterColumnSelector.FormattingEnabled = true;
+            this.filterColumnSelector.Location = new System.Drawing.Point(745, 33);
+            this.filterColumnSelector.Name = "filterColumnSelector";
+            this.filterColumnSelector.Size = new System.Drawing.Size(121, 21);
+            this.filterColumnSelector.TabIndex = 0;
+            // 
             // dataSetDataGridView
             // 
             this.dataSetDataGridView.AllowUserToAddRows = false;
@@ -125,7 +232,7 @@ namespace HSA.UserInterface
             this.dataSetDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataSetDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataSetDataGridView.Size = new System.Drawing.Size(894, 414);
-            this.dataSetDataGridView.TabIndex = 0;            
+            this.dataSetDataGridView.TabIndex = 0;
             // 
             // dataShowingLabel
             // 
@@ -168,113 +275,6 @@ namespace HSA.UserInterface
             this.nextPageButton.Text = "Next";
             this.nextPageButton.UseVisualStyleBackColor = true;
             this.nextPageButton.Click += new System.EventHandler(this.nextPageButton_Click);
-            // 
-            // filterColumnSelector
-            // 
-            this.filterColumnSelector.FormattingEnabled = true;
-            this.filterColumnSelector.Location = new System.Drawing.Point(745, 33);
-            this.filterColumnSelector.Name = "filterColumnSelector";
-            this.filterColumnSelector.Size = new System.Drawing.Size(121, 21);
-            this.filterColumnSelector.TabIndex = 0;
-            // 
-            // fromLabel
-            // 
-            this.fromLabel.AutoSize = true;
-            this.fromLabel.Location = new System.Drawing.Point(40, 20);
-            this.fromLabel.Name = "fromLabel";
-            this.fromLabel.Size = new System.Drawing.Size(33, 13);
-            this.fromLabel.TabIndex = 1;
-            this.fromLabel.Text = "From:";
-            // 
-            // toLabel
-            // 
-            this.toLabel.AutoSize = true;
-            this.toLabel.Location = new System.Drawing.Point(277, 20);
-            this.toLabel.Name = "toLabel";
-            this.toLabel.Size = new System.Drawing.Size(20, 13);
-            this.toLabel.TabIndex = 2;
-            this.toLabel.Text = "To";
-            // 
-            // fromTextBox
-            // 
-            this.fromTextBox.Location = new System.Drawing.Point(79, 17);
-            this.fromTextBox.Name = "fromTextBox";
-            this.fromTextBox.Size = new System.Drawing.Size(100, 20);
-            this.fromTextBox.TabIndex = 3;
-            // 
-            // toTextBox
-            // 
-            this.toTextBox.Location = new System.Drawing.Point(303, 17);
-            this.toTextBox.Name = "toTextBox";
-            this.toTextBox.Size = new System.Drawing.Size(100, 20);
-            this.toTextBox.TabIndex = 4;
-            // 
-            // endDatePicker
-            // 
-            this.endDatePicker.Location = new System.Drawing.Point(372, 52);
-            this.endDatePicker.Name = "endDatePicker";
-            this.endDatePicker.Size = new System.Drawing.Size(200, 20);
-            this.endDatePicker.TabIndex = 5;
-            // 
-            // stringFilterTextBox
-            // 
-            this.stringFilterTextBox.Location = new System.Drawing.Point(517, 17);
-            this.stringFilterTextBox.Name = "stringFilterTextBox";
-            this.stringFilterTextBox.Size = new System.Drawing.Size(100, 20);
-            this.stringFilterTextBox.TabIndex = 6;
-            // 
-            // stringFilterLabel
-            // 
-            this.stringFilterLabel.AutoSize = true;
-            this.stringFilterLabel.Location = new System.Drawing.Point(446, 20);
-            this.stringFilterLabel.Name = "stringFilterLabel";
-            this.stringFilterLabel.Size = new System.Drawing.Size(56, 13);
-            this.stringFilterLabel.TabIndex = 7;
-            this.stringFilterLabel.Text = "String filter";
-            // 
-            // searchButton
-            // 
-            this.searchButton.Location = new System.Drawing.Point(644, 33);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(75, 23);
-            this.searchButton.TabIndex = 8;
-            this.searchButton.Text = "Search";
-            this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
-            // 
-            // filteringCriteriaLabel
-            // 
-            this.filteringCriteriaLabel.AutoSize = true;
-            this.filteringCriteriaLabel.Location = new System.Drawing.Point(767, 17);
-            this.filteringCriteriaLabel.Name = "filteringCriteriaLabel";
-            this.filteringCriteriaLabel.Size = new System.Drawing.Size(78, 13);
-            this.filteringCriteriaLabel.TabIndex = 9;
-            this.filteringCriteriaLabel.Text = "Filtering Criteria";
-            // 
-            // startDatePicker
-            // 
-            this.startDatePicker.Location = new System.Drawing.Point(79, 52);
-            this.startDatePicker.Name = "startDatePicker";
-            this.startDatePicker.Size = new System.Drawing.Size(200, 20);
-            this.startDatePicker.TabIndex = 10;
-            // 
-            // startDateLabel
-            // 
-            this.startDateLabel.AutoSize = true;
-            this.startDateLabel.Location = new System.Drawing.Point(4, 58);
-            this.startDateLabel.Name = "startDateLabel";
-            this.startDateLabel.Size = new System.Drawing.Size(69, 13);
-            this.startDateLabel.TabIndex = 11;
-            this.startDateLabel.Text = "Starting Date";
-            // 
-            // endDateLabel
-            // 
-            this.endDateLabel.AutoSize = true;
-            this.endDateLabel.Location = new System.Drawing.Point(300, 58);
-            this.endDateLabel.Name = "endDateLabel";
-            this.endDateLabel.Size = new System.Drawing.Size(66, 13);
-            this.endDateLabel.TabIndex = 12;
-            this.endDateLabel.Text = "Ending Date";
             // 
             // dataViewerControl
             // 

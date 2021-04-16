@@ -64,15 +64,5 @@ namespace HSA.UserInterface
             _stringFlags.LineAlignment = StringAlignment.Center;
             g.DrawString(_tabPage.Text, _tabFont, _textBrush, _tabBounds, new StringFormat(_stringFlags));
         }
-
-        private void MainWindow_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataViewerControl_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

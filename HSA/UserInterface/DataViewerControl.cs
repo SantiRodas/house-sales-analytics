@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Data;
 using System.Windows.Forms;
 using HSA.Model;
 
 namespace HSA.UserInterface
 {
-    public partial class dataViewerControl : UserControl
+    public partial class DataViewerControl : UserControl
     {
         private DataSetManager manager;
 
-        public dataViewerControl()
+        public DataViewerControl()
         {
             InitializeComponent();            
         }
@@ -22,6 +23,19 @@ namespace HSA.UserInterface
             UpdatePageInfoLabelsAndButtons(page);
 
             dataSetDataGridView.DataSource = this.manager.CurrentPageData;
+
+            //Adds columns to filter columns selector
+
+            DataColumnCollection columns = manager.Data.Columns;
+
+            for(int i = 0; i < columns.Count; i++)
+            {
+                filterColumnSelector.Items.Add(columns[i].ToString());
+            }
+
+            
+
+
         }
         
         private void nextPageButton_Click(object sender, EventArgs e)

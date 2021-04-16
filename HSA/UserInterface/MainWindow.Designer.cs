@@ -32,7 +32,7 @@ namespace HSA.UserInterface
             this.mainWindowTabs = new System.Windows.Forms.TabControl();
             this.dataViewTab = new System.Windows.Forms.TabPage();
             this.graphicsTab = new System.Windows.Forms.TabPage();
-            this.dataViewerControl = new HSA.UserInterface.dataViewerControl();
+            this.dataViewerControl = new HSA.UserInterface.DataViewerControl();
             this.mainWindowTabs.SuspendLayout();
             this.dataViewTab.SuspendLayout();
             this.SuspendLayout();
@@ -70,7 +70,6 @@ namespace HSA.UserInterface
             this.dataViewerControl.Name = "dataViewerControl";
             this.dataViewerControl.Size = new System.Drawing.Size(900, 553);
             this.dataViewerControl.TabIndex = 0;
-            this.dataViewerControl.Load += new System.EventHandler(this.dataViewerControl_Load);
             // 
             // graphicsTab
             // 
@@ -101,7 +100,6 @@ namespace HSA.UserInterface
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HSA";
-            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.mainWindowTabs.ResumeLayout(false);
             this.dataViewTab.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -113,7 +111,7 @@ namespace HSA.UserInterface
         private System.Windows.Forms.TabControl mainWindowTabs;
         private System.Windows.Forms.TabPage dataViewTab;
         private System.Windows.Forms.TabPage graphicsTab;
-        private dataViewerControl dataViewerControl;
+        private DataViewerControl dataViewerControl;
     }
 }
 

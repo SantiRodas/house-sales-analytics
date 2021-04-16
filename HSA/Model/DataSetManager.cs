@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.IO;
+using System.Globalization;
 
 namespace HSA.Model
 {
@@ -96,18 +97,50 @@ namespace HSA.Model
             string[] rawData = File.ReadAllLines(path);
 
             //Adds columns, [0] is for data types, not used yet
+            string[] columnsTypes = rawData[0].Split(',');
             string[] columnsNames = rawData[1].Split(',');
+         
             for (int i = 0; i < columnsNames.Length; i++)
             {
-                data.Columns.Add(columnsNames[i]);
-                currentPageData.Columns.Add(columnsNames[i]);
+                Console.WriteLine(CultureInfo.CurrentCulture); ;
+                data.Columns.Add(columnsNames[i],Type.GetType("System." + columnsTypes[i]));
+                currentPageData.Columns.Add(columnsNames[i], Type.GetType("System." + columnsTypes[i]));
             }
 
             //Adds rows
             for (int i = 2; i < rawData.Length; i++)
             {
                 string[] row = rawData[i].Split(',');
-                data.Rows.Add(row);
+
+                DataRow newRow = data.NewRow();
+
+                for (int j = 0; j < row.Length;j++)
+                {
+                    //For special format for some types
+                    Type columnType = data.Columns[j].DataType;
+                    String value = row[j].Replace("\"", "");
+                    if (columnType.Equals(typeof(DateTime))){
+                        //Format  yyyyMMddThhmmss
+                        newRow[columnsNames[j]] = DateTime.ParseExact(value,"yyyyMMddThhmmss",CultureInfo.CurrentCulture);                        
+
+                    }
+                    else if (columnType.Equals(typeof(Boolean)))
+                    {
+                        if (value.Equals("1"))
+                        {
+                            newRow[columnsNames[j]] = true;
+                        }
+                        else
+                        {
+                            newRow[columnsNames[j]] = false;
+                        }
+                    }
+                    else
+                    {
+                        newRow[columnsNames[j]] = value;
+                    }
+                }
+                data.Rows.Add(newRow);
             }
         }
 
