@@ -31,6 +31,7 @@ namespace HSA.UserInterface
         {
             this.dataViewerSplitContainer = new System.Windows.Forms.SplitContainer();
             this.dataViewAndFilterSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.label1 = new System.Windows.Forms.Label();
             this.dataSetDataGridView = new System.Windows.Forms.DataGridView();
             this.dataShowingLabel = new System.Windows.Forms.Label();
             this.pageNumberLabel = new System.Windows.Forms.Label();
@@ -41,6 +42,7 @@ namespace HSA.UserInterface
             this.dataViewerSplitContainer.Panel2.SuspendLayout();
             this.dataViewerSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataViewAndFilterSplitContainer)).BeginInit();
+            this.dataViewAndFilterSplitContainer.Panel1.SuspendLayout();
             this.dataViewAndFilterSplitContainer.Panel2.SuspendLayout();
             this.dataViewAndFilterSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataSetDataGridView)).BeginInit();
@@ -76,12 +78,26 @@ namespace HSA.UserInterface
             this.dataViewAndFilterSplitContainer.Name = "dataViewAndFilterSplitContainer";
             this.dataViewAndFilterSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
+            // dataViewAndFilterSplitContainer.Panel1
+            // 
+            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.label1);
+            this.dataViewAndFilterSplitContainer.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.dataViewAndFilterSplitContainer_Panel1_Paint);
+            // 
             // dataViewAndFilterSplitContainer.Panel2
             // 
             this.dataViewAndFilterSplitContainer.Panel2.Controls.Add(this.dataSetDataGridView);
             this.dataViewAndFilterSplitContainer.Size = new System.Drawing.Size(900, 509);
             this.dataViewAndFilterSplitContainer.SplitterDistance = 87;
             this.dataViewAndFilterSplitContainer.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(535, 49);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // dataSetDataGridView
             // 
@@ -96,6 +112,7 @@ namespace HSA.UserInterface
             this.dataSetDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataSetDataGridView.Size = new System.Drawing.Size(900, 418);
             this.dataSetDataGridView.TabIndex = 0;
+            this.dataSetDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataSetDataGridView_CellContentClick);
             // 
             // dataShowingLabel
             // 
@@ -139,18 +156,20 @@ namespace HSA.UserInterface
             this.nextPageButton.UseVisualStyleBackColor = true;
             this.nextPageButton.Click += new System.EventHandler(this.nextPageButton_Click);
             // 
-            // UserControl1
+            // DataViewerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.dataViewerSplitContainer);
-            this.Name = "UserControl1";
+            this.Name = "DataViewerControl";
             this.Size = new System.Drawing.Size(900, 553);
             this.dataViewerSplitContainer.Panel1.ResumeLayout(false);
             this.dataViewerSplitContainer.Panel2.ResumeLayout(false);
             this.dataViewerSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataViewerSplitContainer)).EndInit();
             this.dataViewerSplitContainer.ResumeLayout(false);
+            this.dataViewAndFilterSplitContainer.Panel1.ResumeLayout(false);
+            this.dataViewAndFilterSplitContainer.Panel1.PerformLayout();
             this.dataViewAndFilterSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataViewAndFilterSplitContainer)).EndInit();
             this.dataViewAndFilterSplitContainer.ResumeLayout(false);
@@ -168,5 +187,6 @@ namespace HSA.UserInterface
         private System.Windows.Forms.Label pageNumberLabel;
         private System.Windows.Forms.Button prevousPageButton;
         private System.Windows.Forms.Button nextPageButton;
+        private System.Windows.Forms.Label label1;
     }
 }
