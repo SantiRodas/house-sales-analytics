@@ -6,7 +6,16 @@ using System.Windows.Forms;
 namespace HSA.UserInterface
 {
     public partial class MainWindow : Form
-    {       
+    {
+        private DataSetManager manager;
+
+        public DataSetManager Manager
+        {
+            get
+            {
+                return manager;
+            }
+        }
 
         public MainWindow()
         {
@@ -14,7 +23,9 @@ namespace HSA.UserInterface
 
             mainWindowTabs.DrawItem += new DrawItemEventHandler(mainWindowTabs_DrawItem);
 
-            dataViewerControl.Initialize(new DataSetManager());
+            manager = new DataSetManager();
+
+            dataViewerControl.Initialize(manager);
             
         }
 
