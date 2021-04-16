@@ -95,8 +95,8 @@ namespace HSA.Model
 
             string[] rawData = File.ReadAllLines(path);
 
-            //Adds columns
-            string[] columnsNames = rawData[0].Split(',');
+            //Adds columns, [0] is for data types, not used yet
+            string[] columnsNames = rawData[1].Split(',');
             for (int i = 0; i < columnsNames.Length; i++)
             {
                 data.Columns.Add(columnsNames[i]);
@@ -104,7 +104,7 @@ namespace HSA.Model
             }
 
             //Adds rows
-            for (int i = 1; i < rawData.Length; i++)
+            for (int i = 2; i < rawData.Length; i++)
             {
                 string[] row = rawData[i].Split(',');
                 data.Rows.Add(row);
@@ -179,7 +179,7 @@ namespace HSA.Model
 
         private void UpdatePageLimits()
         {
-            lowerLimit = currentPage * DataCountPerPage - 250;
+            lowerLimit = currentPage * DataCountPerPage - DataCountPerPage;
             upperLimit = (currentPage == maxPage ? dataCount : lowerLimit + DataCountPerPage + 1);
         }
     }

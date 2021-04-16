@@ -4,11 +4,11 @@ using HSA.Model;
 
 namespace HSA.UserInterface
 {
-    public partial class DataViewerControl : UserControl
+    public partial class dataViewerControl : UserControl
     {
         private DataSetManager manager;
 
-        public DataViewerControl()
+        public dataViewerControl()
         {
             InitializeComponent();            
         }
@@ -63,6 +63,11 @@ namespace HSA.UserInterface
                 prevousPageButton.Enabled = true;
                 nextPageButton.Enabled = true;
             }
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
