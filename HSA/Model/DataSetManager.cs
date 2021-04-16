@@ -4,7 +4,7 @@ using System.IO;
 
 namespace HSA.Model
 {
-    class DataSetManager
+    public class DataSetManager
     {
         DataTable data;
 
