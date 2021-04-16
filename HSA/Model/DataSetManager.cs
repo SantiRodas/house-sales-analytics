@@ -7,7 +7,9 @@ namespace HSA.Model
 {
     public class DataSetManager
     {
-        DataTable data;
+        private DataView dataFiltered;
+
+        private DataTable data;
 
         public DataTable Data
         {
@@ -85,8 +87,9 @@ namespace HSA.Model
             dataCount = data.Rows.Count;
             currentPage = 1;
             UpdatePageLimits();
-            maxPage = (int) Math.Ceiling( (dataCount + (0.0d)) / DataCountPerPage);
+            maxPage = (int)Math.Ceiling((dataCount + (0.0d)) / DataCountPerPage);
             RefreshData();
+            dataFiltered = new DataView(data);
         }
 
         private void LoadData()
@@ -96,14 +99,13 @@ namespace HSA.Model
 
             string[] rawData = File.ReadAllLines(path);
 
-            //Adds columns, [0] is for data types, not used yet
+            //Adds columns, [0] is for data types
             string[] columnsTypes = rawData[0].Split(',');
             string[] columnsNames = rawData[1].Split(',');
-         
+
             for (int i = 0; i < columnsNames.Length; i++)
             {
-                Console.WriteLine(CultureInfo.CurrentCulture); ;
-                data.Columns.Add(columnsNames[i],Type.GetType("System." + columnsTypes[i]));
+                data.Columns.Add(columnsNames[i], Type.GetType("System." + columnsTypes[i]));
                 currentPageData.Columns.Add(columnsNames[i], Type.GetType("System." + columnsTypes[i]));
             }
 
@@ -114,14 +116,15 @@ namespace HSA.Model
 
                 DataRow newRow = data.NewRow();
 
-                for (int j = 0; j < row.Length;j++)
+                for (int j = 0; j < row.Length; j++)
                 {
                     //For special format for some types
                     Type columnType = data.Columns[j].DataType;
                     String value = row[j].Replace("\"", "");
-                    if (columnType.Equals(typeof(DateTime))){
+                    if (columnType.Equals(typeof(DateTime)))
+                    {
                         //Format  yyyyMMddThhmmss
-                        newRow[columnsNames[j]] = DateTime.ParseExact(value,"yyyyMMddThhmmss",CultureInfo.CurrentCulture);                        
+                        newRow[columnsNames[j]] = DateTime.ParseExact(value, "yyyyMMddThhmmss", CultureInfo.CurrentCulture);
 
                     }
                     else if (columnType.Equals(typeof(Boolean)))
@@ -161,7 +164,7 @@ namespace HSA.Model
 
         public int NextPage()
         {
-            if(currentPage < maxPage)
+            if (currentPage < maxPage)
             {
                 currentPage++;
 
@@ -215,5 +218,39 @@ namespace HSA.Model
             lowerLimit = currentPage * DataCountPerPage - DataCountPerPage;
             upperLimit = (currentPage == maxPage ? dataCount : lowerLimit + DataCountPerPage + 1);
         }
+
+        //Filtering and sorting
+
+        public void FilterStringData(String columnName, String subString)
+        {
+            
+        }
+
+        public void FilterIntegerData(String columnName, int from, int to)
+        {
+
+        }
+
+        public void FilterDoubleData(String columnName, double from, double to)
+        {
+
+        }
+
+        public void FilterBooleanData(String columnName, bool value)
+        {
+
+        }
+
+        public void FilterDateData(String columnName, DateTime from, DateTime to)
+        {
+
+        }
+
+        public void ClearFiters()
+        {
+            dataFiltered.RowFilter = "";
+        }
+
     }
 }
+

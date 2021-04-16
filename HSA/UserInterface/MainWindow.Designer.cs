@@ -31,10 +31,12 @@ namespace HSA.UserInterface
         {
             this.mainWindowTabs = new System.Windows.Forms.TabControl();
             this.dataViewTab = new System.Windows.Forms.TabPage();
-            this.graphicsTab = new System.Windows.Forms.TabPage();
             this.dataViewerControl = new HSA.UserInterface.DataViewerControl();
+            this.graphicsTab = new System.Windows.Forms.TabPage();
+            this.chartsControl1 = new HSA.UserInterface.ChartsControl();
             this.mainWindowTabs.SuspendLayout();
             this.dataViewTab.SuspendLayout();
+            this.graphicsTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainWindowTabs
@@ -66,13 +68,15 @@ namespace HSA.UserInterface
             // 
             // dataViewerControl
             // 
-            this.dataViewerControl.Location = new System.Drawing.Point(0, 0);
+            this.dataViewerControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataViewerControl.Location = new System.Drawing.Point(3, 3);
             this.dataViewerControl.Name = "dataViewerControl";
-            this.dataViewerControl.Size = new System.Drawing.Size(900, 553);
+            this.dataViewerControl.Size = new System.Drawing.Size(894, 547);
             this.dataViewerControl.TabIndex = 0;
             // 
             // graphicsTab
             // 
+            this.graphicsTab.Controls.Add(this.chartsControl1);
             this.graphicsTab.Location = new System.Drawing.Point(104, 4);
             this.graphicsTab.Name = "graphicsTab";
             this.graphicsTab.Padding = new System.Windows.Forms.Padding(3);
@@ -81,13 +85,12 @@ namespace HSA.UserInterface
             this.graphicsTab.Text = "Graphics";
             this.graphicsTab.UseVisualStyleBackColor = true;
             // 
-            // dataViewerControl
+            // chartsControl1
             // 
-            this.dataViewerControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataViewerControl.Location = new System.Drawing.Point(3, 3);
-            this.dataViewerControl.Name = "dataViewerControl";
-            this.dataViewerControl.Size = new System.Drawing.Size(894, 547);
-            this.dataViewerControl.TabIndex = 0;
+            this.chartsControl1.Location = new System.Drawing.Point(0, 0);
+            this.chartsControl1.Name = "chartsControl1";
+            this.chartsControl1.Size = new System.Drawing.Size(900, 553);
+            this.chartsControl1.TabIndex = 0;
             // 
             // MainWindow
             // 
@@ -102,6 +105,7 @@ namespace HSA.UserInterface
             this.Text = "HSA";
             this.mainWindowTabs.ResumeLayout(false);
             this.dataViewTab.ResumeLayout(false);
+            this.graphicsTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -112,6 +116,7 @@ namespace HSA.UserInterface
         private System.Windows.Forms.TabPage dataViewTab;
         private System.Windows.Forms.TabPage graphicsTab;
         private DataViewerControl dataViewerControl;
+        private ChartsControl chartsControl1;
     }
 }
 
