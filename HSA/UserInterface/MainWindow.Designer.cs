@@ -64,6 +64,14 @@ namespace HSA.UserInterface
             this.dataViewTab.Text = "Data Viewer";
             this.dataViewTab.UseVisualStyleBackColor = true;
             // 
+            // dataViewerControl
+            // 
+            this.dataViewerControl.Location = new System.Drawing.Point(0, 0);
+            this.dataViewerControl.Name = "dataViewerControl";
+            this.dataViewerControl.Size = new System.Drawing.Size(900, 553);
+            this.dataViewerControl.TabIndex = 0;
+            this.dataViewerControl.Load += new System.EventHandler(this.dataViewerControl_Load);
+            // 
             // graphicsTab
             // 
             this.graphicsTab.Location = new System.Drawing.Point(104, 4);
@@ -93,6 +101,7 @@ namespace HSA.UserInterface
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HSA";
+            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.mainWindowTabs.ResumeLayout(false);
             this.dataViewTab.ResumeLayout(false);
             this.ResumeLayout(false);

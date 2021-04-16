@@ -125,7 +125,7 @@ namespace HSA.UserInterface
             this.dataSetDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataSetDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataSetDataGridView.Size = new System.Drawing.Size(894, 414);
-            this.dataSetDataGridView.TabIndex = 0;
+            this.dataSetDataGridView.TabIndex = 0;            
             // 
             // dataShowingLabel
             // 
