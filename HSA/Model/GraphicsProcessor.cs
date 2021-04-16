@@ -65,6 +65,27 @@ namespace HSA.Model
             }
         }
 
+        public List<int[]> ZipcodeXAveragePrice()
+        {
+
+            List<int[]> displayData = new List<int[]>();
+            foreach (DictionaryEntry i in PricesByZip)
+            {
+                int[] dataPoint = new int[2];
+                int[] values = (int[])i.Value;
+                int a = values[0];
+                int b = values[1];
+                int c = a / b;
+                dataPoint[0] = Int32.Parse(i.Key.ToString());
+                dataPoint[1] = c;
+                
+                displayData.Add(dataPoint);
+            }
+
+            return displayData;
+        }
+
+
 
 
 
