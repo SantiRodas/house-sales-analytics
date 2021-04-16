@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\GraphicsProcessor.cs" />
     <Compile Include="Model\DataSetManager.cs" />
     <Compile Include="UserInterface\MainWindow.cs">
       <SubType>Form</SubType>

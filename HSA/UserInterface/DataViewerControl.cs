@@ -79,10 +79,6 @@ namespace HSA.UserInterface
             }
         }
 
-        private void searchButton_Click(object sender, EventArgs e)
-
-        {
-
-        }
+     
     }
 }

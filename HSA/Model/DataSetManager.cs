@@ -19,6 +19,13 @@ namespace HSA.Model
             }
         }
 
+        public DataView DataFiltered
+        {
+            get
+            {
+                return dataFiltered;
+            }
+        }
         DataTable currentPageData;
 
         public DataTable CurrentPageData
