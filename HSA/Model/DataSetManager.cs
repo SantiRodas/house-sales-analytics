@@ -26,7 +26,6 @@ namespace HSA.Model
                 return data;
             }
         }
-
         DataTable currentPageData;
 
         public DataTable CurrentPageData
