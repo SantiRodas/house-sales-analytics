@@ -15,15 +15,53 @@ namespace HSA.Model
         private DataTable FilteredData { get; set; }
         private Hashtable PricesByZip { get; set; }
 
+        private Hashtable QuantityPerYear { get; set; }
+
         public GraphicsProcessor(DataSetManager data) {
             Data = data;
             UpdateFilteredData();
             PricesByZip = new Hashtable();
+            QuantityPerYear = new Hashtable();
         }
 
         public void UpdateFilteredData()
         {
             FilteredData = Data.DataFiltered.ToTable();
+        }
+
+        public void UpdateQuantityPerYear()
+        {
+            for (int i = 0; i < FilteredData.Rows.Count; i++)
+            {
+                int yr_built = (int)FilteredData.Rows[i]["yr_built"];
+                AddYearToHashtable(yr_built);
+            }
+        }
+
+        private void AddYearToHashtable(int yr_built)
+        {
+            
+
+            if (QuantityPerYear.ContainsKey(yr_built))
+            {
+
+
+                object objArray = QuantityPerYear[yr_built];
+
+                if (objArray != null)
+                {
+                   int valueYear = (int)objArray;
+
+                    QuantityPerYear[yr_built] = valueYear + 1;
+                }
+
+
+            }
+            else
+            {
+                
+                QuantityPerYear.Add(yr_built, 1);
+            }
         }
 
         public void UpdatePricesByZip()
@@ -85,6 +123,33 @@ namespace HSA.Model
             return displayData;
         }
 
+
+        public List<double[]> ZipcodeXPercentage()
+        {
+            int sum = 0;
+            foreach (DictionaryEntry j in PricesByZip)
+            {
+                int[] values = (int[])j.Value;
+                sum += values[1];
+            }
+
+            List<double[]> displayData = new List<double[]>();
+            foreach (DictionaryEntry i in PricesByZip)
+            {
+                double[] dataPoint = new double[2];
+                int[] values = (int[])i.Value;
+                
+                int b = values[1];
+                double percentage = b / sum;
+                
+                dataPoint[0] = Int32.Parse(i.Key.ToString());
+                dataPoint[1] = percentage * 100;
+
+                displayData.Add(dataPoint);
+            }
+
+            return displayData;
+        }
 
 
 
