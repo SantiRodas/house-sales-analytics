@@ -31,24 +31,31 @@ namespace HSA.UserInterface
         {
             this.dataViewerSplitContainer = new System.Windows.Forms.SplitContainer();
             this.dataViewAndFilterSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.endDateLabel = new System.Windows.Forms.Label();
-            this.startDateLabel = new System.Windows.Forms.Label();
+            this.booleanComboBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.sortCriteriaLabel = new System.Windows.Forms.Label();
+            this.sortCriteriaSelector = new System.Windows.Forms.ComboBox();
+            this.sortButton = new System.Windows.Forms.Button();
+            this.separatorDateRangeLabel = new System.Windows.Forms.Label();
+            this.dateRangeLabel = new System.Windows.Forms.Label();
             this.startDatePicker = new System.Windows.Forms.DateTimePicker();
             this.filteringCriteriaLabel = new System.Windows.Forms.Label();
-            this.searchButton = new System.Windows.Forms.Button();
+            this.filterButton = new System.Windows.Forms.Button();
             this.stringFilterLabel = new System.Windows.Forms.Label();
             this.stringFilterTextBox = new System.Windows.Forms.TextBox();
             this.endDatePicker = new System.Windows.Forms.DateTimePicker();
             this.toTextBox = new System.Windows.Forms.TextBox();
             this.fromTextBox = new System.Windows.Forms.TextBox();
-            this.toLabel = new System.Windows.Forms.Label();
-            this.fromLabel = new System.Windows.Forms.Label();
+            this.rangeSeparatorLabel = new System.Windows.Forms.Label();
+            this.rangeLabel = new System.Windows.Forms.Label();
             this.filterColumnSelector = new System.Windows.Forms.ComboBox();
             this.dataSetDataGridView = new System.Windows.Forms.DataGridView();
+            this.resetTableButton = new System.Windows.Forms.Button();
             this.dataShowingLabel = new System.Windows.Forms.Label();
             this.pageNumberLabel = new System.Windows.Forms.Label();
             this.prevousPageButton = new System.Windows.Forms.Button();
             this.nextPageButton = new System.Windows.Forms.Button();
+            this.sortOrderSelector = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataViewerSplitContainer)).BeginInit();
             this.dataViewerSplitContainer.Panel1.SuspendLayout();
             this.dataViewerSplitContainer.Panel2.SuspendLayout();
@@ -62,7 +69,9 @@ namespace HSA.UserInterface
             // 
             // dataViewerSplitContainer
             // 
-            this.dataViewerSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataViewerSplitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataViewerSplitContainer.IsSplitterFixed = true;
             this.dataViewerSplitContainer.Location = new System.Drawing.Point(0, 0);
             this.dataViewerSplitContainer.Name = "dataViewerSplitContainer";
@@ -74,12 +83,14 @@ namespace HSA.UserInterface
             // 
             // dataViewerSplitContainer.Panel2
             // 
+            this.dataViewerSplitContainer.Panel2.Controls.Add(this.resetTableButton);
             this.dataViewerSplitContainer.Panel2.Controls.Add(this.dataShowingLabel);
             this.dataViewerSplitContainer.Panel2.Controls.Add(this.pageNumberLabel);
             this.dataViewerSplitContainer.Panel2.Controls.Add(this.prevousPageButton);
             this.dataViewerSplitContainer.Panel2.Controls.Add(this.nextPageButton);
+            this.dataViewerSplitContainer.Panel2MinSize = 42;
             this.dataViewerSplitContainer.Size = new System.Drawing.Size(894, 547);
-            this.dataViewerSplitContainer.SplitterDistance = 503;
+            this.dataViewerSplitContainer.SplitterDistance = 501;
             this.dataViewerSplitContainer.TabIndex = 1;
             // 
             // dataViewAndFilterSplitContainer
@@ -92,133 +103,251 @@ namespace HSA.UserInterface
             // 
             // dataViewAndFilterSplitContainer.Panel1
             // 
-            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.endDateLabel);
-            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.startDateLabel);
+            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.sortOrderSelector);
+            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.booleanComboBox);
+            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.label1);
+            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.sortCriteriaLabel);
+            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.sortCriteriaSelector);
+            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.sortButton);
+            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.separatorDateRangeLabel);
+            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.dateRangeLabel);
             this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.startDatePicker);
             this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.filteringCriteriaLabel);
-            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.searchButton);
+            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.filterButton);
             this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.stringFilterLabel);
             this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.stringFilterTextBox);
             this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.endDatePicker);
             this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.toTextBox);
             this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.fromTextBox);
-            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.toLabel);
-            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.fromLabel);
+            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.rangeSeparatorLabel);
+            this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.rangeLabel);
             this.dataViewAndFilterSplitContainer.Panel1.Controls.Add(this.filterColumnSelector);
             // 
             // dataViewAndFilterSplitContainer.Panel2
             // 
             this.dataViewAndFilterSplitContainer.Panel2.Controls.Add(this.dataSetDataGridView);
-            this.dataViewAndFilterSplitContainer.Size = new System.Drawing.Size(894, 503);
-            this.dataViewAndFilterSplitContainer.SplitterDistance = 85;
+            this.dataViewAndFilterSplitContainer.Size = new System.Drawing.Size(894, 501);
+            this.dataViewAndFilterSplitContainer.SplitterDistance = 89;
             this.dataViewAndFilterSplitContainer.TabIndex = 0;
             // 
-            // endDateLabel
+            // booleanComboBox
             // 
-            this.endDateLabel.AutoSize = true;
-            this.endDateLabel.Location = new System.Drawing.Point(300, 58);
-            this.endDateLabel.Name = "endDateLabel";
-            this.endDateLabel.Size = new System.Drawing.Size(66, 13);
-            this.endDateLabel.TabIndex = 12;
-            this.endDateLabel.Text = "Ending Date";
+            this.booleanComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.booleanComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.booleanComboBox.Enabled = false;
+            this.booleanComboBox.FormattingEnabled = true;
+            this.booleanComboBox.Items.AddRange(new object[] {
+            "True",
+            "False"});
+            this.booleanComboBox.Location = new System.Drawing.Point(424, 23);
+            this.booleanComboBox.Name = "booleanComboBox";
+            this.booleanComboBox.Size = new System.Drawing.Size(91, 21);
+            this.booleanComboBox.TabIndex = 18;
             // 
-            // startDateLabel
+            // label1
             // 
-            this.startDateLabel.AutoSize = true;
-            this.startDateLabel.Location = new System.Drawing.Point(4, 58);
-            this.startDateLabel.Name = "startDateLabel";
-            this.startDateLabel.Size = new System.Drawing.Size(69, 13);
-            this.startDateLabel.TabIndex = 11;
-            this.startDateLabel.Text = "Starting Date";
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(440, 6);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 13);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "True/False";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // sortCriteriaLabel
+            // 
+            this.sortCriteriaLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.sortCriteriaLabel.AutoSize = true;
+            this.sortCriteriaLabel.Location = new System.Drawing.Point(738, 6);
+            this.sortCriteriaLabel.Name = "sortCriteriaLabel";
+            this.sortCriteriaLabel.Size = new System.Drawing.Size(61, 13);
+            this.sortCriteriaLabel.TabIndex = 15;
+            this.sortCriteriaLabel.Text = "Sort Criteria";
+            // 
+            // sortCriteriaSelector
+            // 
+            this.sortCriteriaSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.sortCriteriaSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sortCriteriaSelector.FormattingEnabled = true;
+            this.sortCriteriaSelector.Location = new System.Drawing.Point(708, 25);
+            this.sortCriteriaSelector.Name = "sortCriteriaSelector";
+            this.sortCriteriaSelector.Size = new System.Drawing.Size(121, 21);
+            this.sortCriteriaSelector.TabIndex = 14;
+            // 
+            // sortButton
+            // 
+            this.sortButton.Location = new System.Drawing.Point(726, 59);
+            this.sortButton.Name = "sortButton";
+            this.sortButton.Size = new System.Drawing.Size(75, 23);
+            this.sortButton.TabIndex = 13;
+            this.sortButton.Text = "Sort";
+            this.sortButton.UseVisualStyleBackColor = true;
+            this.sortButton.Click += new System.EventHandler(this.sortButton_Click);
+            // 
+            // separatorDateRangeLabel
+            // 
+            this.separatorDateRangeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.separatorDateRangeLabel.AutoSize = true;
+            this.separatorDateRangeLabel.Location = new System.Drawing.Point(311, 66);
+            this.separatorDateRangeLabel.Name = "separatorDateRangeLabel";
+            this.separatorDateRangeLabel.Size = new System.Drawing.Size(10, 13);
+            this.separatorDateRangeLabel.TabIndex = 12;
+            this.separatorDateRangeLabel.Text = "-";
+            this.separatorDateRangeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // dateRangeLabel
+            // 
+            this.dateRangeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateRangeLabel.AutoSize = true;
+            this.dateRangeLabel.Location = new System.Drawing.Point(22, 66);
+            this.dateRangeLabel.Name = "dateRangeLabel";
+            this.dateRangeLabel.Size = new System.Drawing.Size(65, 13);
+            this.dateRangeLabel.TabIndex = 11;
+            this.dateRangeLabel.Text = "Date Range";
             // 
             // startDatePicker
             // 
-            this.startDatePicker.Location = new System.Drawing.Point(79, 52);
+            this.startDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.startDatePicker.Enabled = false;
+            this.startDatePicker.Location = new System.Drawing.Point(98, 63);
             this.startDatePicker.Name = "startDatePicker";
             this.startDatePicker.Size = new System.Drawing.Size(200, 20);
             this.startDatePicker.TabIndex = 10;
             // 
             // filteringCriteriaLabel
             // 
+            this.filteringCriteriaLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.filteringCriteriaLabel.AutoSize = true;
-            this.filteringCriteriaLabel.Location = new System.Drawing.Point(767, 17);
+            this.filteringCriteriaLabel.Location = new System.Drawing.Point(599, 6);
             this.filteringCriteriaLabel.Name = "filteringCriteriaLabel";
             this.filteringCriteriaLabel.Size = new System.Drawing.Size(78, 13);
             this.filteringCriteriaLabel.TabIndex = 9;
             this.filteringCriteriaLabel.Text = "Filtering Criteria";
             // 
-            // searchButton
+            // filterButton
             // 
-            this.searchButton.Location = new System.Drawing.Point(644, 33);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(75, 23);
-            this.searchButton.TabIndex = 8;
-            this.searchButton.Text = "Search";
-            this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            this.filterButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filterButton.Location = new System.Drawing.Point(600, 59);
+            this.filterButton.Name = "filterButton";
+            this.filterButton.Size = new System.Drawing.Size(75, 22);
+            this.filterButton.TabIndex = 8;
+            this.filterButton.Text = "Filter";
+            this.filterButton.UseVisualStyleBackColor = true;
+            this.filterButton.Click += new System.EventHandler(this.filterButton_Click);
             // 
             // stringFilterLabel
             // 
+            this.stringFilterLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.stringFilterLabel.AutoSize = true;
-            this.stringFilterLabel.Location = new System.Drawing.Point(446, 20);
+            this.stringFilterLabel.Location = new System.Drawing.Point(296, 6);
             this.stringFilterLabel.Name = "stringFilterLabel";
             this.stringFilterLabel.Size = new System.Drawing.Size(56, 13);
             this.stringFilterLabel.TabIndex = 7;
             this.stringFilterLabel.Text = "String filter";
+            this.stringFilterLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // stringFilterTextBox
             // 
-            this.stringFilterTextBox.Location = new System.Drawing.Point(517, 17);
+            this.stringFilterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.stringFilterTextBox.Enabled = false;
+            this.stringFilterTextBox.Location = new System.Drawing.Point(275, 23);
             this.stringFilterTextBox.Name = "stringFilterTextBox";
             this.stringFilterTextBox.Size = new System.Drawing.Size(100, 20);
             this.stringFilterTextBox.TabIndex = 6;
             // 
             // endDatePicker
             // 
-            this.endDatePicker.Location = new System.Drawing.Point(372, 52);
+            this.endDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.endDatePicker.Enabled = false;
+            this.endDatePicker.Location = new System.Drawing.Point(333, 63);
             this.endDatePicker.Name = "endDatePicker";
             this.endDatePicker.Size = new System.Drawing.Size(200, 20);
             this.endDatePicker.TabIndex = 5;
             // 
             // toTextBox
             // 
-            this.toTextBox.Location = new System.Drawing.Point(303, 17);
+            this.toTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toTextBox.Enabled = false;
+            this.toTextBox.Location = new System.Drawing.Point(150, 23);
             this.toTextBox.Name = "toTextBox";
-            this.toTextBox.Size = new System.Drawing.Size(100, 20);
+            this.toTextBox.Size = new System.Drawing.Size(78, 20);
             this.toTextBox.TabIndex = 4;
             // 
             // fromTextBox
             // 
-            this.fromTextBox.Location = new System.Drawing.Point(79, 17);
+            this.fromTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.fromTextBox.Enabled = false;
+            this.fromTextBox.Location = new System.Drawing.Point(61, 23);
             this.fromTextBox.Name = "fromTextBox";
-            this.fromTextBox.Size = new System.Drawing.Size(100, 20);
+            this.fromTextBox.Size = new System.Drawing.Size(78, 20);
             this.fromTextBox.TabIndex = 3;
             // 
-            // toLabel
+            // rangeSeparatorLabel
             // 
-            this.toLabel.AutoSize = true;
-            this.toLabel.Location = new System.Drawing.Point(277, 20);
-            this.toLabel.Name = "toLabel";
-            this.toLabel.Size = new System.Drawing.Size(20, 13);
-            this.toLabel.TabIndex = 2;
-            this.toLabel.Text = "To";
+            this.rangeSeparatorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rangeSeparatorLabel.AutoSize = true;
+            this.rangeSeparatorLabel.Location = new System.Drawing.Point(139, 26);
+            this.rangeSeparatorLabel.Name = "rangeSeparatorLabel";
+            this.rangeSeparatorLabel.Size = new System.Drawing.Size(10, 13);
+            this.rangeSeparatorLabel.TabIndex = 2;
+            this.rangeSeparatorLabel.Text = "-";
             // 
-            // fromLabel
+            // rangeLabel
             // 
-            this.fromLabel.AutoSize = true;
-            this.fromLabel.Location = new System.Drawing.Point(40, 20);
-            this.fromLabel.Name = "fromLabel";
-            this.fromLabel.Size = new System.Drawing.Size(33, 13);
-            this.fromLabel.TabIndex = 1;
-            this.fromLabel.Text = "From:";
+            this.rangeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rangeLabel.AutoSize = true;
+            this.rangeLabel.Location = new System.Drawing.Point(122, 6);
+            this.rangeLabel.Name = "rangeLabel";
+            this.rangeLabel.Size = new System.Drawing.Size(42, 13);
+            this.rangeLabel.TabIndex = 1;
+            this.rangeLabel.Text = "Range:";
+            this.rangeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // filterColumnSelector
             // 
+            this.filterColumnSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filterColumnSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.filterColumnSelector.FormattingEnabled = true;
-            this.filterColumnSelector.Location = new System.Drawing.Point(745, 33);
+            this.filterColumnSelector.Location = new System.Drawing.Point(575, 25);
             this.filterColumnSelector.Name = "filterColumnSelector";
             this.filterColumnSelector.Size = new System.Drawing.Size(121, 21);
             this.filterColumnSelector.TabIndex = 0;
+            this.filterColumnSelector.SelectedValueChanged += new System.EventHandler(this.filterColumnSelector_SelectedValueChanged);
             // 
             // dataSetDataGridView
             // 
@@ -231,8 +360,21 @@ namespace HSA.UserInterface
             this.dataSetDataGridView.RowHeadersVisible = false;
             this.dataSetDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataSetDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataSetDataGridView.Size = new System.Drawing.Size(894, 414);
+            this.dataSetDataGridView.Size = new System.Drawing.Size(894, 408);
             this.dataSetDataGridView.TabIndex = 0;
+            // 
+            // resetTableButton
+            // 
+            this.resetTableButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.resetTableButton.Location = new System.Drawing.Point(12, 10);
+            this.resetTableButton.Name = "resetTableButton";
+            this.resetTableButton.Size = new System.Drawing.Size(75, 27);
+            this.resetTableButton.TabIndex = 19;
+            this.resetTableButton.Text = "Reset Table";
+            this.resetTableButton.UseVisualStyleBackColor = true;
+            this.resetTableButton.Click += new System.EventHandler(this.resetTableButton_Click);
             // 
             // dataShowingLabel
             // 
@@ -248,7 +390,7 @@ namespace HSA.UserInterface
             // 
             this.pageNumberLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.pageNumberLabel.AutoSize = true;
-            this.pageNumberLabel.Location = new System.Drawing.Point(446, 15);
+            this.pageNumberLabel.Location = new System.Drawing.Point(447, 15);
             this.pageNumberLabel.Name = "pageNumberLabel";
             this.pageNumberLabel.Size = new System.Drawing.Size(56, 13);
             this.pageNumberLabel.TabIndex = 2;
@@ -259,7 +401,7 @@ namespace HSA.UserInterface
             this.prevousPageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.prevousPageButton.Location = new System.Drawing.Point(355, 10);
             this.prevousPageButton.Name = "prevousPageButton";
-            this.prevousPageButton.Size = new System.Drawing.Size(75, 25);
+            this.prevousPageButton.Size = new System.Drawing.Size(75, 27);
             this.prevousPageButton.TabIndex = 1;
             this.prevousPageButton.Text = "Previous";
             this.prevousPageButton.UseVisualStyleBackColor = true;
@@ -270,18 +412,33 @@ namespace HSA.UserInterface
             this.nextPageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.nextPageButton.Location = new System.Drawing.Point(517, 11);
             this.nextPageButton.Name = "nextPageButton";
-            this.nextPageButton.Size = new System.Drawing.Size(75, 24);
+            this.nextPageButton.Size = new System.Drawing.Size(75, 26);
             this.nextPageButton.TabIndex = 0;
             this.nextPageButton.Text = "Next";
             this.nextPageButton.UseVisualStyleBackColor = true;
             this.nextPageButton.Click += new System.EventHandler(this.nextPageButton_Click);
             // 
-            // dataViewerControl
+            // sortOrderSelector
+            // 
+            this.sortOrderSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.sortOrderSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sortOrderSelector.FormattingEnabled = true;
+            this.sortOrderSelector.Items.AddRange(new object[] {
+            "- to +",
+            "+ to -"});
+            this.sortOrderSelector.Location = new System.Drawing.Point(833, 25);
+            this.sortOrderSelector.Name = "sortOrderSelector";
+            this.sortOrderSelector.Size = new System.Drawing.Size(58, 21);
+            this.sortOrderSelector.TabIndex = 19;
+            // 
+            // DataViewerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.dataViewerSplitContainer);
-            this.Name = "dataViewerControl";
+            this.Name = "DataViewerControl";
             this.Size = new System.Drawing.Size(894, 547);
             this.dataViewerSplitContainer.Panel1.ResumeLayout(false);
             this.dataViewerSplitContainer.Panel2.ResumeLayout(false);
@@ -311,14 +468,21 @@ namespace HSA.UserInterface
         private System.Windows.Forms.DateTimePicker endDatePicker;
         private System.Windows.Forms.TextBox toTextBox;
         private System.Windows.Forms.TextBox fromTextBox;
-        private System.Windows.Forms.Label toLabel;
-        private System.Windows.Forms.Label fromLabel;
+        private System.Windows.Forms.Label rangeSeparatorLabel;
+        private System.Windows.Forms.Label rangeLabel;
         private System.Windows.Forms.ComboBox filterColumnSelector;
         private System.Windows.Forms.DateTimePicker startDatePicker;
         private System.Windows.Forms.Label filteringCriteriaLabel;
-        private System.Windows.Forms.Button searchButton;
+        private System.Windows.Forms.Button filterButton;
         private System.Windows.Forms.Label stringFilterLabel;
-        private System.Windows.Forms.Label endDateLabel;
-        private System.Windows.Forms.Label startDateLabel;
+        private System.Windows.Forms.Label separatorDateRangeLabel;
+        private System.Windows.Forms.Label dateRangeLabel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label sortCriteriaLabel;
+        private System.Windows.Forms.ComboBox sortCriteriaSelector;
+        private System.Windows.Forms.Button sortButton;
+        private System.Windows.Forms.ComboBox booleanComboBox;
+        private System.Windows.Forms.Button resetTableButton;
+        private System.Windows.Forms.ComboBox sortOrderSelector;
     }
 }

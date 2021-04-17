@@ -11,6 +11,14 @@ namespace HSA.Model
 
         private DataTable data;
 
+        public DataView DataFiltered 
+        {
+            get
+            {
+                return dataFiltered;
+            }
+        }
+
         public DataTable Data
         {
             get
@@ -84,12 +92,10 @@ namespace HSA.Model
             data = new DataTable();
             currentPageData = new DataTable();
             LoadData();
-            dataCount = data.Rows.Count;
             currentPage = 1;
-            UpdatePageLimits();
-            maxPage = (int)Math.Ceiling((dataCount + (0.0d)) / DataCountPerPage);
-            RefreshData();
             dataFiltered = new DataView(data);
+            UpdatePageLimits();
+            RefreshData();                     
         }
 
         private void LoadData()
@@ -151,14 +157,12 @@ namespace HSA.Model
         {
             UpdatePageLimits();
 
-            DataRowCollection rows = data.Rows;
-
             DataRowCollection currentPageRows = currentPageData.Rows;
             currentPageRows.Clear();
 
             for (int i = lowerLimit; i < upperLimit; i++)
             {
-                currentPageData.ImportRow(rows[i]);
+                currentPageData.ImportRow(dataFiltered[i].Row);
             }
         }
 
@@ -215,40 +219,70 @@ namespace HSA.Model
 
         private void UpdatePageLimits()
         {
+            dataCount = dataFiltered.Count;
+            maxPage = (int)Math.Ceiling((dataCount + (0.0d)) / DataCountPerPage);
             lowerLimit = currentPage * DataCountPerPage - DataCountPerPage;
-            upperLimit = (currentPage == maxPage ? dataCount : lowerLimit + DataCountPerPage + 1);
+            upperLimit = (currentPage >= maxPage ? dataCount : lowerLimit + DataCountPerPage);
         }
 
         //Filtering and sorting
 
-        public void FilterStringData(String columnName, String subString)
+        public void FilterStringData(String columnName, String subString)//OK
         {
-            
+            dataFiltered.RowFilter = $"{columnName} LIKE \'%{subString}%'";
+            currentPage = 1;
+            RefreshData();
         }
 
-        public void FilterIntegerData(String columnName, int from, int to)
+        public void FilterIntegerData(String columnName, int from, int to)//OK
         {
-
+            dataFiltered.RowFilter = $"{columnName} >= {from} AND {columnName} <= {to}";
+            currentPage = 1;
+            RefreshData();
         }
 
-        public void FilterDoubleData(String columnName, double from, double to)
+        public void FilterDoubleData(String columnName, double from, double to)//OK
         {
-
+            dataFiltered.RowFilter = $"{columnName} >= {from} AND {columnName}<= {to}";
+            currentPage = 1;
+            RefreshData();
         }
 
         public void FilterBooleanData(String columnName, bool value)
         {
-
+            dataFiltered.RowFilter = $"{columnName} = {value}";
+            currentPage = 1;
+            RefreshData();
         }
 
-        public void FilterDateData(String columnName, DateTime from, DateTime to)
+        public void FilterDateData(String columnName, DateTime from, DateTime to)//NOT WORKING
         {
-
+            dataFiltered.RowFilter = $"{columnName} >= #{from.ToString()}# AND {columnName} <= #{to.ToString()}#";
+            currentPage = 1;
+            RefreshData();
         }
 
-        public void ClearFiters()
+        public void SortData(String columnName, bool ascendant)
+        {
+            if (ascendant)
+            {
+                dataFiltered.Sort = $"{columnName} ASC";
+            }
+            else
+            {
+                dataFiltered.Sort = $"{columnName} DESC";
+            }
+                
+            currentPage = 1;
+            RefreshData();
+        }
+
+        public void ClearSortFiters()
         {
             dataFiltered.RowFilter = "";
+            dataFiltered.Sort = "";
+            currentPage = 1;
+            RefreshData();
         }
 
     }
