@@ -8,15 +8,17 @@ namespace HSA.UserInterface
     public partial class DataViewerControl : UserControl
     {
         private DataSetManager manager;
+        private ChartsControl graphicsManager;
 
         public DataViewerControl()
         {
             InitializeComponent();
         }
 
-        public void Initialize(DataSetManager manager)
+        public void Initialize(DataSetManager manager, ChartsControl graphicsManager)
         {
             this.manager = manager;
+            this.graphicsManager = graphicsManager;
 
             int page = this.manager.CurrentPage;
 
@@ -126,6 +128,8 @@ namespace HSA.UserInterface
                 }
 
                 UpdatePageInfoLabelsAndButtons(1);
+                graphicsManager.UpdateCharts();
+
             }
             catch (Exception ex)
             {
@@ -138,6 +142,7 @@ namespace HSA.UserInterface
         {
             manager.ClearSortFiters();
             UpdatePageInfoLabelsAndButtons(1);
+            graphicsManager.UpdateCharts();
         }
 
         private void filterColumnSelector_SelectedValueChanged(object sender, EventArgs e)

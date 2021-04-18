@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HSA.Model
 {
-    class GraphicsProcessor
+    public class GraphicsProcessor
     {
         public DataSetManager Data { get; set; }
 
@@ -19,14 +19,21 @@ namespace HSA.Model
 
         public GraphicsProcessor(DataSetManager data) {
             Data = data;
-            UpdateFilteredData();
             PricesByZip = new Hashtable();
             QuantityPerYear = new Hashtable();
+            UpdateFilteredData();
         }
 
         public void UpdateFilteredData()
         {
+            
             FilteredData = Data.DataFiltered.ToTable();
+
+            QuantityPerYear.Clear();
+            PricesByZip.Clear();
+
+            UpdateQuantityPerYear();
+            UpdatePricesByZip();
         }
 
         public void UpdateQuantityPerYear()
@@ -68,14 +75,15 @@ namespace HSA.Model
         {
             for (int i =0; i< FilteredData.Rows.Count;i++) 
             {
-                string zipcode = (string)FilteredData.Rows[i]["zipcode"];
-                int price = (int)FilteredData.Rows[i]["price"];
+                int zipcode = (int)FilteredData.Rows[i]["zipcode"];
+                double price = (double)FilteredData.Rows[i]["price"];
+
                 AddPriceToHashtable(zipcode, price);
             }
         }
 
-        private void AddPriceToHashtable(string zipcode, int price) {
-            int[] arrayForAverage = { 0, 0 };
+        private void AddPriceToHashtable(int zipcode, double price) {
+            double[] arrayForAverage = { 0, 0 };
 
             if (PricesByZip.ContainsKey(zipcode))
             {
@@ -85,7 +93,7 @@ namespace HSA.Model
 
                 if (objArray != null)
                 {
-                    arrayForAverage = (int[])objArray;
+                    arrayForAverage = (double[])objArray;
 
                     arrayForAverage[0] = arrayForAverage[0] + price;
                     arrayForAverage[1] = arrayForAverage[1] + 1;
@@ -103,20 +111,40 @@ namespace HSA.Model
             }
         }
 
-        public List<int[]> ZipcodeXAveragePrice()
+        public List<int[]> YearXQuantity()
         {
-
+            
             List<int[]> displayData = new List<int[]>();
-            foreach (DictionaryEntry i in PricesByZip)
+            foreach (DictionaryEntry i in QuantityPerYear)
             {
                 int[] dataPoint = new int[2];
-                int[] values = (int[])i.Value;
-                int a = values[0];
-                int b = values[1];
-                int c = a / b;
+
+                int values = (int)i.Value;
+                
+                dataPoint[0] = Int32.Parse(i.Key.ToString());
+                dataPoint[1] = (int)i.Value;
+
+                displayData.Add(dataPoint);
+            }
+
+            return displayData;
+        }
+
+
+        public List<double[]> ZipcodeXAveragePrice()
+        {
+
+            List<double[]> displayData = new List<double[]>();
+            foreach (DictionaryEntry i in PricesByZip)
+            {
+                double[] dataPoint = new double[2];
+                double[] values = (double[])i.Value;
+                double a = values[0];
+                double b = values[1];
+                double c = a / b;
                 dataPoint[0] = Int32.Parse(i.Key.ToString());
                 dataPoint[1] = c;
-                
+
                 displayData.Add(dataPoint);
             }
 
@@ -126,10 +154,10 @@ namespace HSA.Model
 
         public List<double[]> ZipcodeXPercentage()
         {
-            int sum = 0;
+            double sum = 0;
             foreach (DictionaryEntry j in PricesByZip)
             {
-                int[] values = (int[])j.Value;
+                double[] values = (double[])j.Value;
                 sum += values[1];
             }
 
@@ -137,13 +165,14 @@ namespace HSA.Model
             foreach (DictionaryEntry i in PricesByZip)
             {
                 double[] dataPoint = new double[2];
-                int[] values = (int[])i.Value;
-                
-                int b = values[1];
+                double[] values = (double[])i.Value;
+
+                double b = values[1];
                 double percentage = b / sum;
+                percentage = Math.Round(percentage*100, 2);
                 
                 dataPoint[0] = Int32.Parse(i.Key.ToString());
-                dataPoint[1] = percentage * 100;
+                dataPoint[1] = percentage;
 
                 displayData.Add(dataPoint);
             }

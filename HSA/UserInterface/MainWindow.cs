@@ -8,12 +8,21 @@ namespace HSA.UserInterface
     public partial class MainWindow : Form
     {
         private DataSetManager manager;
+        private GraphicsProcessor graphicsManager;
 
         public DataSetManager Manager
         {
             get
             {
                 return manager;
+            }
+        }
+
+        public GraphicsProcessor GraphicsManager
+        {
+            get
+            {
+                return graphicsManager;
             }
         }
 
@@ -24,9 +33,13 @@ namespace HSA.UserInterface
             mainWindowTabs.DrawItem += new DrawItemEventHandler(mainWindowTabs_DrawItem);
 
             manager = new DataSetManager();
+            graphicsManager = new GraphicsProcessor(manager);
 
-            dataViewerControl.Initialize(manager);
+            chartsControl1.Initialize(graphicsManager);
+            dataViewerControl.Initialize(manager, chartsControl1);
             
+
+
         }
 
         //Allows vertical tabs, not possible within tab control properties
