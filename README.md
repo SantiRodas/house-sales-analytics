@@ -6,7 +6,7 @@ Reading this data, the system analyze the information by means of autonomous lea
       * Data Viewer with filtering, sorting and paging
       * Charts reports based on the filtered data
 ## Program Requirements
-* C#
+* C# (.NET Framework 4.7.2)
 * Visual Studio
 * Windows 10
 
