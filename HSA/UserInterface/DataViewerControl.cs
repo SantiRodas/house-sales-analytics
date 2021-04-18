@@ -37,7 +37,13 @@ namespace HSA.UserInterface
                 sortCriteriaSelector.Items.Add(columnName);
             }
 
+            //Initialize sort order combo box to be - to +
             sortOrderSelector.SelectedIndex = 0;
+
+            //Sets properties to allow a nice resize
+            dataViewerSplitContainer.FixedPanel = FixedPanel.Panel2;
+            dataViewAndFilterSplitContainer.FixedPanel = FixedPanel.Panel1;
+
 
         }
 

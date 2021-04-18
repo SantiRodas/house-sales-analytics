@@ -60,11 +60,12 @@ namespace HSA.UserInterface
             // 
             // chartZipcodeXAverage
             // 
+            this.chartZipcodeXAverage.Anchor = System.Windows.Forms.AnchorStyles.Top;
             chartArea1.AxisX.Title = "Zipcode";
             chartArea1.AxisY.Title = "Average Price";
             chartArea1.Name = "ChartArea1";
             this.chartZipcodeXAverage.ChartAreas.Add(chartArea1);
-            this.chartZipcodeXAverage.Location = new System.Drawing.Point(0, 93);
+            this.chartZipcodeXAverage.Location = new System.Drawing.Point(5, 93);
             this.chartZipcodeXAverage.Name = "chartZipcodeXAverage";
             series1.ChartArea = "ChartArea1";
             series1.Name = "Average Sale Price";
@@ -78,11 +79,12 @@ namespace HSA.UserInterface
             // 
             // chartZipcodeXPercentage
             // 
+            this.chartZipcodeXPercentage.Anchor = System.Windows.Forms.AnchorStyles.Top;
             chartArea2.AxisX.Title = "Zipcode";
             chartArea2.AxisY.Title = "Average Price";
             chartArea2.Name = "ChartArea1";
             this.chartZipcodeXPercentage.ChartAreas.Add(chartArea2);
-            this.chartZipcodeXPercentage.Location = new System.Drawing.Point(-3, 621);
+            this.chartZipcodeXPercentage.Location = new System.Drawing.Point(6, 621);
             this.chartZipcodeXPercentage.Name = "chartZipcodeXPercentage";
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
@@ -98,13 +100,14 @@ namespace HSA.UserInterface
             // 
             // chartYearXQuantity
             // 
+            this.chartYearXQuantity.Anchor = System.Windows.Forms.AnchorStyles.Top;
             chartArea3.AxisX.Title = "Year Built";
             chartArea3.AxisY.Title = "Houses sold";
             chartArea3.Name = "ChartArea1";
             this.chartYearXQuantity.ChartAreas.Add(chartArea3);
             legend1.Name = "Years";
             this.chartYearXQuantity.Legends.Add(legend1);
-            this.chartYearXQuantity.Location = new System.Drawing.Point(-3, 1169);
+            this.chartYearXQuantity.Location = new System.Drawing.Point(6, 1169);
             this.chartYearXQuantity.Name = "chartYearXQuantity";
             series3.ChartArea = "ChartArea1";
             series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
@@ -120,10 +123,11 @@ namespace HSA.UserInterface
             // 
             // label1
             // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label1.Location = new System.Drawing.Point(428, 38);
+            this.label1.Location = new System.Drawing.Point(406, 34);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(75, 24);
             this.label1.TabIndex = 3;
@@ -132,12 +136,13 @@ namespace HSA.UserInterface
             // 
             // chartZipcodeXAverageSqrFt
             // 
+            this.chartZipcodeXAverageSqrFt.Anchor = System.Windows.Forms.AnchorStyles.Top;
             chartArea4.AxisX.Interval = 1D;
             chartArea4.AxisX.Title = "Zipcode";
             chartArea4.AxisY.Title = "Living square feet";
             chartArea4.Name = "ChartArea1";
             this.chartZipcodeXAverageSqrFt.ChartAreas.Add(chartArea4);
-            this.chartZipcodeXAverageSqrFt.Location = new System.Drawing.Point(0, 1702);
+            this.chartZipcodeXAverageSqrFt.Location = new System.Drawing.Point(4, 1702);
             this.chartZipcodeXAverageSqrFt.Name = "chartZipcodeXAverageSqrFt";
             series4.ChartArea = "ChartArea1";
             series4.IsXValueIndexed = true;
@@ -152,12 +157,13 @@ namespace HSA.UserInterface
             // 
             // chartZipcodeXAverageSqrFtPrice
             // 
+            this.chartZipcodeXAverageSqrFtPrice.Anchor = System.Windows.Forms.AnchorStyles.Top;
             chartArea5.AxisX.Interval = 1D;
             chartArea5.AxisX.Title = "Zipcode";
             chartArea5.AxisY.Title = "Living square feet price";
             chartArea5.Name = "ChartArea1";
             this.chartZipcodeXAverageSqrFtPrice.ChartAreas.Add(chartArea5);
-            this.chartZipcodeXAverageSqrFtPrice.Location = new System.Drawing.Point(0, 2235);
+            this.chartZipcodeXAverageSqrFtPrice.Location = new System.Drawing.Point(4, 2235);
             this.chartZipcodeXAverageSqrFtPrice.Name = "chartZipcodeXAverageSqrFtPrice";
             series5.ChartArea = "ChartArea1";
             series5.IsXValueIndexed = true;
@@ -182,7 +188,7 @@ namespace HSA.UserInterface
             this.Controls.Add(this.chartZipcodeXPercentage);
             this.Controls.Add(this.chartZipcodeXAverage);
             this.Name = "ChartsControl";
-            this.Size = new System.Drawing.Size(883, 2723);
+            this.Size = new System.Drawing.Size(894, 2706);
             ((System.ComponentModel.ISupportInitialize)(this.chartZipcodeXAverage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartZipcodeXPercentage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartYearXQuantity)).EndInit();

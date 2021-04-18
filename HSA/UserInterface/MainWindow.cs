@@ -37,8 +37,6 @@ namespace HSA.UserInterface
 
             chartsControl1.Initialize(graphicsManager);
             dataViewerControl.Initialize(manager, chartsControl1);
-            
-
 
         }
 
@@ -57,14 +55,13 @@ namespace HSA.UserInterface
 
             if (e.State == DrawItemState.Selected)
             {
-
                 // Draw a different background color, and don't paint a focus rectangle.
                 _textBrush = new SolidBrush(Color.Black);
                 g.FillRectangle(Brushes.Gray, e.Bounds);
             }
             else
             {
-                _textBrush = new System.Drawing.SolidBrush(e.ForeColor);
+                _textBrush = new SolidBrush(e.ForeColor);
                 e.DrawBackground();
             }
 

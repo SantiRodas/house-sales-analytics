@@ -71,9 +71,10 @@ namespace HSA.UserInterface
         {
             chartYearXQuantity.Series["Years"].Points.Clear();
             List<int[]> chartData = manager.YearXQuantity();
-            foreach (int[] i in chartData)
+            chartData.Sort((x,y) => x[0].CompareTo(y[0]));
+            for (int i = 0; i < chartData.Count; i++)
             {
-                chartYearXQuantity.Series["Years"].Points.AddXY(i[0], i[1]);
+                chartYearXQuantity.Series["Years"].Points.AddXY(chartData[i][0], chartData[i][1]);
             }
         }
 

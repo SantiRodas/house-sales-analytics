@@ -31,8 +31,8 @@ namespace HSA.UserInterface
         {
             this.mainWindowTabs = new System.Windows.Forms.TabControl();
             this.dataViewTab = new System.Windows.Forms.TabPage();
-            this.dataViewerControl = new HSA.UserInterface.DataViewerControl();
             this.graphicsTab = new System.Windows.Forms.TabPage();
+            this.dataViewerControl = new HSA.UserInterface.DataViewerControl();
             this.chartsControl1 = new HSA.UserInterface.ChartsControl();
             this.mainWindowTabs.SuspendLayout();
             this.dataViewTab.SuspendLayout();
@@ -66,14 +66,6 @@ namespace HSA.UserInterface
             this.dataViewTab.Text = "Data Viewer";
             this.dataViewTab.UseVisualStyleBackColor = true;
             // 
-            // dataViewerControl
-            // 
-            this.dataViewerControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataViewerControl.Location = new System.Drawing.Point(3, 3);
-            this.dataViewerControl.Name = "dataViewerControl";
-            this.dataViewerControl.Size = new System.Drawing.Size(894, 547);
-            this.dataViewerControl.TabIndex = 0;
-            // 
             // graphicsTab
             // 
             this.graphicsTab.Controls.Add(this.chartsControl1);
@@ -85,11 +77,21 @@ namespace HSA.UserInterface
             this.graphicsTab.Text = "Graphics";
             this.graphicsTab.UseVisualStyleBackColor = true;
             // 
+            // dataViewerControl
+            // 
+            this.dataViewerControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataViewerControl.Location = new System.Drawing.Point(3, 3);
+            this.dataViewerControl.Name = "dataViewerControl";
+            this.dataViewerControl.Size = new System.Drawing.Size(894, 547);
+            this.dataViewerControl.TabIndex = 0;
+            // 
             // chartsControl1
             // 
-            this.chartsControl1.Location = new System.Drawing.Point(0, 0);
+            this.chartsControl1.AutoScroll = true;
+            this.chartsControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartsControl1.Location = new System.Drawing.Point(3, 3);
             this.chartsControl1.Name = "chartsControl1";
-            this.chartsControl1.Size = new System.Drawing.Size(900, 553);
+            this.chartsControl1.Size = new System.Drawing.Size(894, 547);
             this.chartsControl1.TabIndex = 0;
             // 
             // MainWindow

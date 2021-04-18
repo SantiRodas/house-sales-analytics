@@ -31,6 +31,7 @@ namespace HSA.UserInterface
         {
             this.dataViewerSplitContainer = new System.Windows.Forms.SplitContainer();
             this.dataViewAndFilterSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.sortOrderSelector = new System.Windows.Forms.ComboBox();
             this.booleanComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.sortCriteriaLabel = new System.Windows.Forms.Label();
@@ -55,7 +56,6 @@ namespace HSA.UserInterface
             this.pageNumberLabel = new System.Windows.Forms.Label();
             this.prevousPageButton = new System.Windows.Forms.Button();
             this.nextPageButton = new System.Windows.Forms.Button();
-            this.sortOrderSelector = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataViewerSplitContainer)).BeginInit();
             this.dataViewerSplitContainer.Panel1.SuspendLayout();
             this.dataViewerSplitContainer.Panel2.SuspendLayout();
@@ -130,11 +130,22 @@ namespace HSA.UserInterface
             this.dataViewAndFilterSplitContainer.SplitterDistance = 89;
             this.dataViewAndFilterSplitContainer.TabIndex = 0;
             // 
+            // sortOrderSelector
+            // 
+            this.sortOrderSelector.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.sortOrderSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sortOrderSelector.FormattingEnabled = true;
+            this.sortOrderSelector.Items.AddRange(new object[] {
+            "- to +",
+            "+ to -"});
+            this.sortOrderSelector.Location = new System.Drawing.Point(833, 25);
+            this.sortOrderSelector.Name = "sortOrderSelector";
+            this.sortOrderSelector.Size = new System.Drawing.Size(58, 21);
+            this.sortOrderSelector.TabIndex = 19;
+            // 
             // booleanComboBox
             // 
-            this.booleanComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.booleanComboBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.booleanComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.booleanComboBox.Enabled = false;
             this.booleanComboBox.FormattingEnabled = true;
@@ -148,9 +159,7 @@ namespace HSA.UserInterface
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(440, 6);
             this.label1.Name = "label1";
@@ -161,9 +170,7 @@ namespace HSA.UserInterface
             // 
             // sortCriteriaLabel
             // 
-            this.sortCriteriaLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.sortCriteriaLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.sortCriteriaLabel.AutoSize = true;
             this.sortCriteriaLabel.Location = new System.Drawing.Point(738, 6);
             this.sortCriteriaLabel.Name = "sortCriteriaLabel";
@@ -173,9 +180,7 @@ namespace HSA.UserInterface
             // 
             // sortCriteriaSelector
             // 
-            this.sortCriteriaSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.sortCriteriaSelector.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.sortCriteriaSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sortCriteriaSelector.FormattingEnabled = true;
             this.sortCriteriaSelector.Location = new System.Drawing.Point(708, 25);
@@ -185,7 +190,8 @@ namespace HSA.UserInterface
             // 
             // sortButton
             // 
-            this.sortButton.Location = new System.Drawing.Point(726, 59);
+            this.sortButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.sortButton.Location = new System.Drawing.Point(730, 59);
             this.sortButton.Name = "sortButton";
             this.sortButton.Size = new System.Drawing.Size(75, 23);
             this.sortButton.TabIndex = 13;
@@ -195,9 +201,7 @@ namespace HSA.UserInterface
             // 
             // separatorDateRangeLabel
             // 
-            this.separatorDateRangeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.separatorDateRangeLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.separatorDateRangeLabel.AutoSize = true;
             this.separatorDateRangeLabel.Location = new System.Drawing.Point(311, 66);
             this.separatorDateRangeLabel.Name = "separatorDateRangeLabel";
@@ -208,9 +212,7 @@ namespace HSA.UserInterface
             // 
             // dateRangeLabel
             // 
-            this.dateRangeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateRangeLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.dateRangeLabel.AutoSize = true;
             this.dateRangeLabel.Location = new System.Drawing.Point(22, 66);
             this.dateRangeLabel.Name = "dateRangeLabel";
@@ -220,9 +222,7 @@ namespace HSA.UserInterface
             // 
             // startDatePicker
             // 
-            this.startDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.startDatePicker.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.startDatePicker.Enabled = false;
             this.startDatePicker.Location = new System.Drawing.Point(98, 63);
             this.startDatePicker.Name = "startDatePicker";
@@ -231,9 +231,7 @@ namespace HSA.UserInterface
             // 
             // filteringCriteriaLabel
             // 
-            this.filteringCriteriaLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filteringCriteriaLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.filteringCriteriaLabel.AutoSize = true;
             this.filteringCriteriaLabel.Location = new System.Drawing.Point(599, 6);
             this.filteringCriteriaLabel.Name = "filteringCriteriaLabel";
@@ -243,9 +241,7 @@ namespace HSA.UserInterface
             // 
             // filterButton
             // 
-            this.filterButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filterButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.filterButton.Location = new System.Drawing.Point(600, 59);
             this.filterButton.Name = "filterButton";
             this.filterButton.Size = new System.Drawing.Size(75, 22);
@@ -256,9 +252,7 @@ namespace HSA.UserInterface
             // 
             // stringFilterLabel
             // 
-            this.stringFilterLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.stringFilterLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.stringFilterLabel.AutoSize = true;
             this.stringFilterLabel.Location = new System.Drawing.Point(296, 6);
             this.stringFilterLabel.Name = "stringFilterLabel";
@@ -269,9 +263,7 @@ namespace HSA.UserInterface
             // 
             // stringFilterTextBox
             // 
-            this.stringFilterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.stringFilterTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.stringFilterTextBox.Enabled = false;
             this.stringFilterTextBox.Location = new System.Drawing.Point(275, 23);
             this.stringFilterTextBox.Name = "stringFilterTextBox";
@@ -280,9 +272,7 @@ namespace HSA.UserInterface
             // 
             // endDatePicker
             // 
-            this.endDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.endDatePicker.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.endDatePicker.Enabled = false;
             this.endDatePicker.Location = new System.Drawing.Point(333, 63);
             this.endDatePicker.Name = "endDatePicker";
@@ -291,9 +281,7 @@ namespace HSA.UserInterface
             // 
             // toTextBox
             // 
-            this.toTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.toTextBox.Enabled = false;
             this.toTextBox.Location = new System.Drawing.Point(150, 23);
             this.toTextBox.Name = "toTextBox";
@@ -302,9 +290,7 @@ namespace HSA.UserInterface
             // 
             // fromTextBox
             // 
-            this.fromTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.fromTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.fromTextBox.Enabled = false;
             this.fromTextBox.Location = new System.Drawing.Point(61, 23);
             this.fromTextBox.Name = "fromTextBox";
@@ -313,9 +299,7 @@ namespace HSA.UserInterface
             // 
             // rangeSeparatorLabel
             // 
-            this.rangeSeparatorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rangeSeparatorLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.rangeSeparatorLabel.AutoSize = true;
             this.rangeSeparatorLabel.Location = new System.Drawing.Point(139, 26);
             this.rangeSeparatorLabel.Name = "rangeSeparatorLabel";
@@ -325,9 +309,7 @@ namespace HSA.UserInterface
             // 
             // rangeLabel
             // 
-            this.rangeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rangeLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.rangeLabel.AutoSize = true;
             this.rangeLabel.Location = new System.Drawing.Point(122, 6);
             this.rangeLabel.Name = "rangeLabel";
@@ -338,9 +320,7 @@ namespace HSA.UserInterface
             // 
             // filterColumnSelector
             // 
-            this.filterColumnSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filterColumnSelector.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.filterColumnSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.filterColumnSelector.FormattingEnabled = true;
             this.filterColumnSelector.Location = new System.Drawing.Point(575, 25);
@@ -365,10 +345,8 @@ namespace HSA.UserInterface
             // 
             // resetTableButton
             // 
-            this.resetTableButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.resetTableButton.Location = new System.Drawing.Point(12, 10);
+            this.resetTableButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.resetTableButton.Location = new System.Drawing.Point(12, 7);
             this.resetTableButton.Name = "resetTableButton";
             this.resetTableButton.Size = new System.Drawing.Size(75, 27);
             this.resetTableButton.TabIndex = 19;
@@ -378,9 +356,9 @@ namespace HSA.UserInterface
             // 
             // dataShowingLabel
             // 
-            this.dataShowingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.dataShowingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.dataShowingLabel.AutoSize = true;
-            this.dataShowingLabel.Location = new System.Drawing.Point(717, 15);
+            this.dataShowingLabel.Location = new System.Drawing.Point(705, 15);
             this.dataShowingLabel.Name = "dataShowingLabel";
             this.dataShowingLabel.Size = new System.Drawing.Size(109, 13);
             this.dataShowingLabel.TabIndex = 3;
@@ -388,7 +366,7 @@ namespace HSA.UserInterface
             // 
             // pageNumberLabel
             // 
-            this.pageNumberLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.pageNumberLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.pageNumberLabel.AutoSize = true;
             this.pageNumberLabel.Location = new System.Drawing.Point(447, 15);
             this.pageNumberLabel.Name = "pageNumberLabel";
@@ -398,8 +376,8 @@ namespace HSA.UserInterface
             // 
             // prevousPageButton
             // 
-            this.prevousPageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.prevousPageButton.Location = new System.Drawing.Point(355, 10);
+            this.prevousPageButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.prevousPageButton.Location = new System.Drawing.Point(355, 7);
             this.prevousPageButton.Name = "prevousPageButton";
             this.prevousPageButton.Size = new System.Drawing.Size(75, 27);
             this.prevousPageButton.TabIndex = 1;
@@ -409,29 +387,14 @@ namespace HSA.UserInterface
             // 
             // nextPageButton
             // 
-            this.nextPageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.nextPageButton.Location = new System.Drawing.Point(517, 11);
+            this.nextPageButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.nextPageButton.Location = new System.Drawing.Point(517, 8);
             this.nextPageButton.Name = "nextPageButton";
             this.nextPageButton.Size = new System.Drawing.Size(75, 26);
             this.nextPageButton.TabIndex = 0;
             this.nextPageButton.Text = "Next";
             this.nextPageButton.UseVisualStyleBackColor = true;
             this.nextPageButton.Click += new System.EventHandler(this.nextPageButton_Click);
-            // 
-            // sortOrderSelector
-            // 
-            this.sortOrderSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.sortOrderSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.sortOrderSelector.FormattingEnabled = true;
-            this.sortOrderSelector.Items.AddRange(new object[] {
-            "- to +",
-            "+ to -"});
-            this.sortOrderSelector.Location = new System.Drawing.Point(833, 25);
-            this.sortOrderSelector.Name = "sortOrderSelector";
-            this.sortOrderSelector.Size = new System.Drawing.Size(58, 21);
-            this.sortOrderSelector.TabIndex = 19;
             // 
             // DataViewerControl
             // 
