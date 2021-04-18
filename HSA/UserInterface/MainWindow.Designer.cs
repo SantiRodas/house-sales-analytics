@@ -31,8 +31,8 @@ namespace HSA.UserInterface
         {
             this.mainWindowTabs = new System.Windows.Forms.TabControl();
             this.dataViewTab = new System.Windows.Forms.TabPage();
-            this.graphicsTab = new System.Windows.Forms.TabPage();
             this.dataViewerControl = new HSA.UserInterface.DataViewerControl();
+            this.graphicsTab = new System.Windows.Forms.TabPage();
             this.chartsControl1 = new HSA.UserInterface.ChartsControl();
             this.mainWindowTabs.SuspendLayout();
             this.dataViewTab.SuspendLayout();
@@ -66,6 +66,14 @@ namespace HSA.UserInterface
             this.dataViewTab.Text = "Data Viewer";
             this.dataViewTab.UseVisualStyleBackColor = true;
             // 
+            // dataViewerControl
+            // 
+            this.dataViewerControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataViewerControl.Location = new System.Drawing.Point(3, 3);
+            this.dataViewerControl.Name = "dataViewerControl";
+            this.dataViewerControl.Size = new System.Drawing.Size(894, 547);
+            this.dataViewerControl.TabIndex = 0;
+            // 
             // graphicsTab
             // 
             this.graphicsTab.Controls.Add(this.chartsControl1);
@@ -76,14 +84,6 @@ namespace HSA.UserInterface
             this.graphicsTab.TabIndex = 1;
             this.graphicsTab.Text = "Graphics";
             this.graphicsTab.UseVisualStyleBackColor = true;
-            // 
-            // dataViewerControl
-            // 
-            this.dataViewerControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataViewerControl.Location = new System.Drawing.Point(3, 3);
-            this.dataViewerControl.Name = "dataViewerControl";
-            this.dataViewerControl.Size = new System.Drawing.Size(894, 547);
-            this.dataViewerControl.TabIndex = 0;
             // 
             // chartsControl1
             // 
@@ -101,8 +101,6 @@ namespace HSA.UserInterface
             this.ClientSize = new System.Drawing.Size(1008, 561);
             this.Controls.Add(this.mainWindowTabs);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1024, 600);
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
