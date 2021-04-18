@@ -77,13 +77,15 @@ namespace HSA.Model
             {
                 int zipcode = (int)FilteredData.Rows[i]["zipcode"];
                 double price = (double)FilteredData.Rows[i]["price"];
+                double sqr_ft = (double)FilteredData.Rows[i]["sqft_living"];
 
-                AddPriceToHashtable(zipcode, price);
+                AddPriceToHashtable(zipcode, price, sqr_ft);
             }
         }
 
-        private void AddPriceToHashtable(int zipcode, double price) {
-            double[] arrayForAverage = { 0, 0 };
+        private void AddPriceToHashtable(int zipcode, double price, double sqr_ft) {
+            double[] arrayForAverage = { 0, 0, 0, 0 };
+            double oneSqrFt = price / sqr_ft;
 
             if (PricesByZip.ContainsKey(zipcode))
             {
@@ -95,8 +97,12 @@ namespace HSA.Model
                 {
                     arrayForAverage = (double[])objArray;
 
-                    arrayForAverage[0] = arrayForAverage[0] + price;
-                    arrayForAverage[1] = arrayForAverage[1] + 1;
+                    
+
+                    arrayForAverage[0] = arrayForAverage[0] + price; //keeps the sum of the prices per zipcode
+                    arrayForAverage[1] = arrayForAverage[1] + 1; //keeps the sum of the number of sales per zipcode
+                    arrayForAverage[2] = arrayForAverage[2] + sqr_ft; //keeps the sum of the living square feet per zipcode
+                    arrayForAverage[3] = arrayForAverage[3] + oneSqrFt; //keeps the sum of the price of one living square feet per zipcode
 
                     PricesByZip[zipcode] = arrayForAverage;
                 }
@@ -107,6 +113,9 @@ namespace HSA.Model
             {
                 arrayForAverage[0] = price;
                 arrayForAverage[1] = 1;
+                arrayForAverage[2] = sqr_ft;
+                arrayForAverage[3] = oneSqrFt;
+
                 PricesByZip.Add(zipcode, arrayForAverage);
             }
         }
@@ -173,6 +182,49 @@ namespace HSA.Model
                 
                 dataPoint[0] = Int32.Parse(i.Key.ToString());
                 dataPoint[1] = percentage;
+
+                displayData.Add(dataPoint);
+            }
+
+            return displayData;
+        }
+
+        public List<double[]> ZipcodeXAverageSqrFt()
+        {
+
+            List<double[]> displayData = new List<double[]>();
+            foreach (DictionaryEntry i in PricesByZip)
+            {
+                double[] dataPoint = new double[2];
+                double[] values = (double[])i.Value;
+                double a = values[2];
+                double b = values[1];
+                double c = a / b;
+                dataPoint[0] = Int32.Parse(i.Key.ToString());
+                dataPoint[1] = c;
+
+                displayData.Add(dataPoint);
+            }
+
+            return displayData;
+        }
+
+
+
+
+        public List<double[]> ZipcodeXAverageOneSqrFt()
+        {
+
+            List<double[]> displayData = new List<double[]>();
+            foreach (DictionaryEntry i in PricesByZip)
+            {
+                double[] dataPoint = new double[2];
+                double[] values = (double[])i.Value;
+                double a = values[3];
+                double b = values[1];
+                double c = a / b;
+                dataPoint[0] = Int32.Parse(i.Key.ToString());
+                dataPoint[1] = c;
 
                 displayData.Add(dataPoint);
             }

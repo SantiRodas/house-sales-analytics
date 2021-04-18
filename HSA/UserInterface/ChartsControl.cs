@@ -38,6 +38,8 @@ namespace HSA.UserInterface
             UpdateChartZipcodeXAverage();
             UpdateChartZipcodeXPercentage();
             UpdateChartYearXQuantity();
+            UpdateChartZipcodeXAverageSqrFt();
+            UpdateChartZipcodeXAverageSqrFtPrice();
         }
 
         private void UpdateChartZipcodeXAverage() 
@@ -74,6 +76,31 @@ namespace HSA.UserInterface
                 chartYearXQuantity.Series["Years"].Points.AddXY(i[0], i[1]);
             }
         }
+
+        private void UpdateChartZipcodeXAverageSqrFt()
+        {
+            chartZipcodeXAverageSqrFt.Series["Square Feet"].Points.Clear();
+            List<double[]> chartData = manager.ZipcodeXAverageSqrFt();
+            
+            foreach (double[] i in chartData)
+            {
+                chartZipcodeXAverageSqrFt.Series["Square Feet"].Points.AddXY(i[0], i[1]);
+            }
+        }
+
+
+        private void UpdateChartZipcodeXAverageSqrFtPrice()
+        {
+            chartZipcodeXAverageSqrFtPrice.Series["Square Feet Price"].Points.Clear();
+            List<double[]> chartData = manager.ZipcodeXAverageOneSqrFt();
+
+            foreach (double[] i in chartData)
+            {
+                chartZipcodeXAverageSqrFtPrice.Series["Square Feet Price"].Points.AddXY(i[0], i[1]);
+            }
+        }
+
+        
 
 
     }
