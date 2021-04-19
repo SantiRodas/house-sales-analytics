@@ -1,10 +1,14 @@
 # House Sales Analytics (HSA)
 Functional program in C# that allows to read a dataset from Kaggle about the [houses sold in King County, USA.](https://www.kaggle.com/harlfoxem/housesalesprediction)
-Reading this data, the system analyze the information by means of autonomous learning, classifying or predicting the price range of a property.  
+Reading this data, the system analyze the information by means of autonomous learning, classifying or predicting the price range of a property.
+
+## Iterations
+  
   * ### Iteration 1:
     * Available features:
       * Data Viewer with filtering, sorting and paging
       * Charts reports based on the filtered data
+
 ## Program Requirements
 * C# (.NET Framework 4.7.2)
 * Visual Studio
@@ -25,10 +29,12 @@ Reading this data, the system analyze the information by means of autonomous lea
 
 3. Implementation
 - [HSA](https://github.com/SantiRodas/house-sales-analytics/tree/master/HSA)
+- [Explanatory video](https://www.youtube.com/watch?v=XCxvp5R_Mas)
 
 ## Tools used
 * Google Docs
 * Visual Paradigm Online
+* LucidChart
 * GitHub
 * Visual Studio
 
