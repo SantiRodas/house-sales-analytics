@@ -8,6 +8,11 @@ Reading this data, the system analyze the information by means of autonomous lea
     * Available features:
       * Data Viewer with filtering, sorting and paging
       * Charts reports based on the filtered data
+  
+   * ### Iteration 2:
+     * Available features:
+       * Own implementation of a decision tree
+       * Classification of the nodes in the dataset
 
 ## Program Requirements
 * C# (.NET Framework 4.7.2)
@@ -43,6 +48,12 @@ Reading this data, the system analyze the information by means of autonomous lea
 - [Juan Fernando Martinez](https://github.com/JuanF2019)
 - [Gonzalo De Varona](https://github.com/gonzalodevarona)
 - [Alejandro Garcia](https://github.com/AleGarQ)
+
+-------------------------------------------------------------------------------------------------------------
+
+###### [Behaviour:](https://github.com/SantiRodas/house-sales-analytics/blob/master/CODE_OF_CONDUCT.md) All contributors commit to a code of conduct.
+
+-------------------------------------------------------------------------------------------------------------
 
 ## Screenshots
 ![](https://github.com/SantiRodas/house-sales-analytics/blob/master/images/1.JPG)
