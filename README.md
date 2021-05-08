@@ -30,11 +30,14 @@ Reading this data, the system analyze the information by means of autonomous lea
 
 2. Design
 - [Class diagram](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20clases.pdf)
+- [Object diagram](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20objetos.pdf)
 - [Engineering Method](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Metodo%20de%20la%20ingenieria.pdf)
 
 3. Implementation
 - [HSA](https://github.com/SantiRodas/house-sales-analytics/tree/master/HSA)
-- [Explanatory video](https://www.youtube.com/watch?v=XCxvp5R_Mas)
+
+4. Explanatory system videos
+- [Iteration 1](https://www.youtube.com/watch?v=XCxvp5R_Mas)
 
 ## Tools used
 * Google Docs
