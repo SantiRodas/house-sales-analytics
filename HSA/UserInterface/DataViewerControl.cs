@@ -149,30 +149,37 @@ namespace HSA.UserInterface
             manager.ClearSortFiters();
             UpdatePageInfoLabelsAndButtons(1);
             graphicsManager.UpdateCharts();
+            ResetFilteringFields();
+            UpdateEnable(false, false, false, false);
+            filterColumnSelector.SelectedIndex = -1;
+            sortCriteriaSelector.SelectedIndex = -1;
+            sortOrderSelector.SelectedIndex = 0;
         }
 
         private void filterColumnSelector_SelectedValueChanged(object sender, EventArgs e)
         {
-            Type columnType = manager.Data.Columns[filterColumnSelector.SelectedIndex].DataType;
+            if(filterColumnSelector.SelectedIndex >= 0) { 
+                Type columnType = manager.Data.Columns[filterColumnSelector.SelectedIndex].DataType;
 
-            if (columnType.Equals(typeof(Int32))|| columnType.Equals(typeof(Double)))
-            {
-                UpdateEnable(true, false, false, false);
-            }
-            else if (columnType.Equals(typeof(DateTime)))
-            {
-                UpdateEnable(false, false, true, false);
-            }
-            else if (columnType.Equals(typeof(String)))
-            {
-                UpdateEnable(false, true, false, false);
-            }
-            else//boolean
-            {
-                UpdateEnable(false, false, false, true);
-            }
+                if (columnType.Equals(typeof(Int32))|| columnType.Equals(typeof(Double)))
+                {
+                    UpdateEnable(true, false, false, false);
+                }
+                else if (columnType.Equals(typeof(DateTime)))
+                {
+                    UpdateEnable(false, false, true, false);
+                }
+                else if (columnType.Equals(typeof(String)))
+                {
+                    UpdateEnable(false, true, false, false);
+                }
+                else//boolean
+                {
+                    UpdateEnable(false, false, false, true);
+                }
 
-            ResetFilteringFields();
+                ResetFilteringFields();
+            }
         }
 
         private void ResetFilteringFields()
