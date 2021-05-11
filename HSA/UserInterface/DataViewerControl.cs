@@ -73,15 +73,18 @@ namespace HSA.UserInterface
                 dataShowingLabel.Text = "Showing " + (lowerLimit + 1) + " to " + (upperLimit) + " of " + dataCount;
             }
 
-            if (page <= 1)
-            {
-                prevousPageButton.Enabled = false;
-            }
-            else if (page == maxPage)
+            
+            if (page == maxPage)
             {
                 nextPageButton.Enabled = false;
             }
-            else
+
+            if (page <= 1 || (page <= 1 && page == maxPage))
+            {
+                prevousPageButton.Enabled = false;
+            }
+
+            if(page > 1 && page < maxPage)
             {
                 prevousPageButton.Enabled = true;
                 nextPageButton.Enabled = true;
