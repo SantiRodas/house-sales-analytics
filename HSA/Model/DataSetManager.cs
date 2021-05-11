@@ -172,14 +172,13 @@ namespace HSA.Model
                 currentPage++;
 
                 UpdatePageLimits();
-                DataRowCollection rows = data.Rows;
 
                 DataRowCollection currentPageRows = currentPageData.Rows;
                 currentPageRows.Clear();
 
                 for (int i = lowerLimit; i < upperLimit; i++)
                 {
-                    currentPageData.ImportRow(rows[i]);
+                    currentPageData.ImportRow(dataFiltered[i].Row);
                 }
 
                 return currentPage;
@@ -205,7 +204,7 @@ namespace HSA.Model
 
                 for (int i = lowerLimit; i < upperLimit; i++)
                 {
-                    currentPageData.ImportRow(rows[i]);
+                    currentPageData.ImportRow(dataFiltered[i].Row);
                 }
 
                 return currentPage;
