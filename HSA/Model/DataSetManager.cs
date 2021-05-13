@@ -7,9 +7,12 @@ namespace HSA.Model
 {
     public class DataSetManager
     {
-        private DataView dataFiltered;
 
-        private DataTable data;
+        // ----------------------------------------------------------------------------------------------------
+
+        // Information of the data filtered
+
+        private DataView dataFiltered;
 
         public DataView DataFiltered 
         {
@@ -19,6 +22,12 @@ namespace HSA.Model
             }
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Information of the data
+
+        private DataTable data;
+
         public DataTable Data
         {
             get
@@ -26,6 +35,11 @@ namespace HSA.Model
                 return data;
             }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Information of the current page data
+
         DataTable currentPageData;
 
         public DataTable CurrentPageData
@@ -36,7 +50,12 @@ namespace HSA.Model
             }
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Information of the data count
+
         private int dataCount;
+
         public int DataCount
         {
             get
@@ -44,6 +63,10 @@ namespace HSA.Model
                 return dataCount;
             }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Information of the current page
 
         private int currentPage;
 
@@ -55,6 +78,10 @@ namespace HSA.Model
             }
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Information of max page
+
         private int maxPage;
 
         public int MaxPage
@@ -65,7 +92,11 @@ namespace HSA.Model
             }
         }
 
-        private int lowerLimit; //From
+        // ----------------------------------------------------------------------------------------------------
+
+        // Information of the lower limit
+
+        private int lowerLimit; 
 
         public int LowerLimit
         {
@@ -75,7 +106,12 @@ namespace HSA.Model
             }
         }
 
-        private int upperLimit; //The next to the last one
+        // ----------------------------------------------------------------------------------------------------
+
+        // Information of the upper limit
+
+        private int upperLimit; 
+
         public int UpperLimit
         {
             get
@@ -84,7 +120,15 @@ namespace HSA.Model
             }
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Constant information
+
         public const int DataCountPerPage = 250;
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method data set manager
 
         public DataSetManager()
         {
@@ -96,6 +140,10 @@ namespace HSA.Model
             UpdatePageLimits();
             RefreshData();                     
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method load data
 
         private void LoadData()
         {
@@ -124,11 +172,14 @@ namespace HSA.Model
                 for (int j = 0; j < row.Length; j++)
                 {
                     //For special format for some types
+
                     Type columnType = data.Columns[j].DataType;
                     String value = row[j].Replace("\"", "");
+
                     if (columnType.Equals(typeof(DateTime)))
                     {
                         //Format  yyyyMMddThhmmss
+
                         newRow[columnsNames[j]] = DateTime.ParseExact(value, "yyyyMMddThhmmss", CultureInfo.CurrentCulture);
 
                     }
@@ -152,6 +203,10 @@ namespace HSA.Model
             }
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method refresh data
+
         private void RefreshData()
         {
             UpdatePageLimits();
@@ -164,6 +219,10 @@ namespace HSA.Model
                 currentPageData.ImportRow(dataFiltered[i].Row);
             }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method next page
 
         public int NextPage()
         {
@@ -185,9 +244,13 @@ namespace HSA.Model
             }
             else
             {
-                return -1;
+                return - 1;
             }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method previous page
 
         public int PreviousPage()
         {
@@ -215,6 +278,10 @@ namespace HSA.Model
             }
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method update page limits
+
         private void UpdatePageLimits()
         {
             dataCount = dataFiltered.Count;
@@ -223,7 +290,9 @@ namespace HSA.Model
             upperLimit = (currentPage >= maxPage ? dataCount : lowerLimit + DataCountPerPage);
         }
 
-        //Filtering and sorting
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method filter string data
 
         public void FilterStringData(String columnName, String subString)//OK
         {
@@ -232,12 +301,20 @@ namespace HSA.Model
             RefreshData();
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method filter integer data
+
         public void FilterIntegerData(String columnName, int from, int to)//OK
         {
             dataFiltered.RowFilter = $"{columnName} >= {from} AND {columnName} <= {to}";
             currentPage = 1;
             RefreshData();
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method filter double data
 
         public void FilterDoubleData(String columnName, double from, double to)//OK
         {
@@ -246,6 +323,10 @@ namespace HSA.Model
             RefreshData();
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method filter boolean data
+
         public void FilterBooleanData(String columnName, bool value)
         {
             dataFiltered.RowFilter = $"{columnName} = {value}";
@@ -253,12 +334,20 @@ namespace HSA.Model
             RefreshData();
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method filter date data
+
         public void FilterDateData(String columnName, DateTime from, DateTime to)//NOT WORKING
         {
             dataFiltered.RowFilter = $"{columnName} >= #{from.ToString()}# AND {columnName} <= #{to.ToString()}#";
             currentPage = 1;
             RefreshData();
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method sort data
 
         public void SortData(String columnName, bool ascendant)
         {
@@ -270,10 +359,14 @@ namespace HSA.Model
             {
                 dataFiltered.Sort = $"{columnName} DESC";
             }
-                
+
             currentPage = 1;
             RefreshData();
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method clear sort filters
 
         public void ClearSortFiters()
         {
@@ -282,6 +375,8 @@ namespace HSA.Model
             currentPage = 1;
             RefreshData();
         }
+
+        // ----------------------------------------------------------------------------------------------------
 
     }
 }

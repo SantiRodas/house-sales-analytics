@@ -10,12 +10,22 @@ namespace HSA.Model
 {
     public class GraphicsProcessor
     {
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Information of the graphics processor
+
         public DataSetManager Data { get; set; }
 
         private DataTable FilteredData { get; set; }
+
         private Hashtable PricesByZip { get; set; }
 
         private Hashtable QuantityPerYear { get; set; }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method constructor of the graphics processor
 
         public GraphicsProcessor(DataSetManager data) {
             Data = data;
@@ -24,9 +34,12 @@ namespace HSA.Model
             UpdateFilteredData();
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method update filtered data
+
         public void UpdateFilteredData()
         {
-            
             FilteredData = Data.DataFiltered.ToTable();
 
             QuantityPerYear.Clear();
@@ -35,6 +48,10 @@ namespace HSA.Model
             UpdateQuantityPerYear();
             UpdatePricesByZip();
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method update quantity per year
 
         public void UpdateQuantityPerYear()
         {
@@ -45,31 +62,32 @@ namespace HSA.Model
             }
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method add year to hash table
+
         private void AddYearToHashtable(int yr_built)
         {
-            
-
             if (QuantityPerYear.ContainsKey(yr_built))
             {
-
-
                 object objArray = QuantityPerYear[yr_built];
 
                 if (objArray != null)
                 {
-                   int valueYear = (int)objArray;
-
+                    int valueYear = (int)objArray;
+                    
                     QuantityPerYear[yr_built] = valueYear + 1;
                 }
-
-
             }
             else
             {
-                
                 QuantityPerYear.Add(yr_built, 1);
             }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method update prices by zip
 
         public void UpdatePricesByZip()
         {
@@ -83,21 +101,22 @@ namespace HSA.Model
             }
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method add price to hash table
+
         private void AddPriceToHashtable(int zipcode, double price, double sqr_ft) {
+
             double[] arrayForAverage = { 0, 0, 0, 0 };
             double oneSqrFt = price / sqr_ft;
 
             if (PricesByZip.ContainsKey(zipcode))
             {
-
-
                 object objArray = PricesByZip[zipcode];
 
                 if (objArray != null)
                 {
                     arrayForAverage = (double[])objArray;
-
-                    
 
                     arrayForAverage[0] = arrayForAverage[0] + price; //keeps the sum of the prices per zipcode
                     arrayForAverage[1] = arrayForAverage[1] + 1; //keeps the sum of the number of sales per zipcode
@@ -106,8 +125,6 @@ namespace HSA.Model
 
                     PricesByZip[zipcode] = arrayForAverage;
                 }
-
-
             }
             else
             {
@@ -120,9 +137,12 @@ namespace HSA.Model
             }
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method year X quantity
+
         public List<int[]> YearXQuantity()
         {
-            
             List<int[]> displayData = new List<int[]>();
             foreach (DictionaryEntry i in QuantityPerYear)
             {
@@ -139,10 +159,12 @@ namespace HSA.Model
             return displayData;
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method zip code X average price
 
         public List<double[]> ZipcodeXAveragePrice()
         {
-
             List<double[]> displayData = new List<double[]>();
             foreach (DictionaryEntry i in PricesByZip)
             {
@@ -160,6 +182,9 @@ namespace HSA.Model
             return displayData;
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method zip code X percentage
 
         public List<double[]> ZipcodeXPercentage()
         {
@@ -171,6 +196,7 @@ namespace HSA.Model
             }
 
             List<double[]> displayData = new List<double[]>();
+
             foreach (DictionaryEntry i in PricesByZip)
             {
                 double[] dataPoint = new double[2];
@@ -189,10 +215,14 @@ namespace HSA.Model
             return displayData;
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method zip code X average Sqrft
+
         public List<double[]> ZipcodeXAverageSqrFt()
         {
-
             List<double[]> displayData = new List<double[]>();
+
             foreach (DictionaryEntry i in PricesByZip)
             {
                 double[] dataPoint = new double[2];
@@ -209,13 +239,14 @@ namespace HSA.Model
             return displayData;
         }
 
+        // ----------------------------------------------------------------------------------------------------
 
-
+        // Method zip code X average one Sqrft
 
         public List<double[]> ZipcodeXAverageOneSqrFt()
         {
-
             List<double[]> displayData = new List<double[]>();
+
             foreach (DictionaryEntry i in PricesByZip)
             {
                 double[] dataPoint = new double[2];
@@ -232,13 +263,7 @@ namespace HSA.Model
             return displayData;
         }
 
-
-
-
-
-
-
-
+        // ----------------------------------------------------------------------------------------------------
 
     }
 }

@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Model\GraphicsProcessor.cs" />
     <Compile Include="Model\DataSetManager.cs" />
+    <Compile Include="Tree\Attribute.cs" />
     <Compile Include="UserInterface\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
