@@ -2,6 +2,8 @@
 using System.Data;
 using System.IO;
 using System.Globalization;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace HSA.Model
 {
@@ -153,14 +155,23 @@ namespace HSA.Model
             string[] rawData = File.ReadAllLines(path);
 
             //Adds columns, [0] is for data types
-            string[] columnsTypes = rawData[0].Split(',');
-            string[] columnsNames = rawData[1].Split(',');
+            List<string> columnsTypesBeforePriceRange = rawData[0].Split(',').ToList();
+            List<string> columnsNamesBeforePriceRange = rawData[1].Split(',').ToList();
+
+            columnsTypesBeforePriceRange.Add("String");
+            columnsNamesBeforePriceRange.Add("price_range");
+
+            string[] columnsTypes = columnsTypesBeforePriceRange.ToArray();
+            string[] columnsNames = columnsNamesBeforePriceRange.ToArray();
 
             for (int i = 0; i < columnsNames.Length; i++)
             {
+                
                 data.Columns.Add(columnsNames[i], Type.GetType("System." + columnsTypes[i]));
                 currentPageData.Columns.Add(columnsNames[i], Type.GetType("System." + columnsTypes[i]));
             }
+
+
 
             //Adds rows
             for (int i = 2; i < rawData.Length; i++)
@@ -198,9 +209,42 @@ namespace HSA.Model
                     {
                         newRow[columnsNames[j]] = value;
                     }
+
+                   
+
+                    
                 }
+
+                AddPriceRange(newRow);
+
                 data.Rows.Add(newRow);
             }
+        }
+
+        private void AddPriceRange(DataRow newRow)
+        {
+            double price = (Double)newRow[2];
+            double difference = 100000;
+            string range = "";
+
+            for (int i = 0; i < 40; i++)
+            {
+                double bottomLimit = i * difference;
+                double topLimit = (i+1) * difference;
+
+                if (price >= bottomLimit && price < topLimit) { 
+                    range = "["+ bottomLimit +"-"+ topLimit+")";
+                }
+            }
+            if (range.Equals(""))
+            {
+                range = "[4000000-7700000]";
+            }
+
+            newRow[(newRow.ItemArray.Length-1)] = range;
+
+          
+           
         }
 
         // ----------------------------------------------------------------------------------------------------
