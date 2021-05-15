@@ -53,9 +53,9 @@ namespace HSA.Tree
 
             double sumEntropies = 0;
 
-            foreach (object item in priceRanges)
+            foreach (DictionaryEntry item in priceRanges)
             {
-                int count = (int)item;
+                int count = (int)priceRanges[item.Key];
                 sumEntropies += calculateSingleEntropy(count, totalRows);
             }
 
