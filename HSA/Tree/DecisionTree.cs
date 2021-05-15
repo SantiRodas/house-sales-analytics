@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HSA.Tree
 {
-    class DecisionTree
+    public class DecisionTree
     {
 
         // ----------------------------------------------------------------------------------------------------

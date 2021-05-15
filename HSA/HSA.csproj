@@ -50,6 +50,7 @@
     <Compile Include="Model\GraphicsProcessor.cs" />
     <Compile Include="Model\DataSetManager.cs" />
     <Compile Include="Tree\Attribute.cs" />
+    <Compile Include="Tree\LogicalOperator.cs" />
     <Compile Include="Tree\DecisionTree.cs" />
     <Compile Include="Tree\Node.cs" />
     <Compile Include="UserInterface\MainWindow.cs">
