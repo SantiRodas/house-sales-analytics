@@ -4,6 +4,7 @@ using System.IO;
 using System.Globalization;
 using System.Linq;
 using System.Collections.Generic;
+using HSA.Tree;
 
 namespace HSA.Model
 {
@@ -49,6 +50,20 @@ namespace HSA.Model
             get
             {
                 return currentPageData;
+            }
+        }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Information of the decision tree
+
+        DecisionTree decisionTree;
+
+        public DecisionTree Decision_Tree
+        {
+            get
+            {
+                return decisionTree;
             }
         }
 
@@ -140,7 +155,8 @@ namespace HSA.Model
             currentPage = 1;
             dataFiltered = new DataView(data);
             UpdatePageLimits();
-            RefreshData();                     
+            RefreshData();
+            decisionTree = new DecisionTree(data);
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -219,6 +235,7 @@ namespace HSA.Model
 
                 data.Rows.Add(newRow);
             }
+            
         }
 
         private void AddPriceRange(DataRow newRow)
