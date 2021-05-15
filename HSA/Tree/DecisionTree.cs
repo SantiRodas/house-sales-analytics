@@ -59,7 +59,7 @@ namespace HSA.Tree
                 sumEntropies += calculateSingleEntropy(count, totalRows);
             }
 
-          
+            OverallEntropy = sumEntropies;
 
 
         }
