@@ -11,6 +11,8 @@ namespace HSA.Model
     public class DataSetManager
     {
 
+        private CultureInfo culture;
+
         // ----------------------------------------------------------------------------------------------------
 
         // Information of the data filtered
@@ -149,8 +151,10 @@ namespace HSA.Model
 
         public DataSetManager()
         {
+            culture = new CultureInfo("us");
             data = new DataTable();
             currentPageData = new DataTable();
+            data.Locale = culture;
             LoadData();
             currentPage = 1;
             dataFiltered = new DataView(data);
@@ -207,7 +211,7 @@ namespace HSA.Model
                     {
                         //Format  yyyyMMddThhmmss
 
-                        newRow[columnsNames[j]] = DateTime.ParseExact(value, "yyyyMMddThhmmss", CultureInfo.CurrentCulture);
+                        newRow[columnsNames[j]] = DateTime.ParseExact(value, "yyyyMMddThhmmss", culture);
 
                     }
                     else if (columnType.Equals(typeof(Boolean)))
