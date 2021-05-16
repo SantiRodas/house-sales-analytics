@@ -139,31 +139,52 @@ namespace HSA.Tree
 
         //Every column gini index calculation
 
-        public void calculateGiniIndex(string column)
+        public double calculateGiniIndex(string column)
         {
-            Hashtable priceRanges = new Hashtable();
-
+            Hashtable hashtable = new Hashtable();
+            
             foreach (DataRow item in Data.Rows)
             {
-                string range = item["price_range"].ToString();
-                AddRecordToHashTable(priceRanges, range);
+                string range = item[column].ToString();
+                AddRecordToOutterHashTable(hashtable, range);
             }
+
+
+            AddRecordToHashTable(hashtable, range);
 
             int totalRows = Data.Rows.Count;
 
             double sumGiniIndex = 0;
 
-            foreach (DictionaryEntry item in priceRanges)
+            foreach (DictionaryEntry item in hashtable)
             {
-                int count = (int)priceRanges[item.Key];
+                int count = (int)hashtable[item.Key];
                 sumGiniIndex += calculateSingleGiniIndex(count, totalRows);
             }
 
-            OverallGiniIndex = 1 - sumGiniIndex;
+            return 1 - sumGiniIndex;
 
 
         }
 
+        private void AddRecordToOutterHashTable<T>(Hashtable hashtable, T columnValue, string range) where T : IComparable<T>
+        {
+            if (hashtable.ContainsKey(columnValue))
+            {
+                object objArray = hashtable[columnValue];
+
+                if (objArray != null)
+                {
+                    Hashtable innerHashtable = (Hashtable)objArray;
+                    AddRecordToHashTable(innerHashtable, range);
+                }
+            }
+            else
+            {
+                Hashtable newInnerHashtable = new Hashtable();
+                hashtable.Add(columnValue, newInnerHashtable);
+            }
+        }
     }
 }
 
