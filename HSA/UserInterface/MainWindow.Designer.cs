@@ -166,7 +166,7 @@ namespace HSA.UserInterface
         private DataViewerControl dataViewerControl;
         private ChartsControl chartsControl1;
         private System.Windows.Forms.TabPage decisionTree;
-        private DecisionTreeControl decisionTreeControl;
+        private DecisionTreeControl vis;
         private System.Windows.Forms.TabPage generateTreePredict;
         private GenerateTreePredictControl generateTreePredictControl1;
     }
