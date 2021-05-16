@@ -34,7 +34,7 @@ namespace HSA.UserInterface
 
             } else if (implementationOption2.Checked)
             {
-                // Th user select the library implementation
+                // The user select the library implementation
 
                 MessageBox.Show("This option is not yet implemented, please wait for future versions");
             }

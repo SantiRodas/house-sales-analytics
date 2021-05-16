@@ -64,8 +64,8 @@ namespace HSA.UserInterface
             this.zipCodeText = new System.Windows.Forms.TextBox();
             this.sqftLiving15Text = new System.Windows.Forms.TextBox();
             this.sqftLot15Text = new System.Windows.Forms.TextBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.waterfrontOption1 = new System.Windows.Forms.RadioButton();
+            this.waterfrontOption2 = new System.Windows.Forms.RadioButton();
             this.predictButton = new System.Windows.Forms.Button();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
@@ -91,6 +91,7 @@ namespace HSA.UserInterface
             this.generateNewTreeButton.TabIndex = 1;
             this.generateNewTreeButton.Text = "New tree";
             this.generateNewTreeButton.UseVisualStyleBackColor = true;
+            this.generateNewTreeButton.Click += new System.EventHandler(this.generateNewTreeButton_Click);
             // 
             // label1
             // 
@@ -354,27 +355,27 @@ namespace HSA.UserInterface
             this.sqftLot15Text.Size = new System.Drawing.Size(100, 20);
             this.sqftLot15Text.TabIndex = 31;
             // 
-            // radioButton1
+            // waterfrontOption1
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(332, 265);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(68, 17);
-            this.radioButton1.TabIndex = 32;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Checked";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.waterfrontOption1.AutoSize = true;
+            this.waterfrontOption1.Location = new System.Drawing.Point(332, 265);
+            this.waterfrontOption1.Name = "waterfrontOption1";
+            this.waterfrontOption1.Size = new System.Drawing.Size(68, 17);
+            this.waterfrontOption1.TabIndex = 32;
+            this.waterfrontOption1.TabStop = true;
+            this.waterfrontOption1.Text = "Checked";
+            this.waterfrontOption1.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // waterfrontOption2
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(332, 288);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(87, 17);
-            this.radioButton2.TabIndex = 33;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Not checked";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.waterfrontOption2.AutoSize = true;
+            this.waterfrontOption2.Location = new System.Drawing.Point(332, 288);
+            this.waterfrontOption2.Name = "waterfrontOption2";
+            this.waterfrontOption2.Size = new System.Drawing.Size(87, 17);
+            this.waterfrontOption2.TabIndex = 33;
+            this.waterfrontOption2.TabStop = true;
+            this.waterfrontOption2.Text = "Not checked";
+            this.waterfrontOption2.UseVisualStyleBackColor = true;
             // 
             // predictButton
             // 
@@ -384,6 +385,7 @@ namespace HSA.UserInterface
             this.predictButton.TabIndex = 34;
             this.predictButton.Text = "Predict";
             this.predictButton.UseVisualStyleBackColor = true;
+            this.predictButton.Click += new System.EventHandler(this.predictButton_Click);
             // 
             // pictureBox3
             // 
@@ -401,8 +403,8 @@ namespace HSA.UserInterface
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.predictButton);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.waterfrontOption2);
+            this.Controls.Add(this.waterfrontOption1);
             this.Controls.Add(this.sqftLot15Text);
             this.Controls.Add(this.sqftLiving15Text);
             this.Controls.Add(this.zipCodeText);
@@ -483,8 +485,8 @@ namespace HSA.UserInterface
         private System.Windows.Forms.TextBox zipCodeText;
         private System.Windows.Forms.TextBox sqftLiving15Text;
         private System.Windows.Forms.TextBox sqftLot15Text;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton waterfrontOption1;
+        private System.Windows.Forms.RadioButton waterfrontOption2;
         private System.Windows.Forms.Button predictButton;
         private System.Windows.Forms.PictureBox pictureBox3;
     }
