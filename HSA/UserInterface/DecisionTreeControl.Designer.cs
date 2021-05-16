@@ -84,6 +84,7 @@ namespace HSA.UserInterface
             this.selectImplementationButton.TabIndex = 4;
             this.selectImplementationButton.Text = "Select";
             this.selectImplementationButton.UseVisualStyleBackColor = true;
+            this.selectImplementationButton.Click += new System.EventHandler(this.selectImplementationButton_Click);
             // 
             // panel1
             // 
