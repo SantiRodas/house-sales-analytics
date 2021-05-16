@@ -43,9 +43,11 @@ namespace HSA.Model
             FilteredData = Data.DataFiltered.ToTable();
 
             QuantityPerYear.Clear();
+
             PricesByZip.Clear();
 
             UpdateQuantityPerYear();
+
             UpdatePricesByZip();
         }
 
@@ -58,6 +60,7 @@ namespace HSA.Model
             for (int i = 0; i < FilteredData.Rows.Count; i++)
             {
                 int yr_built = (int)FilteredData.Rows[i]["yr_built"];
+
                 AddYearToHashtable(yr_built);
             }
         }
@@ -94,7 +97,9 @@ namespace HSA.Model
             for (int i =0; i< FilteredData.Rows.Count;i++) 
             {
                 int zipcode = (int)FilteredData.Rows[i]["zipcode"];
+
                 double price = (double)FilteredData.Rows[i]["price"];
+
                 double sqr_ft = (double)FilteredData.Rows[i]["sqft_living"];
 
                 AddPriceToHashtable(zipcode, price, sqr_ft);
@@ -108,6 +113,7 @@ namespace HSA.Model
         private void AddPriceToHashtable(int zipcode, double price, double sqr_ft) {
 
             double[] arrayForAverage = { 0, 0, 0, 0 };
+
             double oneSqrFt = price / sqr_ft;
 
             if (PricesByZip.ContainsKey(zipcode))
@@ -144,6 +150,7 @@ namespace HSA.Model
         public List<int[]> YearXQuantity()
         {
             List<int[]> displayData = new List<int[]>();
+
             foreach (DictionaryEntry i in QuantityPerYear)
             {
                 int[] dataPoint = new int[2];
@@ -151,6 +158,7 @@ namespace HSA.Model
                 int values = (int)i.Value;
                 
                 dataPoint[0] = Int32.Parse(i.Key.ToString());
+
                 dataPoint[1] = (int)i.Value;
 
                 displayData.Add(dataPoint);
@@ -166,19 +174,21 @@ namespace HSA.Model
         public List<double[]> ZipcodeXAveragePrice()
         {
             List<double[]> displayData = new List<double[]>();
+
             foreach (DictionaryEntry i in PricesByZip)
             {
                 double[] dataPoint = new double[2];
                 double[] values = (double[])i.Value;
+
                 double a = values[0];
                 double b = values[1];
                 double c = a / b;
+
                 dataPoint[0] = Int32.Parse(i.Key.ToString());
                 dataPoint[1] = c;
 
                 displayData.Add(dataPoint);
             }
-
             return displayData;
         }
 
@@ -189,9 +199,11 @@ namespace HSA.Model
         public List<double[]> ZipcodeXPercentage()
         {
             double sum = 0;
+
             foreach (DictionaryEntry j in PricesByZip)
             {
                 double[] values = (double[])j.Value;
+
                 sum += values[1];
             }
 
@@ -204,6 +216,7 @@ namespace HSA.Model
 
                 double b = values[1];
                 double percentage = b / sum;
+
                 percentage = Math.Round(percentage*100, 2);
                 
                 dataPoint[0] = Int32.Parse(i.Key.ToString());
@@ -211,7 +224,6 @@ namespace HSA.Model
 
                 displayData.Add(dataPoint);
             }
-
             return displayData;
         }
 
@@ -227,15 +239,16 @@ namespace HSA.Model
             {
                 double[] dataPoint = new double[2];
                 double[] values = (double[])i.Value;
+
                 double a = values[2];
                 double b = values[1];
                 double c = a / b;
+
                 dataPoint[0] = Int32.Parse(i.Key.ToString());
                 dataPoint[1] = c;
 
                 displayData.Add(dataPoint);
             }
-
             return displayData;
         }
 
@@ -251,15 +264,16 @@ namespace HSA.Model
             {
                 double[] dataPoint = new double[2];
                 double[] values = (double[])i.Value;
+
                 double a = values[3];
                 double b = values[1];
                 double c = a / b;
+
                 dataPoint[0] = Int32.Parse(i.Key.ToString());
                 dataPoint[1] = c;
 
                 displayData.Add(dataPoint);
             }
-
             return displayData;
         }
 

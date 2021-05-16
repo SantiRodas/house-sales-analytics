@@ -186,12 +186,9 @@ namespace HSA.Model
 
             for (int i = 0; i < columnsNames.Length; i++)
             {
-                
                 data.Columns.Add(columnsNames[i], Type.GetType("System." + columnsTypes[i]));
                 currentPageData.Columns.Add(columnsNames[i], Type.GetType("System." + columnsTypes[i]));
             }
-
-
 
             //Adds rows
             for (int i = 2; i < rawData.Length; i++)
@@ -212,7 +209,6 @@ namespace HSA.Model
                         //Format  yyyyMMddThhmmss
 
                         newRow[columnsNames[j]] = DateTime.ParseExact(value, "yyyyMMddThhmmss", culture);
-
                     }
                     else if (columnType.Equals(typeof(Boolean)))
                     {
@@ -229,12 +225,7 @@ namespace HSA.Model
                     {
                         newRow[columnsNames[j]] = value;
                     }
-
-                   
-
-                    
                 }
-
                 AddPriceRange(newRow);
 
                 data.Rows.Add(newRow);
@@ -242,10 +233,15 @@ namespace HSA.Model
             
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method add prices range
+
         private void AddPriceRange(DataRow newRow)
         {
             double price = (Double)newRow[2];
             double difference = 100000;
+
             string range = "";
 
             for (int i = 0; i < 40; i++)
@@ -253,7 +249,8 @@ namespace HSA.Model
                 double bottomLimit = i * difference;
                 double topLimit = (i+1) * difference;
 
-                if (price >= bottomLimit && price < topLimit) { 
+                if (price >= bottomLimit && price < topLimit) 
+                { 
                     range = "["+ bottomLimit +"-"+ topLimit+")";
                 }
             }
@@ -263,9 +260,6 @@ namespace HSA.Model
             }
 
             newRow[(newRow.ItemArray.Length-1)] = range;
-
-          
-           
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -277,6 +271,7 @@ namespace HSA.Model
             UpdatePageLimits();
 
             DataRowCollection currentPageRows = currentPageData.Rows;
+
             currentPageRows.Clear();
 
             for (int i = lowerLimit; i < upperLimit; i++)
@@ -328,6 +323,7 @@ namespace HSA.Model
                 DataRowCollection rows = data.Rows;
 
                 DataRowCollection currentPageRows = currentPageData.Rows;
+
                 currentPageRows.Clear();
 
                 for (int i = lowerLimit; i < upperLimit; i++)

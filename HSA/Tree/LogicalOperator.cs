@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace HSA.Tree
 {
+
+    // ----------------------------------------------------------------------------------------------------
+
+    // Enum class
+
     public enum LogicalOperator
     {
         EQUALS,
@@ -13,6 +18,8 @@ namespace HSA.Tree
         SMALLER_THAN,
         LARGER_EQUALS_THAN,
         SMALLER_EQUALS_THAN
-
     }
+
+    // ----------------------------------------------------------------------------------------------------
+
 }

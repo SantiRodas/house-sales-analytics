@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace HSA.Tree
 {
+
     //T represents the type of the attribute stored in this node
+
     public class Node
     {
         // ----------------------------------------------------------------------------------------------------
@@ -105,6 +107,7 @@ namespace HSA.Tree
         // ----------------------------------------------------------------------------------------------------
         
         //Evaluate Condition method
+
         //Evaluates the condition stored in this node with a value of type T such as T is the type of the stored attribute
         public Node EvaluateCondition<T>(T value) where T : IComparable<T>
         {
@@ -139,6 +142,8 @@ namespace HSA.Tree
                     return null;
             }
         }
+
+        // ----------------------------------------------------------------------------------------------------
 
     }
 }

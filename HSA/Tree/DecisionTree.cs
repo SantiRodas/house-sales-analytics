@@ -10,9 +10,14 @@ namespace HSA.Tree
 {
     public class DecisionTree
     {
+
         public double OverallGiniIndex { get; set; }
+
         public Hashtable GiniIndexes { get; set; }
+
+
         public DataTable Data { get; set; }
+
         // ----------------------------------------------------------------------------------------------------
 
         // Constructor
@@ -22,14 +27,16 @@ namespace HSA.Tree
             Data = data;
             GiniIndexes = new Hashtable();
             calculateOverallGiniIndex();
+
             calculateGiniIndexForAllColumns();
 
         }
 
-        private void calculateGiniIndexForAllColumns()
-        {
-            
-        }
+     
+
+
+
+
 
         // ----------------------------------------------------------------------------------------------------
 
@@ -47,14 +54,16 @@ namespace HSA.Tree
 
         //Overall gini index calculation
 
-        public void calculateOverallGiniIndex() 
+        public void calculateOverallGiniIndex()
         {
             Hashtable priceRanges = new Hashtable();
-            
+
             foreach (DataRow item in Data.Rows)
             {
-               string range =  item["price_range"].ToString();
-                AddRecordToHashTable(priceRanges,range);
+                string range = item["price_range"].ToString();
+
+                AddRecordToHashTable(priceRanges, range);
+
             }
 
             int totalRows = Data.Rows.Count;
@@ -64,33 +73,50 @@ namespace HSA.Tree
             foreach (DictionaryEntry item in priceRanges)
             {
                 int count = (int)priceRanges[item.Key];
+
                 sumGiniIndex += calculateSingleGiniIndex(count, totalRows);
             }
 
             OverallGiniIndex = 1 - sumGiniIndex;
-
-
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Calculate all gini indexes
+
+
+        private void calculateGiniIndexForAllColumns()
+        { 
+        }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        //  Calculate single gini index
 
         private double calculateSingleGiniIndex(int count, int totalRows)
         {
             double result = 0;
 
             double castCount = (double)count;
+
             double castTotalRows = (double)totalRows;
 
             double proportion = castCount / castTotalRows;
+
             result = proportion * proportion;
 
             return result;
         }
 
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method add price range record to hash table
+
         private void AddRecordToHashTable<T>(Hashtable priceRanges, T range) where T : IComparable<T>
         {
             if (priceRanges.ContainsKey(range))
             {
-
-
                 object objArray = priceRanges[range];
 
                 if (objArray != null)
@@ -101,8 +127,6 @@ namespace HSA.Tree
 
                     priceRanges[range] = count;
                 }
-
-
             }
             else
             {
@@ -111,6 +135,7 @@ namespace HSA.Tree
         }
 
         // ----------------------------------------------------------------------------------------------------
+
 
         //Every column gini index calculation
 
@@ -141,3 +166,4 @@ namespace HSA.Tree
 
     }
 }
+

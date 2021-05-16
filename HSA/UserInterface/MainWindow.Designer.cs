@@ -34,9 +34,15 @@ namespace HSA.UserInterface
             this.dataViewerControl = new HSA.UserInterface.DataViewerControl();
             this.graphicsTab = new System.Windows.Forms.TabPage();
             this.chartsControl1 = new HSA.UserInterface.ChartsControl();
+            this.decisionTree = new System.Windows.Forms.TabPage();
+            this.decisionTreeControl = new HSA.UserInterface.DecisionTreeControl();
+            this.generateTreePredict = new System.Windows.Forms.TabPage();
+            this.generateTreePredictControl1 = new HSA.UserInterface.GenerateTreePredictControl();
             this.mainWindowTabs.SuspendLayout();
             this.dataViewTab.SuspendLayout();
             this.graphicsTab.SuspendLayout();
+            this.decisionTree.SuspendLayout();
+            this.generateTreePredict.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainWindowTabs
@@ -44,6 +50,8 @@ namespace HSA.UserInterface
             this.mainWindowTabs.Alignment = System.Windows.Forms.TabAlignment.Left;
             this.mainWindowTabs.Controls.Add(this.dataViewTab);
             this.mainWindowTabs.Controls.Add(this.graphicsTab);
+            this.mainWindowTabs.Controls.Add(this.decisionTree);
+            this.mainWindowTabs.Controls.Add(this.generateTreePredict);
             this.mainWindowTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainWindowTabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.mainWindowTabs.ItemSize = new System.Drawing.Size(40, 100);
@@ -94,6 +102,42 @@ namespace HSA.UserInterface
             this.chartsControl1.Size = new System.Drawing.Size(894, 547);
             this.chartsControl1.TabIndex = 0;
             // 
+            // decisionTree
+            // 
+            this.decisionTree.Controls.Add(this.decisionTreeControl);
+            this.decisionTree.Location = new System.Drawing.Point(104, 4);
+            this.decisionTree.Name = "decisionTree";
+            this.decisionTree.Padding = new System.Windows.Forms.Padding(3);
+            this.decisionTree.Size = new System.Drawing.Size(900, 553);
+            this.decisionTree.TabIndex = 2;
+            this.decisionTree.Text = "Decision Tree";
+            this.decisionTree.UseVisualStyleBackColor = true;
+            // 
+            // decisionTreeControl
+            // 
+            this.decisionTreeControl.Location = new System.Drawing.Point(0, -4);
+            this.decisionTreeControl.Name = "decisionTreeControl";
+            this.decisionTreeControl.Size = new System.Drawing.Size(894, 547);
+            this.decisionTreeControl.TabIndex = 0;
+            // 
+            // generateTreePredict
+            // 
+            this.generateTreePredict.Controls.Add(this.generateTreePredictControl1);
+            this.generateTreePredict.Location = new System.Drawing.Point(104, 4);
+            this.generateTreePredict.Name = "generateTreePredict";
+            this.generateTreePredict.Padding = new System.Windows.Forms.Padding(3);
+            this.generateTreePredict.Size = new System.Drawing.Size(900, 553);
+            this.generateTreePredict.TabIndex = 3;
+            this.generateTreePredict.Text = "Generate and predict tree";
+            this.generateTreePredict.UseVisualStyleBackColor = true;
+            // 
+            // generateTreePredictControl1
+            // 
+            this.generateTreePredictControl1.Location = new System.Drawing.Point(0, 0);
+            this.generateTreePredictControl1.Name = "generateTreePredictControl1";
+            this.generateTreePredictControl1.Size = new System.Drawing.Size(894, 547);
+            this.generateTreePredictControl1.TabIndex = 0;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -108,6 +152,8 @@ namespace HSA.UserInterface
             this.mainWindowTabs.ResumeLayout(false);
             this.dataViewTab.ResumeLayout(false);
             this.graphicsTab.ResumeLayout(false);
+            this.decisionTree.ResumeLayout(false);
+            this.generateTreePredict.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -119,6 +165,10 @@ namespace HSA.UserInterface
         private System.Windows.Forms.TabPage graphicsTab;
         private DataViewerControl dataViewerControl;
         private ChartsControl chartsControl1;
+        private System.Windows.Forms.TabPage decisionTree;
+        private DecisionTreeControl decisionTreeControl;
+        private System.Windows.Forms.TabPage generateTreePredict;
+        private GenerateTreePredictControl generateTreePredictControl1;
     }
 }
 
