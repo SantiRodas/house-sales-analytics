@@ -204,8 +204,8 @@ namespace HSA.UserInterface
 
         private void filterColumnSelector_SelectedValueChanged(object sender, EventArgs e)
         {
-            if(filterColumnSelector.SelectedIndex >= 0) { 
-
+            if(filterColumnSelector.SelectedIndex >= 0) 
+            { 
                 Type columnType = manager.Data.Columns[filterColumnSelector.SelectedIndex].DataType;
 
                 if (columnType.Equals(typeof(Int32))|| columnType.Equals(typeof(Double)))
@@ -263,8 +263,8 @@ namespace HSA.UserInterface
 
         private void sortButton_Click(object sender, EventArgs e)
         {
-            try {
-
+            try 
+            {
                 bool ascendantOrder = sortOrderSelector.SelectedIndex == 0 ? true : false;
 
                 manager.SortData((string)sortCriteriaSelector.SelectedItem,ascendantOrder);

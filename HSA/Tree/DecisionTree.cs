@@ -10,8 +10,11 @@ namespace HSA.Tree
 {
     public class DecisionTree
     {
+
         public double OverallGiniIndex { get; set; }
+
         public DataTable Data { get; set; }
+
         // ----------------------------------------------------------------------------------------------------
 
         // Constructor
@@ -20,7 +23,6 @@ namespace HSA.Tree
         {
             Data = data;
             calculateOverallGiniIndex();
-
         }    
 
         // ----------------------------------------------------------------------------------------------------
@@ -46,6 +48,7 @@ namespace HSA.Tree
             foreach (DataRow item in Data.Rows)
             {
                string range =  item["price_range"].ToString();
+
                AddPriceRangeRecordToHashTable(priceRanges,range);
             }
 
@@ -56,33 +59,40 @@ namespace HSA.Tree
             foreach (DictionaryEntry item in priceRanges)
             {
                 int count = (int)priceRanges[item.Key];
+
                 sumGiniIndex += calculateSingleGiniIndex(count, totalRows);
             }
 
             OverallGiniIndex = 1 - sumGiniIndex;
-
-
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method calculare single gini index
 
         private double calculateSingleGiniIndex(int count, int totalRows)
         {
             double result = 0;
 
             double castCount = (double)count;
+
             double castTotalRows = (double)totalRows;
 
             double proportion = castCount / castTotalRows;
+
             result = proportion * proportion;
 
             return result;
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method add price range record to hash table
+
         private void AddPriceRangeRecordToHashTable(Hashtable priceRanges, string range)
         {
             if (priceRanges.ContainsKey(range))
             {
-
-
                 object objArray = priceRanges[range];
 
                 if (objArray != null)
@@ -93,13 +103,14 @@ namespace HSA.Tree
 
                     priceRanges[range] = count;
                 }
-
-
             }
             else
             {
                 priceRanges.Add(range, 1);
             }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
     }
 }
