@@ -145,21 +145,32 @@ namespace HSA.Tree
             
             foreach (DataRow item in Data.Rows)
             {
-                string range = item[column].ToString();
-                AddRecordToOutterHashTable(hashtable, range);
+                string columnValue = item[column].ToString();
+                string range = item["price_range"].ToString();
+                AddRecordToOutterHashTable(hashtable, columnValue, range);
             }
-
-
-            AddRecordToHashTable(hashtable, range);
 
             int totalRows = Data.Rows.Count;
 
             double sumGiniIndex = 0;
 
+            List<double[]> giniIndexAndCountPerValueOfColumn = new List<double[]>();
+
             foreach (DictionaryEntry item in hashtable)
             {
-                int count = (int)hashtable[item.Key];
-                sumGiniIndex += calculateSingleGiniIndex(count, totalRows);
+                Hashtable innerHashtable = (Hashtable)hashtable[item.Key];
+                sumGiniIndex = 0;
+
+                foreach (DictionaryEntry innerHashtableKey in innerHashtable)
+                {
+
+                    int count = (int)innerHashtable[innerHashtableKey.Key];
+                    sumGiniIndex += calculateSingleGiniIndex(count, totalRows);
+                    double authenticGiniIndex =  1 - sumGiniIndex;
+                    giniIndexAndCountPerValueOfColumn.Add(new double[3]{ (double)innerHashtableKey.Key, authenticGiniIndex, count});
+                    // check count argument on the prior statement to this comment
+                }
+                
             }
 
             return 1 - sumGiniIndex;
