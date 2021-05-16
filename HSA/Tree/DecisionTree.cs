@@ -10,7 +10,7 @@ namespace HSA.Tree
 {
     public class DecisionTree
     {
-        public double OverallEntropy { get; set; }
+        public double OverallGiniIndex { get; set; }
         public DataTable Data { get; set; }
         // ----------------------------------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ namespace HSA.Tree
         public DecisionTree(DataTable data)
         {
             Data = data;
-            calculateOverallEntropy();
+            calculateOverallGiniIndex();
 
         }    
 
@@ -39,7 +39,7 @@ namespace HSA.Tree
 
         //Overall entropy calculation
 
-        public void calculateOverallEntropy() 
+        public void calculateOverallGiniIndex() 
         {
             Hashtable priceRanges = new Hashtable();
             
@@ -51,26 +51,28 @@ namespace HSA.Tree
 
             int totalRows = Data.Rows.Count;
 
-            double sumEntropies = 0;
+            double sumGiniIndex = 0;
 
             foreach (DictionaryEntry item in priceRanges)
             {
                 int count = (int)priceRanges[item.Key];
-                sumEntropies += calculateSingleEntropy(count, totalRows);
+                sumGiniIndex += calculateSingleGiniIndex(count, totalRows);
             }
 
-            OverallEntropy = sumEntropies;
+            OverallGiniIndex = 1 - sumGiniIndex;
 
 
         }
 
-        private double calculateSingleEntropy(int count, int totalRows)
+        private double calculateSingleGiniIndex(int count, int totalRows)
         {
             double result = 0;
 
-            double proportion = count / totalRows;
-            result =  Math.Log(proportion, 2);
-            result = (-proportion) * result;
+            double castCount = (double)count;
+            double castTotalRows = (double)totalRows;
+
+            double proportion = castCount / castTotalRows;
+            result = proportion * proportion;
 
             return result;
         }
