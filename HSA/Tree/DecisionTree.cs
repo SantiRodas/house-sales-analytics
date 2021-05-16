@@ -11,6 +11,7 @@ namespace HSA.Tree
     public class DecisionTree
     {
         public double OverallGiniIndex { get; set; }
+        public Hashtable GiniIndexes { get; set; }
         public DataTable Data { get; set; }
         // ----------------------------------------------------------------------------------------------------
 
@@ -19,9 +20,16 @@ namespace HSA.Tree
         public DecisionTree(DataTable data)
         {
             Data = data;
+            GiniIndexes = new Hashtable();
             calculateOverallGiniIndex();
+            calculateGiniIndexForAllColumns();
 
-        }    
+        }
+
+        private void calculateGiniIndexForAllColumns()
+        {
+            
+        }
 
         // ----------------------------------------------------------------------------------------------------
 
@@ -37,7 +45,7 @@ namespace HSA.Tree
 
         // ----------------------------------------------------------------------------------------------------
 
-        //Overall entropy calculation
+        //Overall gini index calculation
 
         public void calculateOverallGiniIndex() 
         {
@@ -46,7 +54,7 @@ namespace HSA.Tree
             foreach (DataRow item in Data.Rows)
             {
                string range =  item["price_range"].ToString();
-               AddPriceRangeRecordToHashTable(priceRanges,range);
+                AddRecordToHashTable(priceRanges,range);
             }
 
             int totalRows = Data.Rows.Count;
@@ -77,7 +85,7 @@ namespace HSA.Tree
             return result;
         }
 
-        private void AddPriceRangeRecordToHashTable(Hashtable priceRanges, string range)
+        private void AddRecordToHashTable<T>(Hashtable priceRanges, T range) where T : IComparable<T>
         {
             if (priceRanges.ContainsKey(range))
             {
@@ -101,5 +109,35 @@ namespace HSA.Tree
                 priceRanges.Add(range, 1);
             }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        //Every column gini index calculation
+
+        public void calculateGiniIndex(string column)
+        {
+            Hashtable priceRanges = new Hashtable();
+
+            foreach (DataRow item in Data.Rows)
+            {
+                string range = item["price_range"].ToString();
+                AddRecordToHashTable(priceRanges, range);
+            }
+
+            int totalRows = Data.Rows.Count;
+
+            double sumGiniIndex = 0;
+
+            foreach (DictionaryEntry item in priceRanges)
+            {
+                int count = (int)priceRanges[item.Key];
+                sumGiniIndex += calculateSingleGiniIndex(count, totalRows);
+            }
+
+            OverallGiniIndex = 1 - sumGiniIndex;
+
+
+        }
+
     }
 }
