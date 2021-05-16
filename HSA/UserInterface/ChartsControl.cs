@@ -19,7 +19,7 @@ namespace HSA.UserInterface
 
         // Relation with the graphics processos class
 
-        private GraphicsProcessor manager;
+        private GraphicsProcessor graphicsManager;
 
         // ----------------------------------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ namespace HSA.UserInterface
 
         public void Initialize(GraphicsProcessor manager)
         {
-            this.manager = manager;
+            this.graphicsManager = manager;
             UpdateCharts();
         }
 
@@ -47,7 +47,7 @@ namespace HSA.UserInterface
 
         public void UpdateCharts() 
         {
-            manager.UpdateFilteredData();
+            graphicsManager.UpdateFilteredData();
 
             UpdateChartZipcodeXAverage();
             UpdateChartZipcodeXPercentage();
@@ -64,7 +64,7 @@ namespace HSA.UserInterface
         {
             chartZipcodeXAverage.Series["Average Sale Price"].Points.Clear();
 
-            List<double[]> chartData = manager.ZipcodeXAveragePrice();
+            List<double[]> chartData = graphicsManager.ZipcodeXAveragePrice();
 
             foreach (double[] i in chartData)
             {
@@ -80,7 +80,7 @@ namespace HSA.UserInterface
         {
             chartZipcodeXPercentage.Series["Percentage per Zipcode"].Points.Clear();
 
-            List<double[]> chartData = manager.ZipcodeXPercentage();
+            List<double[]> chartData = graphicsManager.ZipcodeXPercentage();
 
             chartZipcodeXPercentage.Series["Percentage per Zipcode"].IsValueShownAsLabel = true;
             chartZipcodeXPercentage.Series["Percentage per Zipcode"].BorderColor = Color.Black;
@@ -101,7 +101,7 @@ namespace HSA.UserInterface
         {
             chartYearXQuantity.Series["Years"].Points.Clear();
 
-            List<int[]> chartData = manager.YearXQuantity();
+            List<int[]> chartData = graphicsManager.YearXQuantity();
 
             chartData.Sort((x,y) => x[0].CompareTo(y[0]));
 
@@ -119,7 +119,7 @@ namespace HSA.UserInterface
         {
             chartZipcodeXAverageSqrFt.Series["Square Feet"].Points.Clear();
 
-            List<double[]> chartData = manager.ZipcodeXAverageSqrFt();
+            List<double[]> chartData = graphicsManager.ZipcodeXAverageSqrFt();
             
             foreach (double[] i in chartData)
             {
@@ -135,7 +135,7 @@ namespace HSA.UserInterface
         {
             chartZipcodeXAverageSqrFtPrice.Series["Square Feet Price"].Points.Clear();
 
-            List<double[]> chartData = manager.ZipcodeXAverageOneSqrFt();
+            List<double[]> chartData = graphicsManager.ZipcodeXAverageOneSqrFt();
 
             foreach (double[] i in chartData)
             {
