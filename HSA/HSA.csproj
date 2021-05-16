@@ -52,6 +52,18 @@
     <Compile Include="Tree\LogicalOperator.cs" />
     <Compile Include="Tree\DecisionTree.cs" />
     <Compile Include="Tree\Node.cs" />
+    <Compile Include="UserInterface\DecisionTreeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\DecisionTreeControl.Designer.cs">
+      <DependentUpon>DecisionTreeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\GenerateTreePredictControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\GenerateTreePredictControl.Designer.cs">
+      <DependentUpon>GenerateTreePredictControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +95,12 @@
     </Compile>
     <EmbeddedResource Include="UserInterface\ChartsControl.resx">
       <DependentUpon>ChartsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\DecisionTreeControl.resx">
+      <DependentUpon>DecisionTreeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\GenerateTreePredictControl.resx">
+      <DependentUpon>GenerateTreePredictControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
