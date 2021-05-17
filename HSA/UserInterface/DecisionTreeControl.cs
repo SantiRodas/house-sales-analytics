@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HSA.Tree;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,9 +18,43 @@ namespace HSA.UserInterface
 
         // Constructor method with initialize component
 
-        public DecisionTreeControl()
+        public DecisionTreeControl(Node root)
         {
             InitializeComponent();
+            LoadTree(root);
+        }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Adds the root node to the tree
+
+        private void LoadTree(Node root)
+        {
+            TreeNode dad = new TreeNode(root.ConditionAttributeName);
+            decisionTreeView.Nodes.Add(root.ConditionAttributeName.ToString());
+            AddChildrenToTree(root, dad);
+        }
+
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Adds the children of a given node in recursive way
+        private void AddChildrenToTree(Node root, TreeNode dad)
+        {
+           
+            if (root.FalseNode != null && root.TrueNode != null)
+            {
+                TreeNode left = new TreeNode(root.FalseNode.ConditionAttributeName);
+                TreeNode right = new TreeNode(root.TrueNode.ConditionAttributeName);
+                dad.Nodes.Add(root.FalseNode.ConditionAttributeName);
+                dad.Nodes.Add((root.TrueNode.ConditionAttributeName));
+
+                AddChildrenToTree(root.FalseNode, left);
+                AddChildrenToTree(root.TrueNode, right);
+            }
+
+            return;
+           
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -44,6 +79,8 @@ namespace HSA.UserInterface
             }
 
         }
+
+       
 
         // ----------------------------------------------------------------------------------------------------
 

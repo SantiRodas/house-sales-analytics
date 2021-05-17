@@ -44,6 +44,7 @@ namespace HSA.UserInterface
             this.decisionTreeView.Name = "decisionTreeView";
             this.decisionTreeView.Size = new System.Drawing.Size(472, 506);
             this.decisionTreeView.TabIndex = 0;
+          
             // 
             // implementationOption1
             // 
