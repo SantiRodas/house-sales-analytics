@@ -26,9 +26,9 @@ namespace HSA.Tree
 
         private bool isLeaf;
 
-        private Node trueNode; //Connected node for a true conditon evaluation result
+        private Node trueNode; //Connected node for a true conditon evaluation result //Right
 
-        private Node falseNode; //Connected node for a true conditon evaluation result
+        private Node falseNode; //Connected node for a true conditon evaluation result //Left
 
         private string answer; // If node is leaf the answer or classifier predicted
 

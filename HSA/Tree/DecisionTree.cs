@@ -13,7 +13,6 @@ namespace HSA.Tree
 
         public Hashtable GiniIndexes { get; set; }
 
-
         public DataTable Data { get; set; }
 
         public DataView DataFiltered { get; set; }
@@ -84,14 +83,109 @@ namespace HSA.Tree
 
         public Node generateTree()
         {
-            return generateTreeRecursive(root);
+            generateTreeRecursive(root);
+            return root;
         }
 
-        private Node generateTreeRecursive(Node currentNode)
+        private void generateTreeRecursive(Node currentNode)
         {
-            if(currentNode == root)
+            if(currentNode == root)//Se necesita gini indexes de las particiones
             {
+                //<giniIndex, [columnName, condition]>
                 KeyValuePair<double, Pair> bestColumnGiniAndCondition = SelectBestColumn(DataFiltered);
+
+                double infoGain = currentNode.GiniIndex - bestColumnGiniAndCondition.Key;
+
+                Pair columnNameAndCondition = bestColumnGiniAndCondition.Value;
+
+                string columnName = (string)columnNameAndCondition.Element1;
+
+                object conditionObj = columnNameAndCondition.Element2;
+
+                if (infoGain > 0)//Nodo de decision
+                {
+                    Type columnDataType = conditionObj.GetType();
+
+                    DataView partitionTrue = new DataView(Data);
+
+                    DataView partitionFalse = new DataView(Data);
+
+                    Node nodeTrue = new Node();
+
+                    Node nodeFalse = new Node();
+
+                    if (columnDataType.Equals(typeof(double)))
+                    {
+                        double condition = (double)conditionObj;
+
+                        partitionTrue.RowFilter = $"{columnName} <= {condition}";
+                        partitionFalse.RowFilter = $"{columnName} > {condition}";      
+                        
+                        root.ConditionOperator = LogicalOperator.SMALLER_EQUALS_THAN;                       
+
+                    }
+                    else if (columnDataType.Equals(typeof(int)))
+                    {
+                        int condition = (int)conditionObj;
+
+                        partitionTrue.RowFilter = $"{columnName} <= {condition}";
+                        partitionFalse.RowFilter = $"{columnName} > {condition}";
+
+                        root.ConditionOperator = LogicalOperator.SMALLER_EQUALS_THAN;
+                    }
+                    else if (columnDataType.Equals(typeof(bool)))
+                    {
+                        bool condition = (bool)conditionObj;
+
+                        partitionTrue.RowFilter = $"{columnName} = {condition}";
+                        partitionFalse.RowFilter = $"{columnName} != {condition}";
+
+                        root.ConditionOperator = LogicalOperator.EQUALS;
+                    }
+                    else if (columnDataType.Equals(typeof(string)))
+                    {
+                        string condition = (string)conditionObj;
+
+                        partitionTrue.RowFilter = $"{columnName} = '{condition}'";
+                        partitionFalse.RowFilter = $"{columnName} != '{condition}'";
+
+                        root.ConditionOperator = LogicalOperator.EQUALS;
+                    }
+                    else
+                    {
+                        throw new Exception("Unsupported data type");
+                    }
+
+                    nodeTrue.Partition = partitionTrue;
+                    nodeFalse.Partition = partitionFalse;
+
+                    root.ConditionAttributeName = columnName;
+                    root.IsLeaf = false;
+                    root.ConditionValue = conditionObj;
+                    root.AttributeType = columnDataType;
+
+                    root.TrueNode = nodeTrue;
+                    root.FalseNode = nodeFalse;
+
+                    generateTreeRecursive(nodeTrue);
+                    generateTreeRecursive(nodeFalse);
+                    
+                }
+                else//Es una hoja
+                {
+                    root.IsLeaf = true;
+
+                    //Se necesita las inner hashtables del nodo padre
+                    //Verificar si es hijo true o false
+                    //y contar cual es el rango que mas tiene datos
+                    // y ese rango es el answer
+
+                    //que rango tiene la mayoria de viviendas
+                    //
+
+
+
+                }
                 //calcular el information gain
                 //si el gain es mayor a 0 entonces particiona
                 //crea dos nodos con dos data views con cada particion
@@ -113,8 +207,6 @@ namespace HSA.Tree
                 //si no este nodo es hoja y se determina la respuesta
                 //retorna el nodo actual
             }
-
-            return null;
         }
 
         public KeyValuePair<double,Pair> SelectBestColumn(DataView nodePartition)
