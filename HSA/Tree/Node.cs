@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,8 @@ namespace HSA.Tree
         private string answer; // If node is leaf the answer or classifier predicted
 
         private double giniIndex; //Gini index of this node, is stored but not updated in node
+
+        private DataView partition;
 
         // ----------------------------------------------------------------------------------------------------
 
@@ -89,6 +92,12 @@ namespace HSA.Tree
         {
             get { return giniIndex; }
             set { giniIndex = value; }
+        }
+
+        public DataView Partition
+        {
+            get { return partition; }
+            set { partition = value; }
         }
 
         // ----------------------------------------------------------------------------------------------------

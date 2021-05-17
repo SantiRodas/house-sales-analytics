@@ -16,6 +16,8 @@ namespace HSA.Tree
 
         public DataTable Data { get; set; }
 
+        public DataView DataFiltered { get; set; }
+
         // ----------------------------------------------------------------------------------------------------
 
         // Constructor
@@ -25,6 +27,7 @@ namespace HSA.Tree
             Data = data;
             GiniIndexes = new Hashtable();
             CalculateOverallGiniIndex();
+            DataFiltered = new DataView(data);
 
             root = new Node();
             root.GiniIndex = OverallGiniIndex;
@@ -88,11 +91,27 @@ namespace HSA.Tree
         {
             if(currentNode == root)
             {
+                KeyValuePair<double, Pair> bestColumnGiniAndCondition = SelectBestColumn(DataFiltered);
+                //calcular el information gain
+                //si el gain es mayor a 0 entonces particiona
+                //crea dos nodos con dos data views con cada particion
+                //agrega la condicion al nodo actual
+                //y llama generat tree de manera recursiva
 
+                //si no este nodo es hoja y se determina la respuesta
+                //retorna el nodo actual
             }
             else
             {
+                KeyValuePair<double, Pair> bestColumnGiniAndCondition = SelectBestColumn(currentNode.Partition);
+                //calcular el information gain
+                //si el gain es mayor a 0 entonces particiona
+                //crea dos nodos con dos data views con cada particion
+                //agrega la condicion al nodo actual
+                //y llama generat tree de manera recursiva
 
+                //si no este nodo es hoja y se determina la respuesta
+                //retorna el nodo actual
             }
 
             return null;
