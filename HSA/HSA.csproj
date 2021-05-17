@@ -84,6 +84,7 @@
     <Compile Include="UserInterface\ChartsControl.Designer.cs">
       <DependentUpon>ChartsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\Pair.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

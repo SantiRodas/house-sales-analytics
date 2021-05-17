@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HSA.Utilities;
 
 namespace HSA.Tree
 {
@@ -15,7 +14,7 @@ namespace HSA.Tree
         //Hasta que????
 
         //Recorrer todas las columnas
-            //Para cada columna determinar la pregunta que mejor particiona los datos, es decir la que tenga mayor info gain
+        //Para cada columna determinar la pregunta que mejor particiona los datos, es decir la que tenga mayor info gain
 
 
 
@@ -95,7 +94,7 @@ namespace HSA.Tree
 
 
         private void calculateGiniIndexForAllColumns()
-        { 
+        {
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -139,52 +138,109 @@ namespace HSA.Tree
 
         // ----------------------------------------------------------------------------------------------------
 
-
         //Every column gini index calculation
         //Return a pair with the categorical value that best separates the data and its gini index
+        //The partition received as a parameter is the current node partition that is going to be split into two
+        //ONLY FOR CATEGORICAL OR true/false DATA
 
-        public KeyValuePair<string,double> calculateGiniIndex(string column, DataTable partition)
+        public KeyValuePair<double, string> CategoricalColumnOverallGiniImpurity(string columnName, DataView partition)
         {
             Hashtable outerHashtable = new Hashtable(); //Stores each possible category value
 
-            SortedDictionary<string, double> columnValuesGiniIndex = new SortedDictionary<string, double>();
+            int totalRows = partition.Count;
 
-            foreach (DataRow item in partition.Rows)
+            for (int i = 0; i < totalRows; i++)
             {
-                string columnValue = item[column].ToString();
+                DataRow item = partition[i].Row;
 
-                //Adds column value to column values gini index sorted dictionary (works like a heap)
-                if (!columnValuesGiniIndex.ContainsKey(columnValue))
+                string columnValue = item[columnName].ToString();
+
+                if (!outerHashtable.ContainsKey(columnValue))
                 {
-                    columnValuesGiniIndex[columnValue] = -1; //-1 works like a flag for telling that is not yet calculated a gini index
+
+                    Hashtable partitionTrueInnerHashtable= new Hashtable();
+                    Hashtable partitionFalseInnerHashtable = new Hashtable();
+
+                    Pair partitionsInnerHashtables = new Pair(partitionTrueInnerHashtable, partitionFalseInnerHashtable);
+
+                    outerHashtable[columnValue] = partitionsInnerHashtables;
                 }
+                else
+                {
+                    continue;
+                }
+            }
+
+            for (int i = 0; i < totalRows; i++)
+            {
+                DataRow item = partition[i].Row;
+
+                string columnValue = item[columnName].ToString();
 
                 string itemPriceRange = item["price_range"].ToString();
 
-                AddRecordToOutterHashTable(outerHashtable, columnValue, itemPriceRange);//Adds column value if not present and counts the times a price range appears in each columna value
+                foreach (DictionaryEntry possibleCondition in outerHashtable)
+                {
+                    Pair partitionsInnerHashtables = (Pair)possibleCondition.Value;
+
+                    Hashtable partitionInnerHashtable;
+
+                    if (columnValue.Equals(possibleCondition.Key))
+                    {
+                        partitionInnerHashtable = (Hashtable)partitionsInnerHashtables.Element1;
+                    }
+                    else
+                    {
+                        partitionInnerHashtable = (Hashtable)partitionsInnerHashtables.Element2;
+                    }
+
+                    AddRecordToHashTable(partitionInnerHashtable, itemPriceRange);
+
+                }
+
             }
 
-            int totalRows = partition.Rows.Count; //Change to take into acount data separation
+            //<gini impurity, columnValue (condition)>
+            SortedDictionary<double, string> columnValuesGiniIndex = new SortedDictionary<double, string>();
 
             foreach (DictionaryEntry item in outerHashtable)
             {
-                Hashtable innerHashtable = (Hashtable)outerHashtable[item.Key];
-                double sumProportionSquared = 0;
-                double authenticGiniIndex = -1;
+                Pair partitionsInnerHashtables = (Pair)item.Value;
 
-                foreach (DictionaryEntry priceRange in innerHashtable)
+                Hashtable innerHashtableTrue = (Hashtable)partitionsInnerHashtables.Element1;
+
+                Hashtable innerHashtableFalse = (Hashtable)partitionsInnerHashtables.Element1;
+
+                double sumProportionSquaredTrue = 0;
+                double sumProportionSquaredFalse = 0;
+
+                int trueCount = 0;
+
+                foreach (DictionaryEntry priceRange in innerHashtableTrue)
                 {
                     int count = (int)priceRange.Value;
 
-                    sumProportionSquared += CalculateProportionSquared(count, totalRows);
+                    trueCount += count;
 
-                    authenticGiniIndex =  1 - sumProportionSquared;
-                    //giniIndexAndCountPerValueOfColumn.Add(new double[3]{ (double)priceRange.Key, authenticGiniIndex, count});
-                    // check count argument on the prior statement to this comment
+                    sumProportionSquaredTrue += CalculateProportionSquared(count, totalRows);
                 }
 
-                columnValuesGiniIndex[(string)item.Key] = authenticGiniIndex; //Sets columnValue gini index to the calculated gini index
+                foreach (DictionaryEntry priceRange in innerHashtableFalse)
+                {
+                    int count = (int)priceRange.Value;
 
+                    sumProportionSquaredFalse += CalculateProportionSquared(count, totalRows);
+                }
+
+                double giniImpurityTrue = 1 - sumProportionSquaredTrue;
+                double giniImpurityFalse = 1 - sumProportionSquaredFalse;
+
+                double overallTrueProportion = trueCount / totalRows;
+
+                double giniImpurityOverall = giniImpurityTrue*(overallTrueProportion) + giniImpurityFalse*(1- overallTrueProportion);
+
+                //Item.key is the condition, the column value (assume equals)
+                columnValuesGiniIndex[giniImpurityOverall] = (string)item.Key;
             }
 
             return columnValuesGiniIndex.Min();
@@ -209,6 +265,125 @@ namespace HSA.Tree
                 hashtable.Add(columnValue, newInnerHashtable);
             }
         }
+
+        //Retornar esto al contrario
+        //Asumes condition is expressed as <=
+        public KeyValuePair<double, double> NumericalOverallGiniIndex(string columnName, DataView partition)
+        {
+            Hashtable outerHashtable = new Hashtable(); //Stores each possible category value
+            
+            int totalRows = partition.Count;
+            partition.Sort = $"{columnName} ASC";
+
+            if (totalRows == 1)
+            {
+                DataRow item = partition[0].Row;
+
+                Hashtable partitionTrueInnerHashtable = new Hashtable();
+                Hashtable partitionFalseInnerHashtable = new Hashtable();
+
+                Pair partitionsInnerHashtables = new Pair(partitionTrueInnerHashtable, partitionFalseInnerHashtable);
+
+                outerHashtable[(double)item[columnName]] = partitionsInnerHashtables;
+            }
+            
+            double pastAverage = Double.MinValue;          
+
+            for (int i = 0; i < totalRows - 1; i++)
+            {
+                DataRow item = partition[i].Row;
+                DataRow nextItem = partition[i].Row;
+
+                double average = ((double)item[columnName] + (double)nextItem[columnName]) / 2;
+
+                if (average > pastAverage)
+                {
+                    Hashtable partitionTrueInnerHashtable = new Hashtable();
+                    Hashtable partitionFalseInnerHashtable = new Hashtable();
+
+                    Pair partitionsInnerHashtables = new Pair(partitionTrueInnerHashtable, partitionFalseInnerHashtable);
+
+                    outerHashtable[average] = partitionsInnerHashtables;
+
+                    pastAverage = average;
+                }               
+            }
+
+            for (int i = 0; i < totalRows; i++)
+            {
+                DataRow item = partition[i].Row;
+
+                double columnValue = (double)item[columnName];
+
+                string itemPriceRange = item["price_range"].ToString();
+
+                foreach (DictionaryEntry possibleCondition in outerHashtable)
+                {
+                    Pair partitionsInnerHashtables = (Pair)possibleCondition.Value;
+
+                    Hashtable partitionInnerHashtable;
+
+                    if (columnValue >= (double)possibleCondition.Key)
+                    {
+                        partitionInnerHashtable = (Hashtable)partitionsInnerHashtables.Element1;
+                    }
+                    else
+                    {
+                        partitionInnerHashtable = (Hashtable)partitionsInnerHashtables.Element2;
+                    }
+
+                    AddRecordToHashTable(partitionInnerHashtable, itemPriceRange);
+                }
+
+            }
+
+            //<gini impurity, columnValue (condition)>
+            SortedDictionary<double, double> columnValuesGiniIndex = new SortedDictionary<double, double>();
+
+            foreach (DictionaryEntry item in outerHashtable)
+            {
+                Pair partitionsInnerHashtables = (Pair)item.Value;
+
+                Hashtable innerHashtableTrue = (Hashtable)partitionsInnerHashtables.Element1;
+
+                Hashtable innerHashtableFalse = (Hashtable)partitionsInnerHashtables.Element1;
+
+                double sumProportionSquaredTrue = 0;
+                double sumProportionSquaredFalse = 0;
+
+                int trueCount = 0;
+
+                foreach (DictionaryEntry priceRange in innerHashtableTrue)
+                {
+                    int count = (int)priceRange.Value;
+
+                    trueCount += count;
+
+                    sumProportionSquaredTrue += CalculateProportionSquared(count, totalRows);
+                }
+
+                foreach (DictionaryEntry priceRange in innerHashtableFalse)
+                {
+                    int count = (int)priceRange.Value;
+
+                    sumProportionSquaredFalse += CalculateProportionSquared(count, totalRows);
+                }
+
+                double giniImpurityTrue = 1 - sumProportionSquaredTrue;
+                double giniImpurityFalse = 1 - sumProportionSquaredFalse;
+
+                double overallTrueProportion = trueCount / totalRows;
+
+                double giniImpurityOverall = giniImpurityTrue * (overallTrueProportion) + giniImpurityFalse * (1 - overallTrueProportion);
+
+                //Item.key is the condition, the column value (assume equals)
+                columnValuesGiniIndex[giniImpurityOverall] = (double)item.Key;
+            }
+
+            return columnValuesGiniIndex.Min();
+        }
+
+        
     }
 }
 
