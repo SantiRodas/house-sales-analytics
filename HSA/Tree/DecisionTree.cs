@@ -43,6 +43,7 @@ namespace HSA.Tree
 
             calculateGiniIndexForAllColumns();
 
+            ColumnOverallGiniImpurity<int>("bedrooms", new DataView(data));
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -70,7 +71,7 @@ namespace HSA.Tree
             {
                 string range = register["price_range"].ToString();
 
-                AddRecordToHashTable(priceRangesCount, range); //Adds not repeating price ranges to the hashtable
+                AddPriceRangeRecordToHashTable(priceRangesCount, range); //Adds not repeating price ranges to the hashtable
 
             }
 
@@ -115,7 +116,7 @@ namespace HSA.Tree
 
         // Method add price range record to hash table
 
-        private void AddRecordToHashTable<T>(Hashtable priceRangesCount, T range) where T : IComparable<T>
+        private void AddPriceRangeRecordToHashTable<T>(Hashtable priceRangesCount, T range) where T : IComparable<T>
         {
             if (priceRangesCount.ContainsKey(range))
             {
@@ -137,183 +138,58 @@ namespace HSA.Tree
         }
 
         // ----------------------------------------------------------------------------------------------------
-
-        //Every column gini index calculation
-        //Return a pair with the categorical value that best separates the data and its gini index
+        //Overall column gini index 
+        //Column overall gini impurity
+        //Return a pair with the condition that best separates the data and its gini index
         //The partition received as a parameter is the current node partition that is going to be split into two
-        //ONLY FOR CATEGORICAL OR true/false DATA
-
-        public KeyValuePair<double, string> CategoricalColumnOverallGiniImpurity(string columnName, DataView partition)
+        public KeyValuePair<double, T> ColumnOverallGiniImpurity<T>(string columnName, DataView nodePartition) where T:IComparable<T>
         {
-            Hashtable outerHashtable = new Hashtable(); //Stores each possible category value
+            int totalRows = nodePartition.Count;
 
-            int totalRows = partition.Count;
+            //Stores each possible category or numeric value with inner hash table for price range counting of comlying and not complying data
+            Hashtable outerHashtable = ObtainPossibleConditions<T>(nodePartition, totalRows, columnName);
+
+            //Counting
+            outerHashtable = CountPriceRangesForPossibleCondition<T>(outerHashtable, nodePartition, columnName, totalRows);
+
+            //Possible gini ipurities calculation
+            //<gini impurity, columnValue (condition)>
+            SortedDictionary<double, T> columnValuesGiniImpurities = CalculatePossibleOverallGiniImpurities<T>(outerHashtable, totalRows);
+
+            //Return the best condition with its gini impurity
+            return columnValuesGiniImpurities.Min();
+        }
+
+        public Hashtable ObtainPossibleConditions<T>(DataView nodePartition, int totalRows, string columnName) where T:IComparable<T>
+        {
+            Hashtable outerHashtable = new Hashtable();
 
             for (int i = 0; i < totalRows; i++)
             {
-                DataRow item = partition[i].Row;
+                DataRow item = nodePartition[i].Row;
 
-                string columnValue = item[columnName].ToString();
+                T columnValue = (T)item[columnName];
 
                 if (!outerHashtable.ContainsKey(columnValue))
-                {
-
-                    Hashtable partitionTrueInnerHashtable= new Hashtable();
-                    Hashtable partitionFalseInnerHashtable = new Hashtable();
-
-                    Pair partitionsInnerHashtables = new Pair(partitionTrueInnerHashtable, partitionFalseInnerHashtable);
-
-                    outerHashtable[columnValue] = partitionsInnerHashtables;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-
-            for (int i = 0; i < totalRows; i++)
-            {
-                DataRow item = partition[i].Row;
-
-                string columnValue = item[columnName].ToString();
-
-                string itemPriceRange = item["price_range"].ToString();
-
-                foreach (DictionaryEntry possibleCondition in outerHashtable)
-                {
-                    Pair partitionsInnerHashtables = (Pair)possibleCondition.Value;
-
-                    Hashtable partitionInnerHashtable;
-
-                    if (columnValue.Equals(possibleCondition.Key))
-                    {
-                        partitionInnerHashtable = (Hashtable)partitionsInnerHashtables.Element1;
-                    }
-                    else
-                    {
-                        partitionInnerHashtable = (Hashtable)partitionsInnerHashtables.Element2;
-                    }
-
-                    AddRecordToHashTable(partitionInnerHashtable, itemPriceRange);
-
-                }
-
-            }
-
-            //<gini impurity, columnValue (condition)>
-            SortedDictionary<double, string> columnValuesGiniIndex = new SortedDictionary<double, string>();
-
-            foreach (DictionaryEntry item in outerHashtable)
-            {
-                Pair partitionsInnerHashtables = (Pair)item.Value;
-
-                Hashtable innerHashtableTrue = (Hashtable)partitionsInnerHashtables.Element1;
-
-                Hashtable innerHashtableFalse = (Hashtable)partitionsInnerHashtables.Element1;
-
-                double sumProportionSquaredTrue = 0;
-                double sumProportionSquaredFalse = 0;
-
-                int trueCount = 0;
-
-                foreach (DictionaryEntry priceRange in innerHashtableTrue)
-                {
-                    int count = (int)priceRange.Value;
-
-                    trueCount += count;
-
-                    sumProportionSquaredTrue += CalculateProportionSquared(count, totalRows);
-                }
-
-                foreach (DictionaryEntry priceRange in innerHashtableFalse)
-                {
-                    int count = (int)priceRange.Value;
-
-                    sumProportionSquaredFalse += CalculateProportionSquared(count, totalRows);
-                }
-
-                double giniImpurityTrue = 1 - sumProportionSquaredTrue;
-                double giniImpurityFalse = 1 - sumProportionSquaredFalse;
-
-                double overallTrueProportion = trueCount / totalRows;
-
-                double giniImpurityOverall = giniImpurityTrue*(overallTrueProportion) + giniImpurityFalse*(1- overallTrueProportion);
-
-                //Item.key is the condition, the column value (assume equals)
-                columnValuesGiniIndex[giniImpurityOverall] = (string)item.Key;
-            }
-
-            return columnValuesGiniIndex.Min();
-
-        }
-
-        private void AddRecordToOutterHashTable<T>(Hashtable hashtable, T columnValue, string range) where T : IComparable<T>
-        {
-            if (hashtable.ContainsKey(columnValue))
-            {
-                object objArray = hashtable[columnValue];
-
-                if (objArray != null)
-                {
-                    Hashtable innerHashtable = (Hashtable)objArray;
-                    AddRecordToHashTable(innerHashtable, range);
-                }
-            }
-            else
-            {
-                Hashtable newInnerHashtable = new Hashtable();
-                hashtable.Add(columnValue, newInnerHashtable);
-            }
-        }
-
-        //Retornar esto al contrario
-        //Asumes condition is expressed as <=
-        public KeyValuePair<double, double> NumericalOverallGiniIndex(string columnName, DataView partition)
-        {
-            Hashtable outerHashtable = new Hashtable(); //Stores each possible category value
-            
-            int totalRows = partition.Count;
-            partition.Sort = $"{columnName} ASC";
-
-            if (totalRows == 1)
-            {
-                DataRow item = partition[0].Row;
-
-                Hashtable partitionTrueInnerHashtable = new Hashtable();
-                Hashtable partitionFalseInnerHashtable = new Hashtable();
-
-                Pair partitionsInnerHashtables = new Pair(partitionTrueInnerHashtable, partitionFalseInnerHashtable);
-
-                outerHashtable[(double)item[columnName]] = partitionsInnerHashtables;
-            }
-            
-            double pastAverage = Double.MinValue;          
-
-            for (int i = 0; i < totalRows - 1; i++)
-            {
-                DataRow item = partition[i].Row;
-                DataRow nextItem = partition[i].Row;
-
-                double average = ((double)item[columnName] + (double)nextItem[columnName]) / 2;
-
-                if (average > pastAverage)
                 {
                     Hashtable partitionTrueInnerHashtable = new Hashtable();
                     Hashtable partitionFalseInnerHashtable = new Hashtable();
 
                     Pair partitionsInnerHashtables = new Pair(partitionTrueInnerHashtable, partitionFalseInnerHashtable);
 
-                    outerHashtable[average] = partitionsInnerHashtables;
-
-                    pastAverage = average;
-                }               
+                    outerHashtable[columnValue] = partitionsInnerHashtables;
+                }
             }
+            return outerHashtable;
+        }
 
+        public Hashtable CountPriceRangesForPossibleCondition<T>(Hashtable outerHashtable, DataView nodePartition, String columnName, int totalRows) where T:IComparable<T>
+        {
             for (int i = 0; i < totalRows; i++)
             {
-                DataRow item = partition[i].Row;
+                DataRow item = nodePartition[i].Row;
 
-                double columnValue = (double)item[columnName];
+                T columnValue = (T)item[columnName];
 
                 string itemPriceRange = item["price_range"].ToString();
 
@@ -323,23 +199,31 @@ namespace HSA.Tree
 
                     Hashtable partitionInnerHashtable;
 
-                    if (columnValue >= (double)possibleCondition.Key)
+                    if ((typeof(T).Equals(typeof(string)) && columnValue.Equals((T)possibleCondition.Key))
+                    || (!typeof(T).Equals(typeof(string)) && columnValue.CompareTo((T)possibleCondition.Key) <= 0))//Conditions
                     {
-                        partitionInnerHashtable = (Hashtable)partitionsInnerHashtables.Element1;
+                        partitionInnerHashtable = (Hashtable)partitionsInnerHashtables.Element1; //True inner hash table
                     }
                     else
                     {
-                        partitionInnerHashtable = (Hashtable)partitionsInnerHashtables.Element2;
+                        partitionInnerHashtable = (Hashtable)partitionsInnerHashtables.Element2;//False inner hash table
                     }
 
-                    AddRecordToHashTable(partitionInnerHashtable, itemPriceRange);
+                    AddPriceRangeRecordToHashTable(partitionInnerHashtable, itemPriceRange);
+
                 }
 
             }
+            return outerHashtable;
+        }
 
+
+        //Return a SortedDictionary with overall gini impurities for each possible column value or possible condition,
+        //From a hashtable with the values as keys and to inner hash tables for priceRange counting in both true and false partitions
+        public SortedDictionary<double, T> CalculatePossibleOverallGiniImpurities<T>(Hashtable outerHashtable, int totalRows) where T:IComparable<T>
+        {
             //<gini impurity, columnValue (condition)>
-            SortedDictionary<double, double> columnValuesGiniIndex = new SortedDictionary<double, double>();
-
+            SortedDictionary<double, T> columnValuesGiniImpurities = new SortedDictionary<double, T>();
             foreach (DictionaryEntry item in outerHashtable)
             {
                 Pair partitionsInnerHashtables = (Pair)item.Value;
@@ -376,13 +260,11 @@ namespace HSA.Tree
 
                 double giniImpurityOverall = giniImpurityTrue * (overallTrueProportion) + giniImpurityFalse * (1 - overallTrueProportion);
 
-                //Item.key is the condition, the column value (assume equals)
-                columnValuesGiniIndex[giniImpurityOverall] = (double)item.Key;
+                //Item.key is the condition, the column value (assume equals in categorical and <= in numerical)
+                columnValuesGiniImpurities[giniImpurityOverall] = (T)item.Key;
             }
-
-            return columnValuesGiniIndex.Min();
+            return columnValuesGiniImpurities;
         }
-
         
     }
 }
