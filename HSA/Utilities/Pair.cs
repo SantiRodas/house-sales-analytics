@@ -1,6 +1,6 @@
 ﻿namespace HSA.Utilities
 {
-    class Pair
+    public class Pair
     {
         public object Element1 { get; set; }
 

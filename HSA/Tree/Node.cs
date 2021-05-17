@@ -31,7 +31,7 @@ namespace HSA.Tree
 
         private string answer; // If node is leaf the answer or classifier predicted
 
-        private int giniIndex; //Gini index of this node, is stored but not updated in node
+        private double giniIndex; //Gini index of this node, is stored but not updated in node
 
         // ----------------------------------------------------------------------------------------------------
 
@@ -85,7 +85,7 @@ namespace HSA.Tree
             set { isLeaf = value; }
         }
 
-        public int GiniIndex
+        public double GiniIndex
         {
             get { return giniIndex; }
             set { giniIndex = value; }
@@ -104,6 +104,10 @@ namespace HSA.Tree
             this.isLeaf = isLeaf;
         }
 
+        public Node()
+        {
+
+        }
         // ----------------------------------------------------------------------------------------------------
         
         //Evaluate Condition method

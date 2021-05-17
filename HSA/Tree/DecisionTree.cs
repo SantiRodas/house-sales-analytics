@@ -9,21 +9,6 @@ namespace HSA.Tree
 {
     public class DecisionTree
     {
-        //Hallar el gini impurty de todo el dataset (con base en los rangos de precio)
-
-        //Hasta que????
-
-        //Recorrer todas las columnas
-        //Para cada columna determinar la pregunta que mejor particiona los datos, es decir la que tenga mayor info gain
-
-
-
-
-        //Hallar el information gain de todas las columnas y particionar los datos con la columna y pregunta que mas informacion de
-
-
-
-
         public double OverallGiniIndex { get; set; }
 
         public Hashtable GiniIndexes { get; set; }
@@ -41,7 +26,10 @@ namespace HSA.Tree
             GiniIndexes = new Hashtable();
             CalculateOverallGiniIndex();
 
-            calculateGiniIndexForAllColumns();
+            root = new Node();
+            root.GiniIndex = OverallGiniIndex;
+
+            //calculateGiniIndexForAllColumns();
 
             ColumnOverallGiniImpurity<int>("bedrooms", new DataView(data));
         }
@@ -57,6 +45,8 @@ namespace HSA.Tree
             get { return root; }
             set { root = value; }
         }
+
+        
 
         // ----------------------------------------------------------------------------------------------------
 
@@ -89,13 +79,93 @@ namespace HSA.Tree
             OverallGiniIndex = 1 - sumProportionSquared;
         }
 
+        public Node generateTree()
+        {
+            return generateTreeRecursive(root);
+        }
+
+        private Node generateTreeRecursive(Node currentNode)
+        {
+            if(currentNode == root)
+            {
+
+            }
+            else
+            {
+
+            }
+
+            return null;
+        }
+
+        public KeyValuePair<double,Pair> SelectBestColumn(DataView nodePartition)
+        {
+
+            SortedDictionary<double, Pair> columnsGiniImpurity = CalculateGiniIndexForAllColumns(nodePartition);
+
+            return columnsGiniImpurity.Min();
+        }
+
         // ----------------------------------------------------------------------------------------------------
 
         // Calculate all gini indexes
 
 
-        private void calculateGiniIndexForAllColumns()
+        private SortedDictionary<double, Pair> CalculateGiniIndexForAllColumns(DataView nodePartition)
         {
+
+            SortedDictionary<double, Pair> columnsGiniImpurity = new SortedDictionary<double, Pair>();
+
+            for(int i = 0; i < nodePartition.Table.Columns.Count; i++)
+            {
+                DataColumn column = nodePartition.Table.Columns[i];
+                String columnName = column.ColumnName;
+                Type columnDataType = column.DataType;
+
+                if (!columnName.Equals("id") && !columnName.Equals("date") 
+                    && !columnName.Equals("lat") && !columnName.Equals("long") 
+                    && !columnName.Equals("price") && !columnName.Equals("price_range"))
+                {
+
+                    double giniIndexValue;
+                    object condition;
+
+                    if (columnDataType.Equals(typeof(double)))
+                    {
+                        KeyValuePair<double, double> giniIndexAndCondition = ColumnOverallGiniImpurity<double>(columnName, nodePartition);
+                        giniIndexValue = giniIndexAndCondition.Key;
+                        condition = giniIndexAndCondition.Value;
+                    }
+                    else if (columnDataType.Equals(typeof(int)))
+                    {
+                        KeyValuePair<double, int> giniIndexAndCondition = ColumnOverallGiniImpurity<int>(columnName, nodePartition);
+                        giniIndexValue = giniIndexAndCondition.Key;
+                        condition = giniIndexAndCondition.Value;
+                    }
+                    else if (columnDataType.Equals(typeof(bool)))
+                    {
+                        KeyValuePair<double, bool> giniIndexAndCondition = ColumnOverallGiniImpurity<bool>(columnName, nodePartition);
+                        giniIndexValue = giniIndexAndCondition.Key;
+                        condition = giniIndexAndCondition.Value;
+                    }
+                    else if (columnDataType.Equals(typeof(string)))
+                    {
+                        KeyValuePair<double, string> giniIndexAndCondition = ColumnOverallGiniImpurity<string>(columnName, nodePartition);
+                        giniIndexValue = giniIndexAndCondition.Key;
+                        condition = giniIndexAndCondition.Value;
+                    }
+                    else
+                    {
+                        throw new Exception("Unsupported data type");
+                    }
+
+                    columnsGiniImpurity[giniIndexValue] = new Pair(columnName,condition);   
+
+                }
+
+            }
+
+            return columnsGiniImpurity;
         }
 
         // ----------------------------------------------------------------------------------------------------
