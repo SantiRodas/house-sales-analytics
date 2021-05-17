@@ -1,12 +1,5 @@
 ﻿using HSA.Tree;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HSA.UserInterface
@@ -18,11 +11,16 @@ namespace HSA.UserInterface
 
         // Constructor method with initialize component
 
-        public DecisionTreeControl(Node root)
+        public DecisionTreeControl()
         {
-            InitializeComponent();
+            InitializeComponent();           
+        }
+
+        public void initializa(Node root)
+        {
             LoadTree(root);
         }
+
 
         // ----------------------------------------------------------------------------------------------------
 

@@ -34,7 +34,7 @@ namespace HSA.Tree
 
             //calculateGiniIndexForAllColumns();
 
-            ColumnOverallGiniImpurity<int>("bedrooms", new DataView(data));
+            ColumnOverallGiniImpurity<int>("yr_built", new DataView(data));
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -122,7 +122,7 @@ namespace HSA.Tree
 
             SortedDictionary<double, Pair> columnsGiniImpurity = CalculateGiniIndexForAllColumns(nodePartition);
 
-            return columnsGiniImpurity.Min();
+            return columnsGiniImpurity.First();
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -151,25 +151,25 @@ namespace HSA.Tree
 
                     if (columnDataType.Equals(typeof(double)))
                     {
-                        KeyValuePair<double, double> giniIndexAndCondition = ColumnOverallGiniImpurity<double>(columnName, nodePartition);
+                        KeyValuePair<double, double> giniIndexAndCondition = ColumnOverallGiniImpurity<Double>(columnName, nodePartition);
                         giniIndexValue = giniIndexAndCondition.Key;
                         condition = giniIndexAndCondition.Value;
                     }
                     else if (columnDataType.Equals(typeof(int)))
                     {
-                        KeyValuePair<double, int> giniIndexAndCondition = ColumnOverallGiniImpurity<int>(columnName, nodePartition);
+                        KeyValuePair<double, int> giniIndexAndCondition = ColumnOverallGiniImpurity<Int32>(columnName, nodePartition);
                         giniIndexValue = giniIndexAndCondition.Key;
                         condition = giniIndexAndCondition.Value;
                     }
                     else if (columnDataType.Equals(typeof(bool)))
                     {
-                        KeyValuePair<double, bool> giniIndexAndCondition = ColumnOverallGiniImpurity<bool>(columnName, nodePartition);
+                        KeyValuePair<double, bool> giniIndexAndCondition = ColumnOverallGiniImpurity<Boolean>(columnName, nodePartition);
                         giniIndexValue = giniIndexAndCondition.Key;
                         condition = giniIndexAndCondition.Value;
                     }
                     else if (columnDataType.Equals(typeof(string)))
                     {
-                        KeyValuePair<double, string> giniIndexAndCondition = ColumnOverallGiniImpurity<string>(columnName, nodePartition);
+                        KeyValuePair<double, string> giniIndexAndCondition = ColumnOverallGiniImpurity<String>(columnName, nodePartition);
                         giniIndexValue = giniIndexAndCondition.Key;
                         condition = giniIndexAndCondition.Value;
                     }
@@ -246,7 +246,7 @@ namespace HSA.Tree
             SortedDictionary<double, T> columnValuesGiniImpurities = CalculatePossibleOverallGiniImpurities<T>(outerHashtable, totalRows);
 
             //Return the best condition with its gini impurity
-            return columnValuesGiniImpurities.Min();
+            return columnValuesGiniImpurities.First();
         }
 
         public Hashtable ObtainPossibleConditions<T>(DataView nodePartition, int totalRows, string columnName) where T:IComparable<T>
@@ -319,7 +319,7 @@ namespace HSA.Tree
 
                 Hashtable innerHashtableTrue = (Hashtable)partitionsInnerHashtables.Element1;
 
-                Hashtable innerHashtableFalse = (Hashtable)partitionsInnerHashtables.Element1;
+                Hashtable innerHashtableFalse = (Hashtable)partitionsInnerHashtables.Element2;
 
                 double sumProportionSquaredTrue = 0;
                 double sumProportionSquaredFalse = 0;
@@ -350,7 +350,7 @@ namespace HSA.Tree
                 double giniImpurityOverall = giniImpurityTrue * (overallTrueProportion) + giniImpurityFalse * (1 - overallTrueProportion);
 
                 //Item.key is the condition, the column value (assume equals in categorical and <= in numerical)
-                columnValuesGiniImpurities[giniImpurityOverall] = (T)item.Key;
+                columnValuesGiniImpurities[giniImpurityOverall]  = (T)item.Key;
             }
             return columnValuesGiniImpurities;
         }
