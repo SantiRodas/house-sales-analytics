@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,8 @@ namespace HSA.Tree
         private double giniIndex; //Gini index of this node, is stored but not updated in node
 
         private DataView partition;
+
+        private Hashtable observationClassCount;
 
         // ----------------------------------------------------------------------------------------------------
 
@@ -98,6 +101,12 @@ namespace HSA.Tree
         {
             get { return partition; }
             set { partition = value; }
+        }
+
+        public Hashtable ObservationClassCount
+        {
+            get { return observationClassCount; }
+            set { observationClassCount = value; }
         }
 
         // ----------------------------------------------------------------------------------------------------

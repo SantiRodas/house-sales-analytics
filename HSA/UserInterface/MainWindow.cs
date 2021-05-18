@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using HSA.Tree;
 
 namespace HSA.UserInterface
 {
@@ -38,6 +39,20 @@ namespace HSA.UserInterface
 
         // ----------------------------------------------------------------------------------------------------
 
+        // Relation with the graphics processor
+
+        private DecisionTree decisionTree;
+
+        public DecisionTree DecisionTree
+        {
+            get
+            {
+                return decisionTree;
+            }
+        }
+
+        // ----------------------------------------------------------------------------------------------------
+
         // Constructor method
 
         public MainWindow()
@@ -50,9 +65,13 @@ namespace HSA.UserInterface
 
             graphicsManager = new GraphicsProcessor(manager);
 
+            decisionTree = new DecisionTree(manager);
+
             chartsControl1.Initialize(graphicsManager);
 
             dataViewerControl.Initialize(manager, chartsControl1);
+
+            decisionTreeControl.Initialize(decisionTree);
         }
 
         // ----------------------------------------------------------------------------------------------------
