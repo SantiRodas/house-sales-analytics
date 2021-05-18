@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Model\GraphicsProcessor.cs" />
     <Compile Include="Model\DataSetManager.cs" />
+    <Compile Include="Tree\Record.cs" />
     <Compile Include="Tree\LogicalOperator.cs" />
     <Compile Include="Tree\DecisionTree.cs" />
     <Compile Include="Tree\Node.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HSA.Tree;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -43,13 +44,13 @@ namespace HSA.UserInterface
 
                 int numberBedrooms = Int32.Parse(bedroomsText.Text);
 
-                int numberBathrooms = Int32.Parse(bathroomsText.Text);
+                double numberBathrooms = double.Parse(bathroomsText.Text);
 
-                int numberSqftLiving = Int32.Parse(sqftLivingText.Text);
+                double numberSqftLiving = double.Parse(sqftLivingText.Text);
 
-                int numberSqftLot = Int32.Parse(sqftLotText.Text);
+                double numberSqftLot = double.Parse(sqftLotText.Text);
 
-                double numberFlorr = double.Parse(floorText.Text);
+                double numberFloor = double.Parse(floorText.Text);
 
                 // The decision bool take the information of the waterfront
 
@@ -59,14 +60,11 @@ namespace HSA.UserInterface
                 {
                     validationWaterfront = true;
 
-                } else if (waterfrontOption2.Checked)
-                {
-                    validationWaterfront = false;
-                }
-                else
+                } else if (waterfrontOption1.Checked == false && waterfrontOption2.Checked == false)
                 {
                     MessageBox.Show("Please select a option");
                 }
+               
 
                 // The system take the information of the house
 
@@ -76,21 +74,27 @@ namespace HSA.UserInterface
 
                 int numberGrade = Int32.Parse(gradeText.Text);
 
-                int numberSqftAbove = Int32.Parse(sqftAboveText.Text);
+                double numberSqftAbove = double.Parse(sqftAboveText.Text);
 
                 // The right part of the window
 
-                int numberSqftBasement = Int32.Parse(sqftBasementText.Text);
+                double numberSqftBasement = double.Parse(sqftBasementText.Text);
 
                 int numberYearRenovated = Int32.Parse(yearRenovatedText.Text);
 
                 int numberZipCode = Int32.Parse(zipCodeText.Text);
 
-                int numberSqftLiving15 = Int32.Parse(sqftLiving15Text.Text);
+                double numberSqftLiving15 = double.Parse(sqftLiving15Text.Text);
 
-                int numberSqftLot15 = Int32.Parse(sqftLot15Text.Text);
+                double numberSqftLot15 = double.Parse(sqftLot15Text.Text);
+
+                Record newDataPoint = new Record(numberBedrooms, numberBathrooms, numberSqftLiving, numberSqftLot, numberFloor , validationWaterfront, numberView, numberCondition, numberGrade, numberSqftAbove, numberSqftBasement, numberYearRenovated, numberZipCode , numberSqftLiving15 ,  numberSqftLot15);
 
                 // With this information the system can work
+
+                
+
+                ClearTextBoxes();
 
             }
             catch (FormatException)
@@ -102,6 +106,24 @@ namespace HSA.UserInterface
                 MessageBox.Show("Null information, please try to write something in all the components");
             }
         }
+
+        private void ClearTextBoxes()
+        {
+            Action<Control.ControlCollection> func = null;
+
+            func = (controls) =>
+            {
+                foreach (Control control in controls)
+                    if (control is TextBox)
+                        (control as TextBox).Clear();
+                    else
+                        func(control.Controls);
+            };
+
+            func(Controls);
+        }
+
+
 
         // ----------------------------------------------------------------------------------------------------
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace HSA.Tree
 {
@@ -38,8 +39,6 @@ namespace HSA.Tree
         private DataView partition;
 
         private Hashtable observationClassCount;
-
-        // ----------------------------------------------------------------------------------------------------
 
         // Getters and Setter
 
@@ -103,10 +102,17 @@ namespace HSA.Tree
             set { partition = value; }
         }
 
+<<<<<<< HEAD
+        public Hashtable InnerHashtable
+        {
+            get { return innerHashtable; }
+            set { innerHashtable = value; }
+=======
         public Hashtable ObservationClassCount
         {
             get { return observationClassCount; }
             set { observationClassCount = value; }
+>>>>>>> df488353c41b85ea141e732f567ed515bba51969
         }
 
         // ----------------------------------------------------------------------------------------------------
