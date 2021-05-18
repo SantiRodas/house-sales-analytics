@@ -37,7 +37,7 @@ Reading this data, the system analyze the information by means of autonomous lea
 
    2.2 Sequence diagrams
    * [Sequence diagram - 1 (Filters)](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%201%20-%20(Filters).pdf)
-   * [Sequence diagram - 2 (Filters in charts](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%202%20-%20(Filters%20in%20charts).pdf)
+   * [Sequence diagram - 2 (Filters in charts)](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%202%20-%20(Filters%20in%20charts).pdf)
    * [Sequence diagram - 3 (Sort)](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%203%20-%20(Sort).pdf)
 
 3. Implementation
