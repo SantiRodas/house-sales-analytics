@@ -467,9 +467,7 @@ namespace HSA.Tree
 
                 double overallTrueProportion = trueCount / totalRows;
 
-                double giniImpurityOverall = giniImpurityTrue * (overallTrueProportion) + giniImpurityFalse * (1 - overallTrueProportion);
-
-                
+                double giniImpurityOverall = giniImpurityTrue * (overallTrueProportion) + giniImpurityFalse * (1 - overallTrueProportion);                
 
                 //Item.key is the condition, the column value (assume equals in categorical and <= in numerical)
                 columnValuesGiniImpurities[giniImpurityOverall] = (T)item.Key;
