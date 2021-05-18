@@ -6,7 +6,8 @@ namespace HSA.UserInterface
 {
     public partial class DecisionTreeControl : UserControl
     {
-
+        public DecisionTree DecisionTree {get; set;}
+        
         // ----------------------------------------------------------------------------------------------------
 
         // Constructor method with initialize component
@@ -16,9 +17,9 @@ namespace HSA.UserInterface
             InitializeComponent();           
         }
 
-        public void initializa(Node root)
+        public void Initialize(DecisionTree dsTree)
         {
-            LoadTree(root);
+            DecisionTree = dsTree;
         }
 
 
@@ -63,7 +64,9 @@ namespace HSA.UserInterface
         {
             if (implementationOption1.Checked)
             {
-                // The user select the own implementation
+                DecisionTree.generateTree();
+                Console.WriteLine("Finish generating");
+                LoadTree(DecisionTree.Root);
 
             } else if (implementationOption2.Checked)
             {

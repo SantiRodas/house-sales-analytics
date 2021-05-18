@@ -160,7 +160,6 @@ namespace HSA.Model
             dataFiltered = new DataView(data);
             UpdatePageLimits();
             RefreshData();
-            decisionTree = new DecisionTree(data);
         }
 
         // ----------------------------------------------------------------------------------------------------
