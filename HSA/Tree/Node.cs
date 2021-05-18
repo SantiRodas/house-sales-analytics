@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace HSA.Tree
 {
@@ -35,6 +36,8 @@ namespace HSA.Tree
         private double giniIndex; //Gini index of this node, is stored but not updated in node
 
         private DataView partition;
+
+        private Hashtable innerHashtable;
 
         // ----------------------------------------------------------------------------------------------------
 
@@ -98,6 +101,12 @@ namespace HSA.Tree
         {
             get { return partition; }
             set { partition = value; }
+        }
+
+        public Hashtable InnerHashtable
+        {
+            get { return innerHashtable; }
+            set { innerHashtable = value; }
         }
 
         // ----------------------------------------------------------------------------------------------------

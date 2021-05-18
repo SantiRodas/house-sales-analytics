@@ -439,6 +439,7 @@ namespace HSA.UserInterface
             this.Controls.Add(this.panel1);
             this.Name = "GenerateTreePredictControl";
             this.Size = new System.Drawing.Size(894, 547);
+           
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
