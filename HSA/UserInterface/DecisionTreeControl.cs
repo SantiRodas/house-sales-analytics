@@ -29,9 +29,10 @@ namespace HSA.UserInterface
 
         private void LoadTree(Node root)
         {
-            TreeNode dad = new TreeNode(root.ConditionAttributeName);
-            decisionTreeView.Nodes.Add(root.ConditionAttributeName.ToString());
+            TreeNode dad = new TreeNode(root.ConditionAttributeName.ToString() + " " + root.ConditionOperator.ToString() + " " + root.ConditionValue.ToString());
+            decisionTreeView.Nodes.Add(dad);            
             AddChildrenToTree(root, dad);
+            
         }
 
 
@@ -43,12 +44,14 @@ namespace HSA.UserInterface
            
             if (root.FalseNode != null && root.TrueNode != null)
             {
+                decisionTreeView.SelectedNode = dad;
+
                 string printValueFalse = "";
                 string printValueTrue = "";
 
                 if (root.FalseNode.ConditionAttributeName != null)
                 {
-                    printValueFalse = root.FalseNode.ConditionAttributeName;
+                    printValueFalse = root.FalseNode.ConditionAttributeName + " " + root.FalseNode.ConditionOperator.ToString() + " " + root.FalseNode.ConditionValue.ToString();
                 }
                 else
                 {
@@ -57,17 +60,29 @@ namespace HSA.UserInterface
 
                 if (root.TrueNode.ConditionAttributeName != null)
                 {
-                    printValueTrue = root.TrueNode.ConditionAttributeName;
+                    printValueTrue = root.TrueNode.ConditionAttributeName + " " + root.TrueNode.ConditionOperator.ToString() + " " + root.TrueNode.ConditionValue.ToString();
                 }
                 else
                 {
                     printValueTrue = root.TrueNode.Answer;
                 }
 
-                TreeNode left = new TreeNode(printValueFalse);
-                TreeNode right = new TreeNode(printValueTrue);
-                dad.Nodes.Add(printValueFalse);
-                dad.Nodes.Add(printValueTrue);
+                
+                
+                
+                TreeNode left = new TreeNode("False: " + printValueFalse);
+                TreeNode right = new TreeNode("True: " + printValueTrue);
+
+                Node trueNode = root.TrueNode;
+                Node falseNode = root.FalseNode;
+
+                if (root.IsLeaf || root.TrueNode.IsLeaf || root.FalseNode.IsLeaf)
+                {
+                    int i = 0;
+                }
+
+                dad.Nodes.Add(left);
+                dad.Nodes.Add(right);
 
                 AddChildrenToTree(root.FalseNode, left);
                 AddChildrenToTree(root.TrueNode, right);

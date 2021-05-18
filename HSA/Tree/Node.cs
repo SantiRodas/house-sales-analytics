@@ -36,7 +36,7 @@ namespace HSA.Tree
 
         private double giniIndex; //Gini index of this node, is stored but not updated in node
 
-        private DataView partition;
+        private DataTable partition;
 
         private Hashtable observationClassCount;
 
@@ -96,7 +96,7 @@ namespace HSA.Tree
             set { giniIndex = value; }
         }
 
-        public DataView Partition
+        public DataTable Partition
         {
             get { return partition; }
             set { partition = value; }

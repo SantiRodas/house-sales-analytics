@@ -40,11 +40,12 @@ namespace HSA.UserInterface
             // 
             // decisionTreeView
             // 
+            this.decisionTreeView.FullRowSelect = true;
             this.decisionTreeView.Location = new System.Drawing.Point(24, 20);
             this.decisionTreeView.Name = "decisionTreeView";
+            this.decisionTreeView.ShowNodeToolTips = true;
             this.decisionTreeView.Size = new System.Drawing.Size(472, 506);
             this.decisionTreeView.TabIndex = 0;
-           
             // 
             // implementationOption1
             // 
