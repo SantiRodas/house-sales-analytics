@@ -101,18 +101,10 @@ namespace HSA.Tree
             get { return partition; }
             set { partition = value; }
         }
-
-<<<<<<< HEAD
-        public Hashtable InnerHashtable
-        {
-            get { return innerHashtable; }
-            set { innerHashtable = value; }
-=======
         public Hashtable ObservationClassCount
         {
             get { return observationClassCount; }
             set { observationClassCount = value; }
->>>>>>> df488353c41b85ea141e732f567ed515bba51969
         }
 
         // ----------------------------------------------------------------------------------------------------

@@ -107,7 +107,7 @@ namespace HSA.Tree
             Hashtable trueHashtable = bestColumnGiniAndCondition.Value.Item3;
             Hashtable falseHashtable = bestColumnGiniAndCondition.Value.Item4;
 
-            if (infoGain > 0)//Nodo de decision
+            if (infoGain > 0.05)//Nodo de decision
             {
                 Type columnDataType = conditionObj.GetType();
 
@@ -455,6 +455,8 @@ namespace HSA.Tree
                     sumProportionSquaredTrue += CalculateProportionSquared(count, totalRows);
                 }
 
+                sumProportionSquaredTrue = trueCount > 0 ?(sumProportionSquaredTrue)*(totalRows/trueCount)* (totalRows / trueCount) : 0;
+
                 foreach (DictionaryEntry priceRange in innerHashtableFalse)
                 {
                     int count = (int)priceRange.Value;
@@ -462,12 +464,14 @@ namespace HSA.Tree
                     sumProportionSquaredFalse += CalculateProportionSquared(count, totalRows);
                 }
 
+                sumProportionSquaredFalse = totalRows - trueCount > 0? (sumProportionSquaredFalse) * (totalRows / (totalRows - trueCount))* (totalRows / (totalRows - trueCount)) : 0;
+
                 giniImpurityTrue = 1 - sumProportionSquaredTrue;
                 giniImpurityFalse = 1 - sumProportionSquaredFalse;
 
-                double overallTrueProportion = trueCount / totalRows;
+                double overallTrueProportion = (double)trueCount / (double)totalRows;
 
-                double giniImpurityOverall = giniImpurityTrue * (overallTrueProportion) + giniImpurityFalse * (1 - overallTrueProportion);                
+                double giniImpurityOverall = giniImpurityTrue * (overallTrueProportion) + giniImpurityFalse * (1 - overallTrueProportion);
 
                 //Item.key is the condition, the column value (assume equals in categorical and <= in numerical)
                 columnValuesGiniImpurities[giniImpurityOverall] = (T)item.Key;
