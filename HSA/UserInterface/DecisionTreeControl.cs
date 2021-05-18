@@ -43,10 +43,31 @@ namespace HSA.UserInterface
            
             if (root.FalseNode != null && root.TrueNode != null)
             {
-                TreeNode left = new TreeNode(root.FalseNode.ConditionAttributeName);
-                TreeNode right = new TreeNode(root.TrueNode.ConditionAttributeName);
-                dad.Nodes.Add(root.FalseNode.ConditionAttributeName);
-                dad.Nodes.Add((root.TrueNode.ConditionAttributeName));
+                string printValueFalse = "";
+                string printValueTrue = "";
+
+                if (root.FalseNode.ConditionAttributeName != null)
+                {
+                    printValueFalse = root.FalseNode.ConditionAttributeName;
+                }
+                else
+                {
+                    printValueFalse = root.FalseNode.Answer;
+                }
+
+                if (root.TrueNode.ConditionAttributeName != null)
+                {
+                    printValueTrue = root.TrueNode.ConditionAttributeName;
+                }
+                else
+                {
+                    printValueTrue = root.TrueNode.Answer;
+                }
+
+                TreeNode left = new TreeNode(printValueFalse);
+                TreeNode right = new TreeNode(printValueTrue);
+                dad.Nodes.Add(printValueFalse);
+                dad.Nodes.Add(printValueTrue);
 
                 AddChildrenToTree(root.FalseNode, left);
                 AddChildrenToTree(root.TrueNode, right);
