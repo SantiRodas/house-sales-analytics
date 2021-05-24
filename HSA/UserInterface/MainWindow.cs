@@ -72,6 +72,8 @@ namespace HSA.UserInterface
             dataViewerControl.Initialize(manager, chartsControl1);
 
             decisionTreeControl.Initialize(decisionTree);
+
+            predictControl.Initialize(decisionTree);
         }
 
         // ----------------------------------------------------------------------------------------------------

@@ -32,6 +32,9 @@ namespace HSA.Tree
         public double NumberSqftBasement { get; set; }
 
         public int NumberYearRenovated { get; set; }
+
+        public int NumberYearBuilt { get; set; }
+
         public int NumberZipCode { get; set; }
 
         public double NumberSqftLiving15 { get; set; }
@@ -40,7 +43,7 @@ namespace HSA.Tree
 
         public string PriceRange { get; set; }
 
-        public Record(int numberBedrooms, double numberBathrooms, double numberSqftLiving, double numberSqftLot, double numberFloor, bool validationWaterfront, int numberView, int numberCondition, int numberGrade, double numberSqftAbove, double numberSqftBasement, int numberYearRenovated, int numberZipCode, double numberSqftLiving15, double numberSqftLot15)
+        public Record(int numberBedrooms, double numberBathrooms, double numberSqftLiving, double numberSqftLot, double numberFloor, bool validationWaterfront, int numberView, int numberCondition, int numberGrade, double numberSqftAbove, double numberSqftBasement,int numberYearBuilt, int numberYearRenovated, int numberZipCode, double numberSqftLiving15, double numberSqftLot15)
         {
             NumberBedrooms = numberBedrooms;
             NumberBathrooms = numberBathrooms;
@@ -53,6 +56,7 @@ namespace HSA.Tree
             NumberGrade = numberGrade;
             NumberSqftAbove = numberSqftAbove;
             NumberSqftBasement = numberSqftBasement;
+            NumberYearBuilt = numberYearBuilt;
             NumberYearRenovated = numberYearRenovated;
             NumberZipCode = numberZipCode;
             NumberSqftLiving15 = numberSqftLiving15;

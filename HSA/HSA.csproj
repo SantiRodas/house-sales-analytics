@@ -59,11 +59,11 @@
     <Compile Include="UserInterface\DecisionTreeControl.Designer.cs">
       <DependentUpon>DecisionTreeControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\GenerateTreePredictControl.cs">
+    <Compile Include="UserInterface\PredictControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserInterface\GenerateTreePredictControl.Designer.cs">
-      <DependentUpon>GenerateTreePredictControl.cs</DependentUpon>
+    <Compile Include="UserInterface\PredictControl.Designer.cs">
+      <DependentUpon>PredictControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\MainWindow.cs">
       <SubType>Form</SubType>
@@ -101,8 +101,8 @@
     <EmbeddedResource Include="UserInterface\DecisionTreeControl.resx">
       <DependentUpon>DecisionTreeControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserInterface\GenerateTreePredictControl.resx">
-      <DependentUpon>GenerateTreePredictControl.cs</DependentUpon>
+    <EmbeddedResource Include="UserInterface\PredictControl.resx">
+      <DependentUpon>PredictControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

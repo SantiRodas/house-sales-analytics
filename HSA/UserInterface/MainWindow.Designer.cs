@@ -37,7 +37,7 @@ namespace HSA.UserInterface
             this.decisionTreeTab = new System.Windows.Forms.TabPage();
             this.decisionTreeControl = new HSA.UserInterface.DecisionTreeControl();
             this.generateTreePredict = new System.Windows.Forms.TabPage();
-            this.generateTreePredictControl1 = new HSA.UserInterface.GenerateTreePredictControl();
+            this.predictControl = new HSA.UserInterface.PredictControl();
             this.mainWindowTabs.SuspendLayout();
             this.dataViewTab.SuspendLayout();
             this.graphicsTab.SuspendLayout();
@@ -116,14 +116,15 @@ namespace HSA.UserInterface
             // decisionTreeControl
             // 
             this.decisionTreeControl.DecisionTree = null;
-            this.decisionTreeControl.Location = new System.Drawing.Point(0, -4);
+            this.decisionTreeControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.decisionTreeControl.Location = new System.Drawing.Point(3, 3);
             this.decisionTreeControl.Name = "decisionTreeControl";
             this.decisionTreeControl.Size = new System.Drawing.Size(894, 547);
             this.decisionTreeControl.TabIndex = 0;
             // 
             // generateTreePredict
             // 
-            this.generateTreePredict.Controls.Add(this.generateTreePredictControl1);
+            this.generateTreePredict.Controls.Add(this.predictControl);
             this.generateTreePredict.Location = new System.Drawing.Point(104, 4);
             this.generateTreePredict.Name = "generateTreePredict";
             this.generateTreePredict.Padding = new System.Windows.Forms.Padding(3);
@@ -132,12 +133,12 @@ namespace HSA.UserInterface
             this.generateTreePredict.Text = "Generate and predict tree";
             this.generateTreePredict.UseVisualStyleBackColor = true;
             // 
-            // generateTreePredictControl1
+            // predictControl
             // 
-            this.generateTreePredictControl1.Location = new System.Drawing.Point(0, 0);
-            this.generateTreePredictControl1.Name = "generateTreePredictControl1";
-            this.generateTreePredictControl1.Size = new System.Drawing.Size(894, 547);
-            this.generateTreePredictControl1.TabIndex = 0;
+            this.predictControl.Location = new System.Drawing.Point(0, 0);
+            this.predictControl.Name = "predictControl";
+            this.predictControl.Size = new System.Drawing.Size(894, 547);
+            this.predictControl.TabIndex = 0;
             // 
             // MainWindow
             // 
@@ -170,7 +171,7 @@ namespace HSA.UserInterface
         private System.Windows.Forms.TabPage decisionTreeTab;
         private DecisionTreeControl decisionTreeControl;
         private System.Windows.Forms.TabPage generateTreePredict;
-        private GenerateTreePredictControl generateTreePredictControl1;
+        private PredictControl predictControl;
     }
 }
 

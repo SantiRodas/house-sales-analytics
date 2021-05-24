@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using HSA.Model;
 using HSA.Utilities;
+using static System.Collections.Generic.Dictionary<string, int>;
 
 namespace HSA.Tree
 {
@@ -95,6 +96,27 @@ namespace HSA.Tree
         {
             if(currentNode.Partition.Rows.Count <= 1)
             {
+                currentNode.IsLeaf = true;
+
+                Hashtable currentNodePriceRangeCount = currentNode.ObservationClassCount;
+
+                int maxCount = -1;
+
+                String maxPriceRange = "";
+
+                foreach (DictionaryEntry priceRangeCount in currentNodePriceRangeCount)
+                {
+
+                    if ((int)priceRangeCount.Value > maxCount)
+                    {
+                        maxCount = (int)priceRangeCount.Value;
+                        maxPriceRange = (string)priceRangeCount.Key;
+                    }
+
+                }
+
+                currentNode.Answer = maxPriceRange;
+
                 return;
             }
 
@@ -104,6 +126,8 @@ namespace HSA.Tree
 
             double infoGain = currentNode.GiniIndex - bestColumnGiniAndCondition.Key;
 
+            Console.WriteLine("curent node gini index = " + currentNode.GiniIndex);
+            Console.WriteLine("best column gini and condition" + bestColumnGiniAndCondition.Key);
             Console.WriteLine("Info gain = " + infoGain);
 
             string columnName = bestColumnGiniAndCondition.Value.Item1;
@@ -111,7 +135,7 @@ namespace HSA.Tree
             Hashtable trueHashtable = bestColumnGiniAndCondition.Value.Item3;
             Hashtable falseHashtable = bestColumnGiniAndCondition.Value.Item4;
 
-            if (infoGain > 0 )//Nodo de decision
+            if (infoGain > 0 && trueHashtable.Count > 0 && falseHashtable.Count > 0)//Nodo de decision
             {
                 Type columnDataType = conditionObj.GetType();
 
