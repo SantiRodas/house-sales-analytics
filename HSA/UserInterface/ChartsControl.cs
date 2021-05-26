@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using HSA.Model;
 
 namespace HSA.UserInterface
@@ -52,10 +54,9 @@ namespace HSA.UserInterface
             UpdateChartZipcodeXAverage();
             UpdateChartZipcodeXPercentage();
             UpdateChartYearXQuantity();
-            /*
-            UpdateChartZipcodeXAverageSqrFt();
-            UpdateChartZipcodeXAverageSqrFtPrice();
-            */
+            UpdateChartPriceRangeXHousesSelled();
+            UpdateChartYearBuiltXAveragePrice();
+            
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -117,31 +118,33 @@ namespace HSA.UserInterface
 
         // Method update chart zip code X average Sqrft
 
-        private void UpdateChartZipcodeXAverageSqrFt()
+        private void UpdateChartPriceRangeXHousesSelled()
         {
-            chartZipcodeXAverageSqrFt.Series["Square Feet"].Points.Clear();
+            chartHousesSoldPerPriceRange.Series["House Count"].Points.Clear();
 
-            List<double[]> chartData = graphicsManager.ZipcodeXAverageSqrFt();
+            SortedDictionary<int, KeyValuePair<string, int>> chartData = graphicsManager.PriceRangeXHousesSold();
             
-            foreach (double[] i in chartData)
+            foreach(KeyValuePair<int,KeyValuePair<string,int>> rangeMarkAndCount in chartData)
             {
-                chartZipcodeXAverageSqrFt.Series["Square Feet"].Points.AddXY(i[0], i[1]);
+                KeyValuePair<string, int> rangeAndCount = rangeMarkAndCount.Value;
+                chartHousesSoldPerPriceRange.Series["House Count"].Points.AddXY((string)rangeAndCount.Key, (int)rangeAndCount.Value);                
             }
+
         }
 
         // ----------------------------------------------------------------------------------------------------
 
         // Method update chart zip code X average Sqrft price
 
-        private void UpdateChartZipcodeXAverageSqrFtPrice()
+        private void UpdateChartYearBuiltXAveragePrice()
         {
-            chartZipcodeXAverageSqrFtPrice.Series["Square Feet Price"].Points.Clear();
+            chartAveragePriceVsYearBuilt.Series["Average Price"].Points.Clear();
 
-            List<double[]> chartData = graphicsManager.ZipcodeXAverageOneSqrFt();
+            SortedDictionary<int, double> chartData = graphicsManager.YearBuiltXAveragePrice();
 
-            foreach (double[] i in chartData)
+            foreach (KeyValuePair<int, double> yearAndAvgPrice in chartData)
             {
-                chartZipcodeXAverageSqrFtPrice.Series["Square Feet Price"].Points.AddXY(i[0], i[1]);
+                chartAveragePriceVsYearBuilt.Series["Average Price"].Points.AddXY(yearAndAvgPrice.Key,yearAndAvgPrice.Value);
             }
         }
 

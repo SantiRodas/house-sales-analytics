@@ -49,13 +49,13 @@ namespace HSA.UserInterface
             this.chartZipcodeXPercentage = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartYearXQuantity = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label1 = new System.Windows.Forms.Label();
-            this.chartZipcodeXAverageSqrFt = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chartZipcodeXAverageSqrFtPrice = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartAveragePriceVsYearBuilt = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartHousesSoldPerPriceRange = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.chartZipcodeXAverage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartZipcodeXPercentage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartYearXQuantity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartZipcodeXAverageSqrFt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartZipcodeXAverageSqrFtPrice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartAveragePriceVsYearBuilt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartHousesSoldPerPriceRange)).BeginInit();
             this.SuspendLayout();
             // 
             // chartZipcodeXAverage
@@ -134,55 +134,59 @@ namespace HSA.UserInterface
             this.label1.Text = "Charts ";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // chartZipcodeXAverageSqrFt
+            // chartAveragePriceVsYearBuilt
             // 
-            this.chartZipcodeXAverageSqrFt.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.chartAveragePriceVsYearBuilt.Anchor = System.Windows.Forms.AnchorStyles.Top;
             chartArea4.AxisX.Interval = 1D;
-            chartArea4.AxisX.Title = "Zipcode";
-            chartArea4.AxisY.Title = "Living square feet";
+            chartArea4.AxisX.Title = "Year Built";
+            chartArea4.AxisY.Title = "Average Price";
             chartArea4.Name = "ChartArea1";
-            this.chartZipcodeXAverageSqrFt.ChartAreas.Add(chartArea4);
-            this.chartZipcodeXAverageSqrFt.Location = new System.Drawing.Point(4, 1702);
-            this.chartZipcodeXAverageSqrFt.Name = "chartZipcodeXAverageSqrFt";
+            this.chartAveragePriceVsYearBuilt.ChartAreas.Add(chartArea4);
+            this.chartAveragePriceVsYearBuilt.Location = new System.Drawing.Point(4, 1702);
+            this.chartAveragePriceVsYearBuilt.Name = "chartAveragePriceVsYearBuilt";
             series4.ChartArea = "ChartArea1";
             series4.IsXValueIndexed = true;
-            series4.Name = "Square Feet";
-            this.chartZipcodeXAverageSqrFt.Series.Add(series4);
-            this.chartZipcodeXAverageSqrFt.Size = new System.Drawing.Size(886, 467);
-            this.chartZipcodeXAverageSqrFt.TabIndex = 4;
-            this.chartZipcodeXAverageSqrFt.Text = "chart1";
+            series4.Name = "Average Price";
+            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chartAveragePriceVsYearBuilt.Series.Add(series4);
+            this.chartAveragePriceVsYearBuilt.Size = new System.Drawing.Size(886, 467);
+            this.chartAveragePriceVsYearBuilt.TabIndex = 4;
+            this.chartAveragePriceVsYearBuilt.Text = "chart1";
             title4.Name = "Title1";
-            title4.Text = "Average Living Square Feet per Zipcode";
-            this.chartZipcodeXAverageSqrFt.Titles.Add(title4);
+            title4.Text = "Average Price per Year Built";
+            this.chartAveragePriceVsYearBuilt.Titles.Add(title4);
             // 
-            // chartZipcodeXAverageSqrFtPrice
+            // chartHousesSoldPerPriceRange
             // 
-            this.chartZipcodeXAverageSqrFtPrice.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.chartHousesSoldPerPriceRange.Anchor = System.Windows.Forms.AnchorStyles.Top;
             chartArea5.AxisX.Interval = 1D;
             chartArea5.AxisX.Title = "Zipcode";
             chartArea5.AxisY.Title = "Living square feet price";
             chartArea5.Name = "ChartArea1";
-            this.chartZipcodeXAverageSqrFtPrice.ChartAreas.Add(chartArea5);
-            this.chartZipcodeXAverageSqrFtPrice.Location = new System.Drawing.Point(4, 2235);
-            this.chartZipcodeXAverageSqrFtPrice.Name = "chartZipcodeXAverageSqrFtPrice";
+            this.chartHousesSoldPerPriceRange.ChartAreas.Add(chartArea5);
+            this.chartHousesSoldPerPriceRange.Location = new System.Drawing.Point(4, 2235);
+            this.chartHousesSoldPerPriceRange.Name = "chartHousesSoldPerPriceRange";
             series5.ChartArea = "ChartArea1";
             series5.IsXValueIndexed = true;
-            series5.Name = "Square Feet Price";
-            this.chartZipcodeXAverageSqrFtPrice.Series.Add(series5);
-            this.chartZipcodeXAverageSqrFtPrice.Size = new System.Drawing.Size(886, 467);
-            this.chartZipcodeXAverageSqrFtPrice.TabIndex = 5;
-            this.chartZipcodeXAverageSqrFtPrice.Text = "chart1";
+            series5.Name = "House Count";
+            series5.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
+            series5.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
+            this.chartHousesSoldPerPriceRange.Series.Add(series5);
+            this.chartHousesSoldPerPriceRange.Size = new System.Drawing.Size(886, 467);
+            this.chartHousesSoldPerPriceRange.TabIndex = 5;
+            this.chartHousesSoldPerPriceRange.Text = "chart1";
             title5.Name = "Title1";
-            title5.Text = "Average Living Square Feet Price per Zipcode";
-            this.chartZipcodeXAverageSqrFtPrice.Titles.Add(title5);
+            title5.Text = "Houses Selled per Price Range";
+            this.chartHousesSoldPerPriceRange.Titles.Add(title5);
             // 
             // ChartsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.Controls.Add(this.chartZipcodeXAverageSqrFtPrice);
-            this.Controls.Add(this.chartZipcodeXAverageSqrFt);
+            this.Controls.Add(this.chartHousesSoldPerPriceRange);
+            this.Controls.Add(this.chartAveragePriceVsYearBuilt);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.chartYearXQuantity);
             this.Controls.Add(this.chartZipcodeXPercentage);
@@ -192,8 +196,8 @@ namespace HSA.UserInterface
             ((System.ComponentModel.ISupportInitialize)(this.chartZipcodeXAverage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartZipcodeXPercentage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartYearXQuantity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartZipcodeXAverageSqrFt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartZipcodeXAverageSqrFtPrice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartAveragePriceVsYearBuilt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartHousesSoldPerPriceRange)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -205,7 +209,7 @@ namespace HSA.UserInterface
         private System.Windows.Forms.DataVisualization.Charting.Chart chartZipcodeXPercentage;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartYearXQuantity;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartZipcodeXAverageSqrFt;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartZipcodeXAverageSqrFtPrice;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartAveragePriceVsYearBuilt;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartHousesSoldPerPriceRange;
     }
 }

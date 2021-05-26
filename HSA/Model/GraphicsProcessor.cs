@@ -48,7 +48,7 @@ namespace HSA.Model
 
             UpdateQuantityPerYear();
 
-            //UpdatePricesByZip();
+            UpdatePricesByZip();
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -100,9 +100,7 @@ namespace HSA.Model
 
                 double price = (double)FilteredData.Rows[i]["price"];
 
-                double sqr_ft = (double)FilteredData.Rows[i]["sqft_living"];
-
-                AddPriceToHashtable(zipcode, price, sqr_ft);
+                AddPriceToHashtable(zipcode, price);
             }
         }
 
@@ -110,11 +108,9 @@ namespace HSA.Model
 
         // Method add price to hash table
 
-        private void AddPriceToHashtable(string zipcode, double price, double sqr_ft) {
+        private void AddPriceToHashtable(string zipcode, double price) {
 
-            double[] arrayForAverage = { 0, 0, 0, 0 };
-
-            double oneSqrFt = price / sqr_ft;
+            double[] arrayForAverage = {0, 0};
 
             if (PricesByZip.ContainsKey(zipcode))
             {
@@ -126,8 +122,6 @@ namespace HSA.Model
 
                     arrayForAverage[0] = arrayForAverage[0] + price; //keeps the sum of the prices per zipcode
                     arrayForAverage[1] = arrayForAverage[1] + 1; //keeps the sum of the number of sales per zipcode
-                    arrayForAverage[2] = arrayForAverage[2] + sqr_ft; //keeps the sum of the living square feet per zipcode
-                    arrayForAverage[3] = arrayForAverage[3] + oneSqrFt; //keeps the sum of the price of one living square feet per zipcode
 
                     PricesByZip[zipcode] = arrayForAverage;
                 }
@@ -136,8 +130,6 @@ namespace HSA.Model
             {
                 arrayForAverage[0] = price;
                 arrayForAverage[1] = 1;
-                arrayForAverage[2] = sqr_ft;
-                arrayForAverage[3] = oneSqrFt;
 
                 PricesByZip.Add(zipcode, arrayForAverage);
             }
@@ -231,23 +223,26 @@ namespace HSA.Model
 
         // Method zip code X average Sqrft
 
-        public List<double[]> ZipcodeXAverageSqrFt()
+        public SortedDictionary<int, KeyValuePair<string, int>> PriceRangeXHousesSold()
         {
-            List<double[]> displayData = new List<double[]>();
+            SortedDictionary<int,KeyValuePair<string,int>> displayData = new SortedDictionary<int, KeyValuePair<string, int>>();
 
-            foreach (DictionaryEntry i in PricesByZip)
+            foreach(DataRow dr in FilteredData.Rows)
             {
-                double[] dataPoint = new double[2];
-                double[] values = (double[])i.Value;
+                string priceRange = (string)dr["price_range"];
+                int priceRangeClassMark = int.Parse(priceRange.Split('-')[0].Replace("[", ""));
 
-                double a = values[2];
-                double b = values[1];
-                double c = a / b;
-
-                dataPoint[0] = Int32.Parse(i.Key.ToString());
-                dataPoint[1] = c;
-
-                displayData.Add(dataPoint);
+                if (displayData.ContainsKey(priceRangeClassMark))
+                {
+                    int currentCount = (int)displayData[priceRangeClassMark].Value;
+                    currentCount++;
+                    displayData[priceRangeClassMark] = new KeyValuePair<string, int>(priceRange,currentCount);
+                }
+                else
+                {
+                    displayData[priceRangeClassMark] = new KeyValuePair<string, int>(priceRange, 1);
+                }
+                
             }
             return displayData;
         }
@@ -256,24 +251,43 @@ namespace HSA.Model
 
         // Method zip code X average one Sqrft
 
-        public List<double[]> ZipcodeXAverageOneSqrFt()
+        public SortedDictionary<int, double> YearBuiltXAveragePrice()
         {
-            List<double[]> displayData = new List<double[]>();
+            SortedDictionary<int, double> displayData = new SortedDictionary<int, double>();
+            SortedDictionary<int, int> displayDataCount = new SortedDictionary<int, int>();
 
-            foreach (DictionaryEntry i in PricesByZip)
+            foreach (DataRow dr in FilteredData.Rows)
             {
-                double[] dataPoint = new double[2];
-                double[] values = (double[])i.Value;
+                int buildYear = (int)dr["yr_built"];
+                double price = (double)dr["price"];
 
-                double a = values[3];
-                double b = values[1];
-                double c = a / b;
+                if (displayData.ContainsKey(buildYear))
+                {
+                    int currentCount = displayDataCount[buildYear];
+                    currentCount += 1;
 
-                dataPoint[0] = Int32.Parse(i.Key.ToString());
-                dataPoint[1] = c;
+                    displayDataCount[buildYear] =currentCount;
 
-                displayData.Add(dataPoint);
+                    double currentSumPrice = displayData[buildYear];
+                    currentSumPrice += price;
+
+                    displayData[buildYear] = currentSumPrice;
+
+                }
+                else
+                {
+                    displayDataCount[buildYear] =  1;
+                    displayData[buildYear] = price;
+                }
+
             }
+
+
+            foreach(KeyValuePair<int,int> displayDataEntryCount in displayDataCount)
+            {
+                displayData[displayDataEntryCount.Key] = Math.Round(displayData[displayDataEntryCount.Key] / (double)displayDataEntryCount.Value, 2);
+            }
+
             return displayData;
         }
 
