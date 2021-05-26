@@ -36,8 +36,9 @@ namespace HSA.Tree
 
         public DecisionTree(DataTable data)
         {
-            DataTraining = data;
-            DataOriginal = DataTraining;
+            DataOriginal = data;
+            DataTraining = DataOriginal;
+            DataTest = null;
             DataFiltered = new DataView(DataTraining);
 
             CalculateOverallGiniIndex();
@@ -204,6 +205,22 @@ namespace HSA.Tree
             Accuracy = 1 - (double)badClassisfications / (double)DataTraining.Rows.Count;
 
             return root;
+        }
+
+        public void Reset()
+        {
+            DataTraining = DataOriginal;
+            DataTest = null;
+            DataFiltered = new DataView(DataTraining);
+
+            CalculateOverallGiniIndex();
+
+            root = new Node
+            {
+                GiniIndex = OverallGiniIndex,
+                ObservationClassCount = PriceRangesCountGlobal,
+                Partition = DataTraining
+            };
         }
 
         private void generateTreeRecursive(Node currentNode, int currentHeight)

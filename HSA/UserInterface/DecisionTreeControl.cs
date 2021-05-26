@@ -175,7 +175,7 @@ namespace HSA.UserInterface
 
         private void resetTreeButton_Click(object sender, EventArgs e)
         {
-            DecisionTree = new DecisionTree(DecisionTree.DataOriginal);
+            DecisionTree.Reset();
             resetTreeButton.Enabled = false;
             trainButton.Enabled = true;
             testingButton.Enabled = false;

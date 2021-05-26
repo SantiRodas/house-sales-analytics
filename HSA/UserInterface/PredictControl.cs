@@ -174,6 +174,7 @@ namespace HSA.UserInterface
         {
             ClearTextBoxes();
             Initialize(dsTree);
+            treeTraversalRichTxtBox.Text = "";
         }
 
 
