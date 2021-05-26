@@ -65,7 +65,7 @@ namespace HSA.UserInterface
 
             graphicsManager = new GraphicsProcessor(manager);
 
-            decisionTree = new DecisionTree(manager);
+            decisionTree = new DecisionTree(manager.Data);
 
             chartsControl1.Initialize(graphicsManager);
 

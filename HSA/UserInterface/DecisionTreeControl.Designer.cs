@@ -35,19 +35,19 @@ namespace HSA.UserInterface
             this.trainButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.button1 = new System.Windows.Forms.Button();
+            this.accuracyLabelTraining = new System.Windows.Forms.Label();
+            this.heigthLimitTxtBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.resetTreeButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.trainingSizeSelector = new System.Windows.Forms.ComboBox();
             this.trainingLabel = new System.Windows.Forms.Label();
             this.testSizeSelector = new System.Windows.Forms.ComboBox();
             this.testSizeLabel = new System.Windows.Forms.Label();
-            this.efficiencyLabel = new System.Windows.Forms.Label();
+            this.accuracyLabelTest = new System.Windows.Forms.Label();
             this.testingButton = new System.Windows.Forms.Button();
             this.testingLabel = new System.Windows.Forms.Label();
             this.treeVisualizerLabel = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.heigthLimitTxtBox = new System.Windows.Forms.TextBox();
-            this.efficiencyTrainingLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -64,7 +64,7 @@ namespace HSA.UserInterface
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.decisionTreeView.FullRowSelect = true;
-            this.decisionTreeView.Location = new System.Drawing.Point(3, 48);
+            this.decisionTreeView.Location = new System.Drawing.Point(0, 48);
             this.decisionTreeView.Name = "decisionTreeView";
             this.decisionTreeView.ShowNodeToolTips = true;
             this.decisionTreeView.Size = new System.Drawing.Size(605, 499);
@@ -129,10 +129,10 @@ namespace HSA.UserInterface
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.efficiencyTrainingLabel);
+            this.splitContainer2.Panel1.Controls.Add(this.accuracyLabelTraining);
             this.splitContainer2.Panel1.Controls.Add(this.heigthLimitTxtBox);
             this.splitContainer2.Panel1.Controls.Add(this.label2);
-            this.splitContainer2.Panel1.Controls.Add(this.button1);
+            this.splitContainer2.Panel1.Controls.Add(this.resetTreeButton);
             this.splitContainer2.Panel1.Controls.Add(this.label1);
             this.splitContainer2.Panel1.Controls.Add(this.trainingSizeSelector);
             this.splitContainer2.Panel1.Controls.Add(this.trainButton);
@@ -144,21 +144,48 @@ namespace HSA.UserInterface
             // 
             this.splitContainer2.Panel2.Controls.Add(this.testSizeSelector);
             this.splitContainer2.Panel2.Controls.Add(this.testSizeLabel);
-            this.splitContainer2.Panel2.Controls.Add(this.efficiencyLabel);
+            this.splitContainer2.Panel2.Controls.Add(this.accuracyLabelTest);
             this.splitContainer2.Panel2.Controls.Add(this.testingButton);
             this.splitContainer2.Panel2.Controls.Add(this.testingLabel);
             this.splitContainer2.Size = new System.Drawing.Size(282, 547);
             this.splitContainer2.SplitterDistance = 268;
             this.splitContainer2.TabIndex = 0;
             // 
-            // button1
+            // accuracyLabelTraining
             // 
-            this.button1.Location = new System.Drawing.Point(42, 226);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Reset Tree";
-            this.button1.UseVisualStyleBackColor = true;
+            this.accuracyLabelTraining.AutoSize = true;
+            this.accuracyLabelTraining.Location = new System.Drawing.Point(94, 48);
+            this.accuracyLabelTraining.Name = "accuracyLabelTraining";
+            this.accuracyLabelTraining.Size = new System.Drawing.Size(69, 13);
+            this.accuracyLabelTraining.TabIndex = 7;
+            this.accuracyLabelTraining.Text = "Accuracy: -%";
+            // 
+            // heigthLimitTxtBox
+            // 
+            this.heigthLimitTxtBox.Location = new System.Drawing.Point(132, 147);
+            this.heigthLimitTxtBox.Name = "heigthLimitTxtBox";
+            this.heigthLimitTxtBox.Size = new System.Drawing.Size(100, 20);
+            this.heigthLimitTxtBox.TabIndex = 10;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(39, 147);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Height Limit";
+            // 
+            // resetTreeButton
+            // 
+            this.resetTreeButton.Enabled = false;
+            this.resetTreeButton.Location = new System.Drawing.Point(42, 226);
+            this.resetTreeButton.Name = "resetTreeButton";
+            this.resetTreeButton.Size = new System.Drawing.Size(75, 23);
+            this.resetTreeButton.TabIndex = 8;
+            this.resetTreeButton.Text = "Reset Tree";
+            this.resetTreeButton.UseVisualStyleBackColor = true;
+            this.resetTreeButton.Click += new System.EventHandler(this.resetTreeButton_Click);
             // 
             // label1
             // 
@@ -203,6 +230,7 @@ namespace HSA.UserInterface
             // 
             // testSizeSelector
             // 
+            this.testSizeSelector.Enabled = false;
             this.testSizeSelector.FormattingEnabled = true;
             this.testSizeSelector.Items.AddRange(new object[] {
             "0.05",
@@ -231,17 +259,18 @@ namespace HSA.UserInterface
             this.testSizeLabel.Text = "Test size \r\n(% of original data set):";
             this.testSizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // efficiencyLabel
+            // accuracyLabelTest
             // 
-            this.efficiencyLabel.AutoSize = true;
-            this.efficiencyLabel.Location = new System.Drawing.Point(94, 74);
-            this.efficiencyLabel.Name = "efficiencyLabel";
-            this.efficiencyLabel.Size = new System.Drawing.Size(73, 13);
-            this.efficiencyLabel.TabIndex = 4;
-            this.efficiencyLabel.Text = "Efficiency: 0%";
+            this.accuracyLabelTest.AutoSize = true;
+            this.accuracyLabelTest.Location = new System.Drawing.Point(94, 74);
+            this.accuracyLabelTest.Name = "accuracyLabelTest";
+            this.accuracyLabelTest.Size = new System.Drawing.Size(69, 13);
+            this.accuracyLabelTest.TabIndex = 4;
+            this.accuracyLabelTest.Text = "Accuracy: -%";
             // 
             // testingButton
             // 
+            this.testingButton.Enabled = false;
             this.testingButton.Location = new System.Drawing.Point(97, 214);
             this.testingButton.Name = "testingButton";
             this.testingButton.Size = new System.Drawing.Size(75, 23);
@@ -271,31 +300,6 @@ namespace HSA.UserInterface
             this.treeVisualizerLabel.Size = new System.Drawing.Size(151, 24);
             this.treeVisualizerLabel.TabIndex = 1;
             this.treeVisualizerLabel.Text = "Tree Visualizer";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(39, 147);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 13);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Height Limit";
-            // 
-            // heigthLimitTxtBox
-            // 
-            this.heigthLimitTxtBox.Location = new System.Drawing.Point(132, 147);
-            this.heigthLimitTxtBox.Name = "heigthLimitTxtBox";
-            this.heigthLimitTxtBox.Size = new System.Drawing.Size(100, 20);
-            this.heigthLimitTxtBox.TabIndex = 10;
-            // 
-            // efficiencyTrainingLabel
-            // 
-            this.efficiencyTrainingLabel.AutoSize = true;
-            this.efficiencyTrainingLabel.Location = new System.Drawing.Point(94, 48);
-            this.efficiencyTrainingLabel.Name = "efficiencyTrainingLabel";
-            this.efficiencyTrainingLabel.Size = new System.Drawing.Size(72, 13);
-            this.efficiencyTrainingLabel.TabIndex = 7;
-            this.efficiencyTrainingLabel.Text = "Accuracy: 0%";
             // 
             // DecisionTreeControl
             // 
@@ -334,10 +338,10 @@ namespace HSA.UserInterface
         private System.Windows.Forms.ComboBox trainingSizeSelector;
         private System.Windows.Forms.ComboBox testSizeSelector;
         private System.Windows.Forms.Label testSizeLabel;
-        private System.Windows.Forms.Label efficiencyLabel;
+        private System.Windows.Forms.Label accuracyLabelTest;
         private System.Windows.Forms.Button testingButton;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label efficiencyTrainingLabel;
+        private System.Windows.Forms.Button resetTreeButton;
+        private System.Windows.Forms.Label accuracyLabelTraining;
         private System.Windows.Forms.TextBox heigthLimitTxtBox;
         private System.Windows.Forms.Label label2;
     }

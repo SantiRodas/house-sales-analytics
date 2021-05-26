@@ -21,6 +21,7 @@ namespace HSA.UserInterface
         {
             DecisionTree = dsTree;
             trainingSizeSelector.SelectedIndex = 8;
+            implementationOption1.Select();
         }
 
 
@@ -115,9 +116,15 @@ namespace HSA.UserInterface
 
                     Console.WriteLine("Finish generating");
 
-                    efficiencyTrainingLabel.Text = "Accuracy: " + Math.Round(DecisionTree.Accuracy*100, 2) + "%";
+                    accuracyLabelTraining.Text = "Accuracy: " + Math.Round(DecisionTree.Accuracy*100, 2) + "%";
+
+                    resetTreeButton.Enabled = true;
+
+                    trainButton.Enabled = false;
 
                     LoadTree(DecisionTree.Root);
+
+                    testingButton.Enabled = true;
                 }
                 catch(FormatException)
                 {
@@ -147,7 +154,7 @@ namespace HSA.UserInterface
         {
             double accuracyTest = DecisionTree.Test();
 
-            efficiencyLabel.Text = "Accuracy: " + " " + accuracyTest;
+            accuracyLabelTest.Text = "Accuracy: " + Math.Round(accuracyTest*100,2) + "%";
         }
 
         private void trainingSizeSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -166,8 +173,28 @@ namespace HSA.UserInterface
             trainingSizeSelector.SelectedIndex = 9 - testSizeSelector.SelectedIndex;
         }
 
+        private void resetTreeButton_Click(object sender, EventArgs e)
+        {
+            DecisionTree = new DecisionTree(DecisionTree.DataOriginal);
+            resetTreeButton.Enabled = false;
+            trainButton.Enabled = true;
+            testingButton.Enabled = false;
+            Clear();
+        }
 
 
+        private void Clear()
+        {
+            implementationOption1.Select();
+
+            heigthLimitTxtBox.Text = "";
+
+            accuracyLabelTraining.Text = "Accuracy: -%";
+
+            accuracyLabelTest.Text = "Accuracy: -%";
+
+            decisionTreeView.Nodes.Clear();
+        }
 
 
         // ----------------------------------------------------------------------------------------------------

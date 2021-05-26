@@ -34,9 +34,9 @@ namespace HSA.Tree
 
         // Constructor
 
-        public DecisionTree(DataSetManager dataSetManager)
+        public DecisionTree(DataTable data)
         {
-            DataTraining = dataSetManager.Data;
+            DataTraining = data;
             DataOriginal = DataTraining;
             DataFiltered = new DataView(DataTraining);
 
@@ -104,11 +104,11 @@ namespace HSA.Tree
             foreach(DataRow dr in DataTest.Rows)
             {
 
-                string predictedPriceRange = Predict(dr);
+                string predictedPriceRange = Predict(dr).Split(';')[0];
 
-                string actualPriceRange = (string) dr["price_range"];
+                string actualPriceRange = ((string) dr["price_range"]);
 
-                if (!predictedPriceRange.Equals(actualPriceRange.Split(' ')[0]))
+                if (!predictedPriceRange.Equals(actualPriceRange))
                 {
                     misses++;
                 }
@@ -124,10 +124,14 @@ namespace HSA.Tree
 
         public string Predict(DataRow newDataPoint)
         {
+            string treeTraversal = "";
+
             if (!Root.IsLeaf && Root.TrueNode == null)
             {
                 throw new Exception("No tree has been generated");
             }
+
+            Node parent = null;
 
             Node currentNode = Root;
 
@@ -138,8 +142,10 @@ namespace HSA.Tree
 
                 object dataPointAttributeValue = newDataPoint[attributeName];
 
+                parent = currentNode;
+
                 if (dataPointAttributeValue.GetType().Equals(typeof(int)))
-                {
+                {                    
                     currentNode = currentNode.EvaluateCondition<int>((int)dataPointAttributeValue);
                 }
                 else if (dataPointAttributeValue.GetType().Equals(typeof(double)))
@@ -158,9 +164,20 @@ namespace HSA.Tree
                 {
                     throw new Exception("Unsupported data type");
                 }
+
+                if(currentNode == parent.TrueNode){
+                    treeTraversal += "True: " + parent.ConditionAttributeName + " " + parent.ConditionOperator + " " + parent.ConditionValue + "\n";
+                }
+                else
+                {
+                    treeTraversal += "False: " + parent.ConditionAttributeName + " " + parent.ConditionOperator + " " + parent.ConditionValue + "\n";
+                }
+
             }
 
-            return currentNode.Answer;
+            treeTraversal += currentNode.Answer; 
+
+            return currentNode.Answer + ";" + treeTraversal;
         }
 
         public Node generateTree(int heightLimit, double trainingP, double testP)
@@ -215,7 +232,7 @@ namespace HSA.Tree
                 }
 
                 badClassisfications += count - maxCount;
-                currentNode.Answer = maxPriceRange + " " +  (double)maxCount/(double)count + " " + count;
+                currentNode.Answer = maxPriceRange + ";" +  (double)maxCount/(double)count + " " + count;
 
                 return;
             }
@@ -342,7 +359,7 @@ namespace HSA.Tree
                 }
 
                 badClassisfications += count - maxCount;
-                currentNode.Answer = maxPriceRange + " " + (double)maxCount / (double)count + " " + count;
+                currentNode.Answer = maxPriceRange + ";" + (double)maxCount / (double)count + " " + count;
 
             }
 

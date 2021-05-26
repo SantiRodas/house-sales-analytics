@@ -36,6 +36,14 @@ namespace HSA.UserInterface
             viewComboBox.SelectedIndex = 0;
             conditionComboBox.SelectedIndex = 0;
             gradeComboBox.SelectedIndex = 0;
+            sqftLiving15ComboBox.SelectedIndex = 0;
+            sqftLivingComboBox.SelectedIndex = 0;
+            sqftAboveComboBox.SelectedIndex = 0;
+            sqftBsmteComboBox.SelectedIndex = 0;
+            sqftLiving15ComboBox.SelectedIndex = 0;
+            sqftLot15ComboBox.SelectedIndex = 0;
+            sqftLotComboBox.SelectedIndex = 0;
+
             this.dsTree = dsTree;
         }
 
@@ -63,11 +71,9 @@ namespace HSA.UserInterface
                 double bathrooms = double.Parse(bathroomsText.Text);
                 if (bathrooms < 0) throw new FormatException("Bathrooms is less than 0");
 
-                double sqftLiving = double.Parse(sqftLivingText.Text);
-                if (sqftLiving <= 0) throw new FormatException("sqftLiving  is less or equal than 0");
+                string sqftLiving = (string)sqftLivingComboBox.SelectedItem;
 
-                double sqftLot = double.Parse(sqftLotText.Text);
-                if (sqftLot <= 0) throw new FormatException("sqftLot is less or equal than 0");
+                string sqftLot = (string) sqftLotComboBox.SelectedItem;
 
                 double floors = double.Parse(floorText.Text);
                 if (floors <= 0) throw new FormatException("floors is less or equal than 0");
@@ -88,32 +94,28 @@ namespace HSA.UserInterface
                 
                 // The system take the information of the house
 
-                int view = int.Parse((string)viewComboBox.SelectedItem);
+                string view = (string)viewComboBox.SelectedItem;
 
-                int condition = int.Parse((string)conditionComboBox.SelectedItem);
+                string condition = (string)conditionComboBox.SelectedItem;
 
-                int grade = int.Parse((string)gradeComboBox.SelectedItem);
+                string grade = (string)gradeComboBox.SelectedItem;
 
-                double sqftAbove = double.Parse(sqftAboveText.Text);
-                if (sqftAbove <= 0) throw new FormatException("sqftAbove is less than 0");
+                string sqftAbove = (string)sqftAboveComboBox.SelectedItem;
 
                 // The right part of the window
 
-                double sqftBasement = double.Parse(sqftBasementText.Text);
-                if (sqftBasement < 0) throw new FormatException("sqftBasement is less than 0");
+                string sqftBasement = (string)sqftBsmteComboBox.SelectedItem;
 
                 int yearBuilt = int.Parse(yearBuiltText.Text);
 
-                int yearRenovated = int.Parse(yearRenovatedText.Text);
+                int zipcodeInt = int.Parse(zipCodeText.Text);
 
-                int zipCode = int.Parse(zipCodeText.Text);
-                if (zipCode <= 0) throw new FormatException("Zipcode is less or equal than 0");
+                if (zipcodeInt <= 0) throw new FormatException("Zipcode is less or equal than 0");
+                string zipcode = zipcodeInt.ToString();
 
-                double sqftLiving15 = double.Parse(sqftLiving15Text.Text);
-                if (sqftLiving15 <= 0) throw new FormatException("sqftLiving15 is less or equal than 0");
+                string sqftLiving15 = (string)sqftLiving15ComboBox.SelectedItem;
 
-                double sqftLot15 = double.Parse(sqftLot15Text.Text);
-                if (sqftLot15 <= 0) throw new FormatException("sqftLot15 is less or equal than 0");
+                string sqftLot15 = (string)sqftLot15ComboBox.SelectedItem;
 
                 DataRow newDataPoint = dsTree.DataTraining.NewRow();
 
@@ -129,15 +131,18 @@ namespace HSA.UserInterface
                 newDataPoint["sqft_above"] = sqftAbove;
                 newDataPoint["sqft_basement"] = sqftBasement;
                 newDataPoint["yr_built"] = yearBuilt;
-                newDataPoint["yr_renovated"] = yearRenovated;
-                newDataPoint["zipcode"] = zipCode;
+                newDataPoint["zipcode"] = zipcode;
                 newDataPoint["sqft_living15"] = sqftLiving15;
                 newDataPoint["sqft_lot15"] = sqftLot15;
 
                 // With this information the system can work
 
-                String priceRange = predictOwnImplementation(newDataPoint);
+                string[] prediction = dsTree.Predict(newDataPoint).Split(';');
 
+                string priceRange = prediction[0];
+                string treeTraversal = prediction[2];
+
+                treeTraversalRichTxtBox.Text = treeTraversal;
                 priceRangeLabel.Text = "Price Range: " + priceRange;
 
                 ClearTextBoxes();
@@ -147,49 +152,6 @@ namespace HSA.UserInterface
             {
                 MessageBox.Show("The following error ocurred, please check that every fill is filled:\n" + ex.Message, "Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
-        }
-
-        private string predictOwnImplementation(DataRow newDataPoint)
-        {
-            Node root = dsTree.Root;
-
-            if(!root.IsLeaf && root.TrueNode == null)
-            {
-                throw new Exception("No tree has been generated");
-            }
-
-            Node currentNode = root;
-                        
-            while (!currentNode.IsLeaf)
-            {
-
-                string attributeName = currentNode.ConditionAttributeName;
-
-                object dataPointAttributeValue = newDataPoint[attributeName];
-
-                if (dataPointAttributeValue.GetType().Equals(typeof(int))){
-                    currentNode = currentNode.EvaluateCondition<int>((int)dataPointAttributeValue);
-                }
-                else if (dataPointAttributeValue.GetType().Equals(typeof(double)))
-                {
-                    currentNode = currentNode.EvaluateCondition<double>((double)dataPointAttributeValue);
-                }
-                else if (dataPointAttributeValue.GetType().Equals(typeof(bool)))
-                {
-                    currentNode = currentNode.EvaluateCondition<bool>((bool)dataPointAttributeValue);
-                }
-                else if (dataPointAttributeValue.GetType().Equals(typeof(string)))
-                {
-                    currentNode = currentNode.EvaluateCondition<string>((string)dataPointAttributeValue);
-                }
-                else
-                {
-                    throw new Exception("Unsupported data type");
-                }
-
-            }
-
-            return currentNode.Answer;
         }
 
         private void ClearTextBoxes()
@@ -206,6 +168,12 @@ namespace HSA.UserInterface
             };
 
             func(Controls);
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            ClearTextBoxes();
+            Initialize(dsTree);
         }
 
 
