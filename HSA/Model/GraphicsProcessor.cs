@@ -48,7 +48,7 @@ namespace HSA.Model
 
             UpdateQuantityPerYear();
 
-            UpdatePricesByZip();
+            //UpdatePricesByZip();
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ namespace HSA.Model
         {
             for (int i =0; i< FilteredData.Rows.Count;i++) 
             {
-                int zipcode = (int)FilteredData.Rows[i]["zipcode"];
+                string zipcode = (string)FilteredData.Rows[i]["zipcode"];
 
                 double price = (double)FilteredData.Rows[i]["price"];
 
@@ -110,7 +110,7 @@ namespace HSA.Model
 
         // Method add price to hash table
 
-        private void AddPriceToHashtable(int zipcode, double price, double sqr_ft) {
+        private void AddPriceToHashtable(string zipcode, double price, double sqr_ft) {
 
             double[] arrayForAverage = { 0, 0, 0, 0 };
 

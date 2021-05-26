@@ -52,8 +52,10 @@ namespace HSA.UserInterface
             UpdateChartZipcodeXAverage();
             UpdateChartZipcodeXPercentage();
             UpdateChartYearXQuantity();
+            /*
             UpdateChartZipcodeXAverageSqrFt();
             UpdateChartZipcodeXAverageSqrFtPrice();
+            */
         }
 
         // ----------------------------------------------------------------------------------------------------

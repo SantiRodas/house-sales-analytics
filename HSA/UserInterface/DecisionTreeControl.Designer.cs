@@ -37,14 +37,17 @@ namespace HSA.UserInterface
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.trainingSizeSelector = new System.Windows.Forms.ComboBox();
             this.trainingLabel = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.testSizeSelector = new System.Windows.Forms.ComboBox();
             this.testSizeLabel = new System.Windows.Forms.Label();
             this.efficiencyLabel = new System.Windows.Forms.Label();
             this.testingButton = new System.Windows.Forms.Button();
             this.testingLabel = new System.Windows.Forms.Label();
             this.treeVisualizerLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.heigthLimitTxtBox = new System.Windows.Forms.TextBox();
+            this.efficiencyTrainingLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -126,9 +129,12 @@ namespace HSA.UserInterface
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.efficiencyTrainingLabel);
+            this.splitContainer2.Panel1.Controls.Add(this.heigthLimitTxtBox);
+            this.splitContainer2.Panel1.Controls.Add(this.label2);
             this.splitContainer2.Panel1.Controls.Add(this.button1);
             this.splitContainer2.Panel1.Controls.Add(this.label1);
-            this.splitContainer2.Panel1.Controls.Add(this.comboBox2);
+            this.splitContainer2.Panel1.Controls.Add(this.trainingSizeSelector);
             this.splitContainer2.Panel1.Controls.Add(this.trainButton);
             this.splitContainer2.Panel1.Controls.Add(this.trainingLabel);
             this.splitContainer2.Panel1.Controls.Add(this.implementationOption2);
@@ -136,7 +142,7 @@ namespace HSA.UserInterface
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.comboBox1);
+            this.splitContainer2.Panel2.Controls.Add(this.testSizeSelector);
             this.splitContainer2.Panel2.Controls.Add(this.testSizeLabel);
             this.splitContainer2.Panel2.Controls.Add(this.efficiencyLabel);
             this.splitContainer2.Panel2.Controls.Add(this.testingButton);
@@ -164,10 +170,10 @@ namespace HSA.UserInterface
             this.label1.Text = "Training size \r\n(% of original data set):";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // comboBox2
+            // trainingSizeSelector
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.trainingSizeSelector.FormattingEnabled = true;
+            this.trainingSizeSelector.Items.AddRange(new object[] {
             "0.5",
             "0.55",
             "0.6",
@@ -177,12 +183,12 @@ namespace HSA.UserInterface
             "0.8",
             "0.85",
             "0.9",
-            "0.95",
-            "1"});
-            this.comboBox2.Location = new System.Drawing.Point(133, 174);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(111, 21);
-            this.comboBox2.TabIndex = 5;
+            "0.95"});
+            this.trainingSizeSelector.Location = new System.Drawing.Point(133, 174);
+            this.trainingSizeSelector.Name = "trainingSizeSelector";
+            this.trainingSizeSelector.Size = new System.Drawing.Size(111, 21);
+            this.trainingSizeSelector.TabIndex = 5;
+            this.trainingSizeSelector.SelectedIndexChanged += new System.EventHandler(this.trainingSizeSelector_SelectedIndexChanged);
             // 
             // trainingLabel
             // 
@@ -195,10 +201,11 @@ namespace HSA.UserInterface
             this.trainingLabel.TabIndex = 3;
             this.trainingLabel.Text = "Training";
             // 
-            // comboBox1
+            // testSizeSelector
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.testSizeSelector.FormattingEnabled = true;
+            this.testSizeSelector.Items.AddRange(new object[] {
+            "0.05",
             "0.1",
             "0.15",
             "0.2",
@@ -208,10 +215,11 @@ namespace HSA.UserInterface
             "0.4",
             "0.45",
             "0.5"});
-            this.comboBox1.Location = new System.Drawing.Point(133, 140);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 6;
+            this.testSizeSelector.Location = new System.Drawing.Point(133, 140);
+            this.testSizeSelector.Name = "testSizeSelector";
+            this.testSizeSelector.Size = new System.Drawing.Size(121, 21);
+            this.testSizeSelector.TabIndex = 6;
+            this.testSizeSelector.SelectedIndexChanged += new System.EventHandler(this.testSizeSelector_SelectedIndexChanged);
             // 
             // testSizeLabel
             // 
@@ -264,6 +272,31 @@ namespace HSA.UserInterface
             this.treeVisualizerLabel.TabIndex = 1;
             this.treeVisualizerLabel.Text = "Tree Visualizer";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(39, 147);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Height Limit";
+            // 
+            // heigthLimitTxtBox
+            // 
+            this.heigthLimitTxtBox.Location = new System.Drawing.Point(132, 147);
+            this.heigthLimitTxtBox.Name = "heigthLimitTxtBox";
+            this.heigthLimitTxtBox.Size = new System.Drawing.Size(100, 20);
+            this.heigthLimitTxtBox.TabIndex = 10;
+            // 
+            // efficiencyTrainingLabel
+            // 
+            this.efficiencyTrainingLabel.AutoSize = true;
+            this.efficiencyTrainingLabel.Location = new System.Drawing.Point(94, 48);
+            this.efficiencyTrainingLabel.Name = "efficiencyTrainingLabel";
+            this.efficiencyTrainingLabel.Size = new System.Drawing.Size(72, 13);
+            this.efficiencyTrainingLabel.TabIndex = 7;
+            this.efficiencyTrainingLabel.Text = "Accuracy: 0%";
+            // 
             // DecisionTreeControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -298,11 +331,14 @@ namespace HSA.UserInterface
         private System.Windows.Forms.Label testingLabel;
         private System.Windows.Forms.Label treeVisualizerLabel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox trainingSizeSelector;
+        private System.Windows.Forms.ComboBox testSizeSelector;
         private System.Windows.Forms.Label testSizeLabel;
         private System.Windows.Forms.Label efficiencyLabel;
         private System.Windows.Forms.Button testingButton;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label efficiencyTrainingLabel;
+        private System.Windows.Forms.TextBox heigthLimitTxtBox;
+        private System.Windows.Forms.Label label2;
     }
 }

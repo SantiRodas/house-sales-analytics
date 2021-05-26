@@ -20,6 +20,7 @@ namespace HSA.UserInterface
         public void Initialize(DecisionTree dsTree)
         {
             DecisionTree = dsTree;
+            trainingSizeSelector.SelectedIndex = 8;
         }
 
 
@@ -51,7 +52,7 @@ namespace HSA.UserInterface
 
                 if (root.FalseNode.ConditionAttributeName != null)
                 {
-                    printValueFalse = root.FalseNode.ConditionAttributeName + " " + root.FalseNode.ConditionOperator.ToString() + " " + root.FalseNode.ConditionValue.ToString();
+                    printValueFalse = root.FalseNode.ConditionAttributeName + " " + root.FalseNode.ConditionOperator.ToString() + " " + root.FalseNode.ConditionValue.ToString() + " " + root.FalseNode.Partition.Rows.Count;
                 }
                 else
                 {
@@ -60,7 +61,7 @@ namespace HSA.UserInterface
 
                 if (root.TrueNode.ConditionAttributeName != null)
                 {
-                    printValueTrue = root.TrueNode.ConditionAttributeName + " " + root.TrueNode.ConditionOperator.ToString() + " " + root.TrueNode.ConditionValue.ToString();
+                    printValueTrue = root.TrueNode.ConditionAttributeName + " " + root.TrueNode.ConditionOperator.ToString() + " " + root.TrueNode.ConditionValue.ToString() +  " " + root.TrueNode.Partition.Rows.Count;
                 }
                 else
                 {
@@ -100,9 +101,29 @@ namespace HSA.UserInterface
         {
             if (implementationOption1.Checked)
             {
-                DecisionTree.generateTree();
-                Console.WriteLine("Finish generating");
-                LoadTree(DecisionTree.Root);
+                try
+                {
+                    int heightLimit = int.Parse(heigthLimitTxtBox.Text);
+
+                    if (heightLimit <= 1) { throw new FormatException("Invalid height"); }
+
+                    double trainingP = double.Parse((string)trainingSizeSelector.SelectedItem);
+
+                    double testP = double.Parse((string)testSizeSelector.SelectedItem);
+
+                    DecisionTree.generateTree(heightLimit, trainingP, testP);
+
+                    Console.WriteLine("Finish generating");
+
+                    efficiencyTrainingLabel.Text = "Accuracy: " + Math.Round(DecisionTree.Accuracy*100, 2) + "%";
+
+                    LoadTree(DecisionTree.Root);
+                }
+                catch(FormatException)
+                {
+                    MessageBox.Show("Be sure the number input is correct!","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                }
+                
 
             } else if (implementationOption2.Checked)
             {
@@ -124,7 +145,25 @@ namespace HSA.UserInterface
 
         private void testingButton_Click(object sender, EventArgs e)
         {
+            double accuracyTest = DecisionTree.Test();
 
+            efficiencyLabel.Text = "Accuracy: " + " " + accuracyTest;
+        }
+
+        private void trainingSizeSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+
+
+            testSizeSelector.SelectedIndex = 9 - trainingSizeSelector.SelectedIndex;
+
+
+
+        }
+
+        private void testSizeSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            trainingSizeSelector.SelectedIndex = 9 - testSizeSelector.SelectedIndex;
         }
 
 

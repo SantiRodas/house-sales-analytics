@@ -238,7 +238,7 @@ namespace HSA.Model
 
         private void AddPriceRange(DataRow newRow)
         {
-            double price = (Double)newRow[2];
+            double price = (Double)newRow["price"];
             double difference = 100000;
 
             string range = "";

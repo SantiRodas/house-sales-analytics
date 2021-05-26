@@ -115,7 +115,7 @@ namespace HSA.UserInterface
                 double sqftLot15 = double.Parse(sqftLot15Text.Text);
                 if (sqftLot15 <= 0) throw new FormatException("sqftLot15 is less or equal than 0");
 
-                DataRow newDataPoint = dsTree.Data.NewRow();
+                DataRow newDataPoint = dsTree.DataTraining.NewRow();
 
                 newDataPoint["bedrooms"] = bedrooms;
                 newDataPoint["bathrooms"] = bathrooms;

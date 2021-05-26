@@ -11,14 +11,24 @@ namespace HSA.Tree
 {
     public class DecisionTree
     {
+
+        private int badClassisfications = 0;
+
+        public double Accuracy { get; set; }
+
+        public int HeightLimit { get; set; }
+
         public double OverallGiniIndex { get; set; }
 
         public Hashtable PriceRangesCountGlobal { get; private set; }     
         
-        public DataTable Data { get; set; }
+        public DataTable DataTraining { get; set; }
+
+        public DataTable DataTest { get; set; }
 
         public DataView DataFiltered { get; set; }
 
+        public DataTable DataOriginal { get; set; }
 
         // ----------------------------------------------------------------------------------------------------
 
@@ -26,7 +36,9 @@ namespace HSA.Tree
 
         public DecisionTree(DataSetManager dataSetManager)
         {
-            Data = dataSetManager.Data;
+            DataTraining = dataSetManager.Data;
+            DataOriginal = DataTraining;
+            DataFiltered = new DataView(DataTraining);
 
             CalculateOverallGiniIndex();
 
@@ -34,10 +46,9 @@ namespace HSA.Tree
             {
                 GiniIndex = OverallGiniIndex,
                 ObservationClassCount = PriceRangesCountGlobal,
-                Partition = Data
+                Partition = DataTraining
             };
 
-            Console.WriteLine(OverallGiniIndex);
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -61,7 +72,7 @@ namespace HSA.Tree
         {
             Hashtable priceRangesCount = new Hashtable();
 
-            foreach (DataRow register in Data.Rows)
+            foreach (DataRow register in DataTraining.Rows)
             {
                 string range = register["price_range"].ToString();
 
@@ -69,7 +80,7 @@ namespace HSA.Tree
 
             }
 
-            int totalRows = Data.Rows.Count; //Total number of rows in the data set
+            int totalRows = DataTraining.Rows.Count; //Total number of rows in the data set
 
             double sumProportionSquared = 0;
 
@@ -85,27 +96,115 @@ namespace HSA.Tree
             PriceRangesCountGlobal = priceRangesCount;
         }      
 
-        public Node generateTree()
+        public double Test()
         {
-            generateTreeRecursive(root);
+
+            double misses = 0;
+
+            foreach(DataRow dr in DataTest.Rows)
+            {
+
+                string predictedPriceRange = Predict(dr);
+
+                string actualPriceRange = (string) dr["price_range"];
+
+                if (!predictedPriceRange.Equals(actualPriceRange.Split(' ')[0]))
+                {
+                    misses++;
+                }
+
+
+            }
+
+
+            double accuracy =1.0 - misses / (double)DataTest.Rows.Count;
+
+            return accuracy;
+        }
+
+        public string Predict(DataRow newDataPoint)
+        {
+            if (!Root.IsLeaf && Root.TrueNode == null)
+            {
+                throw new Exception("No tree has been generated");
+            }
+
+            Node currentNode = Root;
+
+            while (!currentNode.IsLeaf)
+            {
+
+                string attributeName = currentNode.ConditionAttributeName;
+
+                object dataPointAttributeValue = newDataPoint[attributeName];
+
+                if (dataPointAttributeValue.GetType().Equals(typeof(int)))
+                {
+                    currentNode = currentNode.EvaluateCondition<int>((int)dataPointAttributeValue);
+                }
+                else if (dataPointAttributeValue.GetType().Equals(typeof(double)))
+                {
+                    currentNode = currentNode.EvaluateCondition<double>((double)dataPointAttributeValue);
+                }
+                else if (dataPointAttributeValue.GetType().Equals(typeof(bool)))
+                {
+                    currentNode = currentNode.EvaluateCondition<bool>((bool)dataPointAttributeValue);
+                }
+                else if (dataPointAttributeValue.GetType().Equals(typeof(string)))
+                {
+                    currentNode = currentNode.EvaluateCondition<string>((string)dataPointAttributeValue);
+                }
+                else
+                {
+                    throw new Exception("Unsupported data type");
+                }
+            }
+
+            return currentNode.Answer;
+        }
+
+        public Node generateTree(int heightLimit, double trainingP, double testP)
+        {
+            badClassisfications = 0;
+
+            int trainingIndex = (int)((double)trainingP *(double) DataOriginal.Rows.Count);
+            int testIndex = DataOriginal.Rows.Count - (int)((double)testP * (double)DataOriginal.Rows.Count)-1;
+
+            DataFiltered.RowFilter = $"pos <= {trainingIndex}";
+
+            DataTraining = DataFiltered.ToTable();
+
+            DataFiltered.RowFilter = $"pos > {testIndex}";
+
+            DataTest = DataFiltered.ToTable();
+
+            root.Partition = DataTraining;
+
+            HeightLimit = heightLimit;
+
+            generateTreeRecursive(root, 1);
+
+            Accuracy = 1 - (double)badClassisfications / (double)DataTraining.Rows.Count;
 
             return root;
         }
 
-        private void generateTreeRecursive(Node currentNode)
+        private void generateTreeRecursive(Node currentNode, int currentHeight)
         {
-            if(currentNode.Partition.Rows.Count <= 1)
+            if(currentNode.Partition.Rows.Count <= 1 || currentHeight >= HeightLimit)
             {
                 currentNode.IsLeaf = true;
 
                 Hashtable currentNodePriceRangeCount = currentNode.ObservationClassCount;
 
                 int maxCount = -1;
+                int count = 0;
 
                 String maxPriceRange = "";
 
                 foreach (DictionaryEntry priceRangeCount in currentNodePriceRangeCount)
                 {
+                    count += (int)priceRangeCount.Value;
 
                     if ((int)priceRangeCount.Value > maxCount)
                     {
@@ -115,19 +214,21 @@ namespace HSA.Tree
 
                 }
 
-                currentNode.Answer = maxPriceRange;
+                badClassisfications += count - maxCount;
+                currentNode.Answer = maxPriceRange + " " +  (double)maxCount/(double)count + " " + count;
 
                 return;
             }
 
             Console.WriteLine(currentNode.Partition.Rows.Count);
+
             //<giniIndex, [columnName, condition]>
             KeyValuePair<double, Tuple<string, object, Hashtable, Hashtable,double,double>> bestColumnGiniAndCondition = SelectBestColumn(currentNode.Partition);
 
             double infoGain = currentNode.GiniIndex - bestColumnGiniAndCondition.Key;
 
             Console.WriteLine("curent node gini index = " + currentNode.GiniIndex);
-            Console.WriteLine("best column gini and condition" + bestColumnGiniAndCondition.Key);
+            Console.WriteLine("best column gini and condition = " + bestColumnGiniAndCondition.Key);
             Console.WriteLine("Info gain = " + infoGain);
 
             string columnName = bestColumnGiniAndCondition.Value.Item1;
@@ -188,7 +289,8 @@ namespace HSA.Tree
                     string condition = (string)conditionObj;
 
                     partitionTrue.RowFilter = $"{columnName} = '{condition}'";
-                    partitionFalse.RowFilter = $"{columnName} != '{condition}'";
+
+                    partitionFalse.RowFilter = $"{columnName} <> '{condition}'";
 
                     currentNode.ConditionOperator = LogicalOperator.EQUALS;
                 }
@@ -212,8 +314,8 @@ namespace HSA.Tree
                 currentNode.TrueNode = nodeTrue;
                 currentNode.FalseNode = nodeFalse;
 
-                generateTreeRecursive(nodeTrue);
-                generateTreeRecursive(nodeFalse);
+                generateTreeRecursive(nodeTrue, currentHeight+1);
+                generateTreeRecursive(nodeFalse,currentHeight+1);
 
             }
             else//Es una hoja
@@ -223,11 +325,13 @@ namespace HSA.Tree
                 Hashtable currentNodePriceRangeCount = currentNode.ObservationClassCount;
 
                 int maxCount = -1;
+                int count = 0;
 
                 String maxPriceRange = "";
 
                 foreach (DictionaryEntry priceRangeCount in currentNodePriceRangeCount)
                 {
+                    count += (int)priceRangeCount.Value;
 
                     if ((int)priceRangeCount.Value > maxCount)
                     {
@@ -237,7 +341,9 @@ namespace HSA.Tree
 
                 }
 
-                currentNode.Answer = maxPriceRange;
+                badClassisfications += count - maxCount;
+                currentNode.Answer = maxPriceRange + " " + (double)maxCount / (double)count + " " + count;
+
             }
 
         }
@@ -267,7 +373,7 @@ namespace HSA.Tree
                 String columnName = column.ColumnName;
                 Type columnDataType = column.DataType;
 
-                if (!columnName.Equals("id") && !columnName.Equals("date")
+                if (!columnName.Equals("id") && !columnName.Equals("pos") && !columnName.Equals("date")
                     && !columnName.Equals("lat") && !columnName.Equals("long")
                     && !columnName.Equals("price") && !columnName.Equals("price_range"))
                 {
