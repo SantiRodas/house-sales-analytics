@@ -80,6 +80,7 @@ namespace HSA.UserInterface
             this.implementationOption1.TabStop = true;
             this.implementationOption1.Text = "Own implementation";
             this.implementationOption1.UseVisualStyleBackColor = true;
+            this.implementationOption1.CheckedChanged += new System.EventHandler(this.implementationOption1_CheckedChanged);
             // 
             // implementationOption2
             // 
@@ -91,6 +92,7 @@ namespace HSA.UserInterface
             this.implementationOption2.TabStop = true;
             this.implementationOption2.Text = "Library Implementation";
             this.implementationOption2.UseVisualStyleBackColor = true;
+            this.implementationOption2.CheckedChanged += new System.EventHandler(this.implementationOption2_CheckedChanged);
             // 
             // trainButton
             // 

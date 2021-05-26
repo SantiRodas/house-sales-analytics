@@ -104,6 +104,8 @@ namespace HSA.UserInterface
             {
                 try
                 {
+                   
+
                     int heightLimit = int.Parse(heigthLimitTxtBox.Text);
 
                     if (heightLimit <= 1) { throw new FormatException("Invalid height"); }
@@ -134,7 +136,7 @@ namespace HSA.UserInterface
 
             } else if (implementationOption2.Checked)
             {
-                // The user select the library implementation
+             
 
                 MessageBox.Show("This option is not yet implemented, please wait for future versions");
             }
@@ -194,6 +196,16 @@ namespace HSA.UserInterface
             accuracyLabelTest.Text = "Accuracy: -%";
 
             decisionTreeView.Nodes.Clear();
+        }
+
+        private void implementationOption1_CheckedChanged(object sender, EventArgs e)
+        {
+            heigthLimitTxtBox.Enabled = true;
+        }
+
+        private void implementationOption2_CheckedChanged(object sender, EventArgs e)
+        {
+            heigthLimitTxtBox.Enabled = false;
         }
 
 
