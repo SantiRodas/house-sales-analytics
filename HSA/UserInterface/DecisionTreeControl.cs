@@ -136,7 +136,7 @@ namespace HSA.UserInterface
 
             } else if (implementationOption2.Checked)
             {
-             
+                DecisionTree.generateTreeMLNet();
 
                 MessageBox.Show("This option is not yet implemented, please wait for future versions");
             }
@@ -201,11 +201,13 @@ namespace HSA.UserInterface
         private void implementationOption1_CheckedChanged(object sender, EventArgs e)
         {
             heigthLimitTxtBox.Enabled = true;
+            trainingSizeSelector.Enabled = true;
         }
 
         private void implementationOption2_CheckedChanged(object sender, EventArgs e)
         {
             heigthLimitTxtBox.Enabled = false;
+            trainingSizeSelector.Enabled = false;
         }
 
 

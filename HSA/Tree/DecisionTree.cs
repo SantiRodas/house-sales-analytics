@@ -181,6 +181,12 @@ namespace HSA.Tree
             return currentNode.Answer + ";" + treeTraversal;
         }
 
+        public void generateTreeMLNet()
+        {
+           //TODO
+
+        }
+
         public Node generateTree(int heightLimit, double trainingP, double testP)
         {
             badClassisfications = 0;
@@ -208,33 +214,7 @@ namespace HSA.Tree
         }
 
 
-        public Node generateTreeWithMLNet(int heightLimit, double trainingP, double testP)
-        {
-            badClassisfications = 0;
-
-            int trainingIndex = (int)((double)trainingP * (double)DataOriginal.Rows.Count);
-            int testIndex = DataOriginal.Rows.Count - (int)((double)testP * (double)DataOriginal.Rows.Count) - 1;
-
-            DataFiltered.RowFilter = $"pos <= {trainingIndex}";
-
-            DataTraining = DataFiltered.ToTable();
-
-            DataFiltered.RowFilter = $"pos > {testIndex}";
-
-            DataTest = DataFiltered.ToTable();
-
-            root.Partition = DataTraining;
-
-            HeightLimit = heightLimit;
-
-            generateTreeRecursive(root, 1);
-
-            Accuracy = 1 - (double)badClassisfications / (double)DataTraining.Rows.Count;
-
-            return root;
-        }
-
-
+       
         public void Reset()
         {
             DataTraining = DataOriginal;
