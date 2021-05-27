@@ -181,6 +181,13 @@ namespace HSA.Tree
             return currentNode.Answer + ";" + treeTraversal;
         }
 
+        public void generateTreeMLNet()
+        {
+            //TODO
+
+         
+        }
+
         public Node generateTree(int heightLimit, double trainingP, double testP)
         {
             badClassisfications = 0;
@@ -207,6 +214,8 @@ namespace HSA.Tree
             return root;
         }
 
+
+       
         public void Reset()
         {
             DataTraining = DataOriginal;

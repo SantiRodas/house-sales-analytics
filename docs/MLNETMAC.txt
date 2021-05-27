@@ -1,0 +1,128 @@
+Last login: Wed May 26 00:22:35 on ttys001
+iMac-de-de:~ devarona$ dotnet tool install -g mlnet
+Tool 'mlnet' is already installed.
+iMac-de-de:~ devarona$ mkdir myMLApp
+iMac-de-de:~ devarona$ cd myMLApp
+iMac-de-de:myMLApp devarona$ dotnet new console -o consumeModelApp
+Getting ready...
+The template "Console Application" was created successfully.
+
+Processing post-creation actions...
+Running 'dotnet restore' on consumeModelApp/consumeModelApp.csproj...
+  Determining projects to restore...
+  Restored /Users/devaronaosorio/myMLApp/consumeModelApp/consumeModelApp.csproj (in 97 ms).
+Restore succeeded.
+
+iMac-de-de:myMLApp devarona$ pwd
+/Users/devaronaosorio/myMLApp
+iMac-de-de:myMLApp devarona$ ls
+consumeModelApp
+iMac-de-de:myMLApp devarona$ ls
+consumeModelApp		kc_house_data.csv
+iMac-de-de:myMLApp devarona$ mlnet classification --dataset "kc_house_data.csv" --has-header true  --label-col 3 --train-time 10
+Welcome to the ML.NET CLI!
+--------------------------
+Learn more about the ML.NET CLI: https://aka.ms/mlnet-cli
+Use 'mlnet --help' to see available commands and options.
+
+Telemetry
+---------
+The ML.NET CLI tool collects usage data in order to help us improve your experience.
+The data doesn't include personal information or data from your datasets.
+You can opt-out of telemetry by setting the MLDOTNET_CLI_TELEMETRY_OPTOUT environment variable to '1' or 'true' using your favorite shell.
+
+Read more about ML.NET CLI telemetry: https://aka.ms/mlnet-cli-telemetry
+
+Warning: No header has been detected in your dataset, but you have specified --has-header=true. If results are not as expected, please check --has-header option and try training again.
+Start Training
+One or more errors occurred. (Specified label column '20141013' was not found.)
+Check out log file for more information: /Users/devaronaosorio/.mlnet/log.txt
+Exiting ...
+iMac-de-de:myMLApp devarona$ mlnet classification --dataset "kc_house_data.txt" --has-header true  --label-col 3 --train-time 10
+Warning: No header has been detected in your dataset, but you have specified --has-header=true. If results are not as expected, please check --has-header option and try training again.
+Start Training
+One or more errors occurred. (Specified label column '20141013' was not found.)
+Check out log file for more information: /Users/devaronaosorio/.mlnet/log.txt
+Exiting ...
+iMac-de-de:myMLApp devarona$ mlnet classification --dataset "kc_house_data.txt" --has-header false  --label-col 3 --train-time 10
+Start Training
+|     Trainer                              MicroAccuracy  MacroAccuracy  Duration #Iteration                     |
+|1    AveragedPerceptronOva                       0.4779         0.2821       5.5          1                     |                                                                                                                              ===============================================Experiment Results=================================================
+------------------------------------------------------------------------------------------------------------------
+|                                                     Summary                                                    |
+------------------------------------------------------------------------------------------------------------------
+|ML Task: multiclass-classification                                                                              |
+|Dataset: /Users/devaronaosorio/myMLApp/kc_house_data.txt                                                        |
+|Label : col3                                                                                                    |
+|Total experiment time : 5.5013641 Secs                                                                          |
+|Total number of models explored: 1                                                                              |
+------------------------------------------------------------------------------------------------------------------
+
+|                                              Top 1 models explored                                             |
+------------------------------------------------------------------------------------------------------------------
+|     Trainer                              MicroAccuracy  MacroAccuracy  Duration #Iteration                     |
+|1    AveragedPerceptronOva                       0.4779         0.2821       5.5          1                     |
+------------------------------------------------------------------------------------------------------------------
+
+Code Generated
+Generated C# code for model consumption: /Users/devaronaosorio/myMLApp/SampleClassification/SampleClassification.ConsoleApp
+Check out log file for more information: /Users/devaronaosorio/.mlnet/log.txt
+Exiting ...
+iMac-de-de:myMLApp devarona$ mlnet classification --dataset "kc_house_data.txt" --has-header false  --label-col 3 --train-time 30
+Start Training
+|     Trainer                              MicroAccuracy  MacroAccuracy  Duration #Iteration                     |
+|1    AveragedPerceptronOva                       0.4948         0.2912       4.8          1                     |                                                                                                                              ===============================================Experiment Results=================================================
+------------------------------------------------------------------------------------------------------------------
+|                                                     Summary                                                    |
+------------------------------------------------------------------------------------------------------------------
+|ML Task: multiclass-classification                                                                              |
+|Dataset: /Users/devaronaosorio/myMLApp/kc_house_data.txt                                                        |
+|Label : col3                                                                                                    |
+|Total experiment time : 4.8448204 Secs                                                                          |
+|Total number of models explored: 1                                                                              |
+------------------------------------------------------------------------------------------------------------------
+
+|                                              Top 1 models explored                                             |
+------------------------------------------------------------------------------------------------------------------
+|     Trainer                              MicroAccuracy  MacroAccuracy  Duration #Iteration                     |
+|1    AveragedPerceptronOva                       0.4948         0.2912       4.8          1                     |
+------------------------------------------------------------------------------------------------------------------
+
+Code Generated
+Generated C# code for model consumption: /Users/devaronaosorio/myMLApp/SampleClassification/SampleClassification.ConsoleApp
+Check out log file for more information: /Users/devaronaosorio/.mlnet/log.txt
+Exiting ...
+iMac-de-de:myMLApp devarona$ mlnet classification --dataset "kc_house_data.txt" --has-header false  --label-col 3 --train-time 30
+Start Training
+|     Trainer                              MicroAccuracy  MacroAccuracy  Duration #Iteration                     |
+|1    AveragedPerceptronOva                       0.5622         0.1566       3.1          1                     |                                              |2    SdcaMaximumEntropyMulti                     0.5809         0.1835       3.7          2                     |                                              Unable to load shared library 'lib_lightgbm' or one of its dependencies. In order to help diagnose loading problems, consider setting the DYLD_PRINT_LIBRARIES environment variable: dlopen(liblib_lightgbm, 1): image not found
+The type initializer for 'Native' threw an exception.                           |3    FastTreeOva                                 0.6364         0.2590      10.5          3                     |                                              |4    LinearSvmOva                                0.5467         0.1438       1.0          4                     |                                              |5    LbfgsLogisticRegressionOva                  0.5529         0.1404       8.3          5                     |                                                                                                                              ===============================================Experiment Results=================================================
+------------------------------------------------------------------------------------------------------------------
+|                                                     Summary                                                    |
+------------------------------------------------------------------------------------------------------------------
+|ML Task: multiclass-classification                                                                              |
+|Dataset: /Users/devaronaosorio/myMLApp/kc_house_data.txt                                                        |
+|Label : col3                                                                                                    |
+|Total experiment time : 27.346988000000003 Secs                                                                 |
+|Total number of models explored: 7                                                                              |
+------------------------------------------------------------------------------------------------------------------
+
+|                                              Top 5 models explored                                             |
+------------------------------------------------------------------------------------------------------------------
+|     Trainer                              MicroAccuracy  MacroAccuracy  Duration #Iteration                     |
+|1    FastTreeOva                                 0.6364         0.2590      10.5          1                     |
+|2    SdcaMaximumEntropyMulti                     0.5809         0.1835       3.7          2                     |
+|3    AveragedPerceptronOva                       0.5622         0.1566       3.1          3                     |
+|4    LbfgsLogisticRegressionOva                  0.5529         0.1404       8.3          4                     |
+|5    LinearSvmOva                                0.5467         0.1438       1.0          5                     |
+------------------------------------------------------------------------------------------------------------------
+
+Code Generated
+Generated C# code for model consumption: /Users/devaronaosorio/myMLApp/SampleClassification/SampleClassification.ConsoleApp
+Check out log file for more information: /Users/devaronaosorio/.mlnet/log.txt
+Exiting ...
+
+
+
+
+Nota: Estos son los resultados del uso del ML .Net para Mac, se puede concluir de aqui que para este caso, a mayor cantidad de datos mejora la precisión de la clasificación del árbol. Se hicieron 3 ejecuciones del árbol de decisión usando dicha libreria  donde la primera fue con 1000 datos y 10 segundos de entrenamiento, la segunda fue con 1000 datos y 30 segundos de entrenamiento y la tercera fue con 21000 datos y 30 segundos de entrenamiento.
