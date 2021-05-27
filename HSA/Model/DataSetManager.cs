@@ -169,8 +169,11 @@ namespace HSA.Model
         private void LoadData()
         {
             //Reads file content
-            string path = Directory.GetCurrentDirectory().Replace("HSA\\bin\\Debug", "data\\kc_house_data.csv");
-
+            string path = Directory.GetCurrentDirectory().Replace("HSA\\bin\\", "data\\kc_house_data.csv");
+            path = path.Replace("Debug", "");
+            path = path.Replace("x64\\", "");
+            path = path.Replace("x86\\", "");
+            
             string[] rawData = File.ReadAllLines(path);
 
             //Adds columns, [0] is for data types
