@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using HSA.Model;
 using HSA.Utilities;
+using Microsoft.ML;
 using static System.Collections.Generic.Dictionary<string, int>;
 
 namespace HSA.Tree
@@ -185,7 +186,11 @@ namespace HSA.Tree
         {
             //TODO
 
-         
+            MLContext mlContext = new MLContext();
+
+            IDataView trainData = mlContext.Data.LoadFromTextFile<SaleData>("../.../data/kc_house_data", separatorChar: ',', hasHeader: true);
+
+
         }
 
         public Node generateTree(int heightLimit, double trainingP, double testP)
