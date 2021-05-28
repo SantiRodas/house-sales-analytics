@@ -230,7 +230,7 @@ namespace HSA.Model
             foreach(DataRow dr in FilteredData.Rows)
             {
                 string priceRange = (string)dr["price_range"];
-                int priceRangeClassMark = int.Parse(priceRange.Split('-')[0].Replace("[", ""));
+                int priceRangeClassMark = int.Parse(priceRange.Split('-')[0].Replace("[", "").Replace("(", "").Replace("<=", "").Replace(">", ""));
 
                 if (displayData.ContainsKey(priceRangeClassMark))
                 {

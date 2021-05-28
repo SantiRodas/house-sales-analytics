@@ -31,10 +31,12 @@ namespace HSA.UserInterface
 
         private void LoadTree(Node root)
         {
-            TreeNode dad = new TreeNode(root.ConditionAttributeName.ToString() + " " + root.ConditionOperator.ToString() + " " + root.ConditionValue.ToString());
-            decisionTreeView.Nodes.Add(dad);            
-            AddChildrenToTree(root, dad);
-            
+            if (root != null)
+            {
+                TreeNode dad = new TreeNode(root.ConditionAttributeName.ToString() + " " + root.ConditionOperator.ToString() + " " + root.ConditionValue.ToString());
+                decisionTreeView.Nodes.Add(dad);
+                AddChildrenToTree(root, dad);
+            }
         }
 
 
@@ -114,11 +116,11 @@ namespace HSA.UserInterface
 
                     double testP = double.Parse((string)testSizeSelector.SelectedItem);
 
-                    DecisionTree.generateTree(heightLimit, trainingP, testP);
+                    DecisionTree.GenerateTree(heightLimit, trainingP, testP);
 
                     Console.WriteLine("Finish generating");
 
-                    accuracyLabelTraining.Text = "Accuracy: " + Math.Round(DecisionTree.Accuracy*100, 2) + "%";
+                    accuracyLabelTraining.Text = "Accuracy: " + Math.Round(DecisionTree.AccuracyTraining*100, 2) + "%";
 
                     resetTreeButton.Enabled = true;
 

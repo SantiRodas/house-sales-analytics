@@ -1,3 +1,5 @@
+![](https://github.com/SantiRodas/house-sales-analytics/blob/master/images/0.jpg)
+
 # House Sales Analytics (HSA)
 Functional program in C# that allows to read a dataset from Kaggle about the [houses sold in King County, USA.](https://www.kaggle.com/harlfoxem/housesalesprediction)
 Reading this data, the system analyze the information by means of autonomous learning, classifying or predicting the price range of a property.
@@ -43,6 +45,9 @@ Reading this data, the system analyze the information by means of autonomous lea
    2.2 Sequence diagrams
    * [Sequence diagram - 1 (Filters)](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%201%20-%20(Filters).pdf)
    * [Sequence diagram - 2 (Sort)](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%202%20-%20(Sort).pdf)
+   * [Sequence diagram - 3 (Predict)](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%203%20-%20(Predict).pdf)
+   * [Sequence diagram - 4 (Generate)](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%204%20-%20(Generate).pdf)
+   * [Sequence diagram - 5 (Test)](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%205%20-%20(Test).pdf)
 
 3. Implementation
 - [HSA](https://github.com/SantiRodas/house-sales-analytics/tree/master/HSA)
