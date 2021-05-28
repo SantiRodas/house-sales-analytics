@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using HSA.Utilities;
+using Microsoft.ML;
+using static System.Collections.Generic.Dictionary<string, int>;
 
 namespace HSA.Tree
 {
@@ -162,7 +164,13 @@ namespace HSA.Tree
         {
             //TODO
 
-         
+            MLContext mlContext = new MLContext();
+
+            IDataView trainData = mlContext.Data.LoadFromTextFile<SaleData>("../.../data/kc_house_data", separatorChar: ',', hasHeader: true);
+
+
+
+
         }
 
         private void SplitDataSetTrainAndTest(double trainingP, double testP)
