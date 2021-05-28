@@ -76,3 +76,11 @@ Reading this data, the system analyze the information by means of autonomous lea
 -------------------------------------------------------------------------------------------------------------
 
 ![](https://github.com/SantiRodas/house-sales-analytics/blob/master/images/2.JPG)
+
+-------------------------------------------------------------------------------------------------------------
+
+![](https://github.com/SantiRodas/house-sales-analytics/blob/master/images/3.JPG)
+
+-------------------------------------------------------------------------------------------------------------
+
+![](https://github.com/SantiRodas/house-sales-analytics/blob/master/images/4.JPG)
