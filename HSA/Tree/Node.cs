@@ -37,7 +37,7 @@ namespace HSA.Tree
 
         private DataTable partition;
 
-        private Hashtable observationClassCount;
+        private Dictionary<object,int> observationClassCount;
 
         // Getters and Setter
 
@@ -100,7 +100,7 @@ namespace HSA.Tree
             get { return partition; }
             set { partition = value; }
         }
-        public Hashtable ObservationClassCount
+        public Dictionary<object,int> ObservationClassCount
         {
             get { return observationClassCount; }
             set { observationClassCount = value; }

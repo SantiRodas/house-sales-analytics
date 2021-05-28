@@ -180,9 +180,6 @@ namespace HSA.Model
             List<string> columnsTypesBeforePriceRange = rawData[0].Split(',').ToList();
             List<string> columnsNamesBeforePriceRange = rawData[1].Split(',').ToList();
 
-            columnsTypesBeforePriceRange.Add("String");
-            columnsNamesBeforePriceRange.Add("price_range");
-
             string[] columnsTypes = columnsTypesBeforePriceRange.ToArray();
             string[] columnsNames = columnsNamesBeforePriceRange.ToArray();
 
@@ -228,42 +225,11 @@ namespace HSA.Model
                         newRow[columnsNames[j]] = value;
                     }
                 }
-                AddPriceRange(newRow);
 
                 data.Rows.Add(newRow);
             }
             
         }
-
-        // ----------------------------------------------------------------------------------------------------
-
-        // Method add prices range
-
-        private void AddPriceRange(DataRow newRow)
-        {
-            double price = (Double)newRow["price"];
-            double difference = 100000;
-
-            string range = "";
-
-            for (int i = 0; i < 40; i++)
-            {
-                double bottomLimit = i * difference;
-                double topLimit = (i+1) * difference;
-
-                if (price >= bottomLimit && price < topLimit) 
-                { 
-                    range = "["+ bottomLimit +"-"+ topLimit+")";
-                }
-            }
-            if (range.Equals(""))
-            {
-                range = "[4000000-7700000]";
-            }
-
-            newRow[(newRow.ItemArray.Length-1)] = range;
-        }
-
         // ----------------------------------------------------------------------------------------------------
 
         // Method refresh data
