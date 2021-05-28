@@ -188,9 +188,6 @@ namespace HSA.Tree
 
             MLContext mlContext = new MLContext();
 
-            IDataView trainData = mlContext.Data.LoadFromTextFile<SaleData>("../.../data/kc_house_data", separatorChar: ',', hasHeader: true);
-
-
         }
 
         public Node generateTree(int heightLimit, double trainingP, double testP)
