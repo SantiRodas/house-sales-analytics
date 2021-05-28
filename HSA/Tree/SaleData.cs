@@ -4,7 +4,11 @@ namespace HSA.Tree
 {
     public class SaleData
     {
-        
+      
+        [LoadColumn(2)]
+        public float Price { get; set; }
+
+
         [LoadColumn(3)]
         public float Bedrooms { get; set; }
 
