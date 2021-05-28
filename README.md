@@ -45,6 +45,8 @@ Reading this data, the system analyze the information by means of autonomous lea
    * [Sequence diagram - 2 (Sort)](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%202%20-%20(Sort).pdf)
    * [Sequence diagram - 3 (Predict)](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%203%20-%20(Predict).pdf)
    * [Sequence diagram - 4 (Generate)](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%204%20-%20(Generate).pdf)
+   * [Sequence diagram - 5 (Test)](https://github.com/SantiRodas/house-sales-analytics/blob/master/docs/Diagrama%20de%20secuencia%205%20-%20(Test).pdf)
+
 3. Implementation
 - [HSA](https://github.com/SantiRodas/house-sales-analytics/tree/master/HSA)
 
