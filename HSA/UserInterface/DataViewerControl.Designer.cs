@@ -161,7 +161,7 @@ namespace HSA.UserInterface
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(440, 6);
+            this.label1.Location = new System.Drawing.Point(421, 6);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 17;
@@ -172,7 +172,7 @@ namespace HSA.UserInterface
             // 
             this.sortCriteriaLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.sortCriteriaLabel.AutoSize = true;
-            this.sortCriteriaLabel.Location = new System.Drawing.Point(738, 6);
+            this.sortCriteriaLabel.Location = new System.Drawing.Point(705, 6);
             this.sortCriteriaLabel.Name = "sortCriteriaLabel";
             this.sortCriteriaLabel.Size = new System.Drawing.Size(61, 13);
             this.sortCriteriaLabel.TabIndex = 15;
@@ -191,7 +191,7 @@ namespace HSA.UserInterface
             // sortButton
             // 
             this.sortButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.sortButton.Location = new System.Drawing.Point(730, 59);
+            this.sortButton.Location = new System.Drawing.Point(754, 56);
             this.sortButton.Name = "sortButton";
             this.sortButton.Size = new System.Drawing.Size(75, 23);
             this.sortButton.TabIndex = 13;
@@ -233,7 +233,7 @@ namespace HSA.UserInterface
             // 
             this.filteringCriteriaLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.filteringCriteriaLabel.AutoSize = true;
-            this.filteringCriteriaLabel.Location = new System.Drawing.Point(599, 6);
+            this.filteringCriteriaLabel.Location = new System.Drawing.Point(572, 6);
             this.filteringCriteriaLabel.Name = "filteringCriteriaLabel";
             this.filteringCriteriaLabel.Size = new System.Drawing.Size(78, 13);
             this.filteringCriteriaLabel.TabIndex = 9;
@@ -242,7 +242,7 @@ namespace HSA.UserInterface
             // filterButton
             // 
             this.filterButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.filterButton.Location = new System.Drawing.Point(600, 59);
+            this.filterButton.Location = new System.Drawing.Point(575, 56);
             this.filterButton.Name = "filterButton";
             this.filterButton.Size = new System.Drawing.Size(75, 22);
             this.filterButton.TabIndex = 8;
@@ -254,7 +254,7 @@ namespace HSA.UserInterface
             // 
             this.stringFilterLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.stringFilterLabel.AutoSize = true;
-            this.stringFilterLabel.Location = new System.Drawing.Point(296, 6);
+            this.stringFilterLabel.Location = new System.Drawing.Point(272, 6);
             this.stringFilterLabel.Name = "stringFilterLabel";
             this.stringFilterLabel.Size = new System.Drawing.Size(56, 13);
             this.stringFilterLabel.TabIndex = 7;
@@ -311,7 +311,7 @@ namespace HSA.UserInterface
             // 
             this.rangeLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.rangeLabel.AutoSize = true;
-            this.rangeLabel.Location = new System.Drawing.Point(122, 6);
+            this.rangeLabel.Location = new System.Drawing.Point(58, 6);
             this.rangeLabel.Name = "rangeLabel";
             this.rangeLabel.Size = new System.Drawing.Size(42, 13);
             this.rangeLabel.TabIndex = 1;
@@ -346,7 +346,7 @@ namespace HSA.UserInterface
             // resetTableButton
             // 
             this.resetTableButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.resetTableButton.Location = new System.Drawing.Point(12, 7);
+            this.resetTableButton.Location = new System.Drawing.Point(25, 7);
             this.resetTableButton.Name = "resetTableButton";
             this.resetTableButton.Size = new System.Drawing.Size(75, 27);
             this.resetTableButton.TabIndex = 19;
@@ -358,7 +358,7 @@ namespace HSA.UserInterface
             // 
             this.dataShowingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.dataShowingLabel.AutoSize = true;
-            this.dataShowingLabel.Location = new System.Drawing.Point(705, 15);
+            this.dataShowingLabel.Location = new System.Drawing.Point(720, 15);
             this.dataShowingLabel.Name = "dataShowingLabel";
             this.dataShowingLabel.Size = new System.Drawing.Size(109, 13);
             this.dataShowingLabel.TabIndex = 3;

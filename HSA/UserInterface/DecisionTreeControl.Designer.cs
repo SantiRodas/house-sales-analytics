@@ -73,7 +73,7 @@ namespace HSA.UserInterface
             // implementationOption1
             // 
             this.implementationOption1.AutoSize = true;
-            this.implementationOption1.Location = new System.Drawing.Point(70, 74);
+            this.implementationOption1.Location = new System.Drawing.Point(81, 61);
             this.implementationOption1.Name = "implementationOption1";
             this.implementationOption1.Size = new System.Drawing.Size(120, 17);
             this.implementationOption1.TabIndex = 1;
@@ -85,7 +85,7 @@ namespace HSA.UserInterface
             // implementationOption2
             // 
             this.implementationOption2.AutoSize = true;
-            this.implementationOption2.Location = new System.Drawing.Point(66, 107);
+            this.implementationOption2.Location = new System.Drawing.Point(77, 94);
             this.implementationOption2.Name = "implementationOption2";
             this.implementationOption2.Size = new System.Drawing.Size(130, 17);
             this.implementationOption2.TabIndex = 2;
@@ -96,7 +96,7 @@ namespace HSA.UserInterface
             // 
             // trainButton
             // 
-            this.trainButton.Location = new System.Drawing.Point(132, 226);
+            this.trainButton.Location = new System.Drawing.Point(147, 219);
             this.trainButton.Name = "trainButton";
             this.trainButton.Size = new System.Drawing.Size(75, 23);
             this.trainButton.TabIndex = 4;
@@ -156,7 +156,7 @@ namespace HSA.UserInterface
             // accuracyLabelTraining
             // 
             this.accuracyLabelTraining.AutoSize = true;
-            this.accuracyLabelTraining.Location = new System.Drawing.Point(94, 48);
+            this.accuracyLabelTraining.Location = new System.Drawing.Point(163, 20);
             this.accuracyLabelTraining.Name = "accuracyLabelTraining";
             this.accuracyLabelTraining.Size = new System.Drawing.Size(69, 13);
             this.accuracyLabelTraining.TabIndex = 7;
@@ -164,7 +164,7 @@ namespace HSA.UserInterface
             // 
             // heigthLimitTxtBox
             // 
-            this.heigthLimitTxtBox.Location = new System.Drawing.Point(132, 147);
+            this.heigthLimitTxtBox.Location = new System.Drawing.Point(146, 138);
             this.heigthLimitTxtBox.Name = "heigthLimitTxtBox";
             this.heigthLimitTxtBox.Size = new System.Drawing.Size(100, 20);
             this.heigthLimitTxtBox.TabIndex = 10;
@@ -172,7 +172,7 @@ namespace HSA.UserInterface
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(39, 147);
+            this.label2.Location = new System.Drawing.Point(53, 138);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 13);
             this.label2.TabIndex = 9;
@@ -181,7 +181,7 @@ namespace HSA.UserInterface
             // resetTreeButton
             // 
             this.resetTreeButton.Enabled = false;
-            this.resetTreeButton.Location = new System.Drawing.Point(42, 226);
+            this.resetTreeButton.Location = new System.Drawing.Point(57, 219);
             this.resetTreeButton.Name = "resetTreeButton";
             this.resetTreeButton.Size = new System.Drawing.Size(75, 23);
             this.resetTreeButton.TabIndex = 8;
@@ -192,7 +192,7 @@ namespace HSA.UserInterface
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 170);
+            this.label1.Location = new System.Drawing.Point(18, 172);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(113, 26);
             this.label1.TabIndex = 7;
@@ -213,7 +213,7 @@ namespace HSA.UserInterface
             "0.85",
             "0.9",
             "0.95"});
-            this.trainingSizeSelector.Location = new System.Drawing.Point(133, 174);
+            this.trainingSizeSelector.Location = new System.Drawing.Point(147, 176);
             this.trainingSizeSelector.Name = "trainingSizeSelector";
             this.trainingSizeSelector.Size = new System.Drawing.Size(111, 21);
             this.trainingSizeSelector.TabIndex = 5;
@@ -224,7 +224,7 @@ namespace HSA.UserInterface
             this.trainingLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.trainingLabel.AutoSize = true;
             this.trainingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trainingLabel.Location = new System.Drawing.Point(88, 12);
+            this.trainingLabel.Location = new System.Drawing.Point(28, 12);
             this.trainingLabel.Name = "trainingLabel";
             this.trainingLabel.Size = new System.Drawing.Size(87, 24);
             this.trainingLabel.TabIndex = 3;
@@ -245,7 +245,7 @@ namespace HSA.UserInterface
             "0.4",
             "0.45",
             "0.5"});
-            this.testSizeSelector.Location = new System.Drawing.Point(133, 140);
+            this.testSizeSelector.Location = new System.Drawing.Point(146, 126);
             this.testSizeSelector.Name = "testSizeSelector";
             this.testSizeSelector.Size = new System.Drawing.Size(121, 21);
             this.testSizeSelector.TabIndex = 6;
@@ -254,7 +254,7 @@ namespace HSA.UserInterface
             // testSizeLabel
             // 
             this.testSizeLabel.AutoSize = true;
-            this.testSizeLabel.Location = new System.Drawing.Point(4, 135);
+            this.testSizeLabel.Location = new System.Drawing.Point(17, 121);
             this.testSizeLabel.Name = "testSizeLabel";
             this.testSizeLabel.Size = new System.Drawing.Size(113, 26);
             this.testSizeLabel.TabIndex = 5;
@@ -264,7 +264,7 @@ namespace HSA.UserInterface
             // accuracyLabelTest
             // 
             this.accuracyLabelTest.AutoSize = true;
-            this.accuracyLabelTest.Location = new System.Drawing.Point(94, 74);
+            this.accuracyLabelTest.Location = new System.Drawing.Point(163, 44);
             this.accuracyLabelTest.Name = "accuracyLabelTest";
             this.accuracyLabelTest.Size = new System.Drawing.Size(69, 13);
             this.accuracyLabelTest.TabIndex = 4;
@@ -273,7 +273,7 @@ namespace HSA.UserInterface
             // testingButton
             // 
             this.testingButton.Enabled = false;
-            this.testingButton.Location = new System.Drawing.Point(97, 214);
+            this.testingButton.Location = new System.Drawing.Point(100, 215);
             this.testingButton.Name = "testingButton";
             this.testingButton.Size = new System.Drawing.Size(75, 23);
             this.testingButton.TabIndex = 3;
@@ -286,7 +286,7 @@ namespace HSA.UserInterface
             this.testingLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.testingLabel.AutoSize = true;
             this.testingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.testingLabel.Location = new System.Drawing.Point(93, 22);
+            this.testingLabel.Location = new System.Drawing.Point(28, 36);
             this.testingLabel.Name = "testingLabel";
             this.testingLabel.Size = new System.Drawing.Size(79, 24);
             this.testingLabel.TabIndex = 2;
