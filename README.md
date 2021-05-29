@@ -55,6 +55,7 @@ Reading this data, the system analyze the information by means of autonomous lea
 4. Explanatory system videos
 - [Iteration 1](https://www.youtube.com/watch?v=XCxvp5R_Mas)
 - [Iteration 2](https://youtu.be/BDpMM1mIAD8)
+- [Iteration 3](https://www.youtube.com/watch?v=HaemsB8OJlg)
 
 ## Tools used
 * Google Docs
