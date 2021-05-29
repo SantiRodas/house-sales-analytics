@@ -3,8 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Windows.Forms.DataVisualization.Charting;
+using HSA.Model;
 using HSA.Utilities;
 using Microsoft.ML;
+using Microsoft.ML.Data;
+using Microsoft.ML.Trainers;
 using static System.Collections.Generic.Dictionary<string, int>;
 
 namespace HSA.Tree
@@ -160,17 +164,44 @@ namespace HSA.Tree
             return currentNode.Answer + ";" + treeTraversal;
         }
 
-        public void generateTreeMLNet()
+        public RegressionMetrics generateTreeMLNet()
         {
-            //TODO
 
+            // 1. Initialize ML.NET environment
             MLContext mlContext = new MLContext();
 
-            IDataView trainData = mlContext.Data.LoadFromTextFile<SaleData>("../.../data/kc_house_data", separatorChar: ',', hasHeader: true);
 
+            // ISSUES WITH PATH
+            // 2. Load training data
+            IDataView trainData = mlContext.Data.LoadFromTextFile<SaleData>("kc_house_data.csv", separatorChar: ',', hasHeader: true);
 
+            // 3. Add data transformations
+            var dataProcessPipeline = mlContext.Transforms.Concatenate(outputColumnName: "Features", "Price", "Bedrooms", "Bathrooms", "Sqft_living","Sqft_lot", "Floors", "Waterfronts", "View", "Condition", "Grade", "Sqft_above", "Sqft_basement", "Yr_built", "Yr_renovated", "Zipcode", "Sqft_living15","Sqft_lot15");
 
+            // 4. Add algorithm
+            var pipeline = mlContext.Regression.Trainers.FastTree(labelColumnName: "Price", featureColumnName: "Features");
 
+            // 5. Train model
+            var model = pipeline.Fit(trainData);
+
+            // 6. Evaluate model on test data
+            IDataView testData = mlContext.Data.LoadFromTextFile<SaleData>("kc_house_data_test.csv");
+            IDataView predictions = model.Transform(testData);
+            var metrics = mlContext.Regression.Evaluate(predictions, "Price");
+
+            return metrics;
+
+        }
+
+        // Print some evaluation metrics to regression problems.
+        private static void PrintMetrics(RegressionMetrics metrics)
+        {
+            Console.WriteLine("Mean Absolute Error: " + metrics.MeanAbsoluteError);
+            Console.WriteLine("Mean Squared Error: " + metrics.MeanSquaredError);
+            Console.WriteLine(
+                "Root Mean Squared Error: " + metrics.RootMeanSquaredError);
+
+            Console.WriteLine("RSquared: " + metrics.RSquared);
         }
 
         private void SplitDataSetTrainAndTest(double trainingP, double testP)
