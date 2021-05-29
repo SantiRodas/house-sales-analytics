@@ -164,10 +164,8 @@ namespace HSA.Tree
             return currentNode.Answer + ";" + treeTraversal;
         }
 
-        public void generateTreeMLNet()
+        public RegressionMetrics generateTreeMLNet()
         {
-            //TODO
-
 
             // 1. Initialize ML.NET environment
             MLContext mlContext = new MLContext();
@@ -186,6 +184,24 @@ namespace HSA.Tree
             // 5. Train model
             var model = pipeline.Fit(trainData);
 
+            // 6. Evaluate model on test data
+            IDataView testData = mlContext.Data.LoadFromTextFile<SaleData>("kc_house_data_test.csv");
+            IDataView predictions = model.Transform(testData);
+            var metrics = mlContext.Regression.Evaluate(predictions, "Price");
+
+            return metrics;
+
+        }
+
+        // Print some evaluation metrics to regression problems.
+        private static void PrintMetrics(RegressionMetrics metrics)
+        {
+            Console.WriteLine("Mean Absolute Error: " + metrics.MeanAbsoluteError);
+            Console.WriteLine("Mean Squared Error: " + metrics.MeanSquaredError);
+            Console.WriteLine(
+                "Root Mean Squared Error: " + metrics.RootMeanSquaredError);
+
+            Console.WriteLine("RSquared: " + metrics.RSquared);
         }
 
         private void SplitDataSetTrainAndTest(double trainingP, double testP)
