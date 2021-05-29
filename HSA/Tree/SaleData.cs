@@ -5,77 +5,72 @@ namespace HSA.Tree
     public class SaleData
     {
       
-        [LoadColumn(2)]
+        [LoadColumn(1)]
         public float Price { get; set; }
 
 
-        [LoadColumn(3)]
+        [LoadColumn(2)]
         public float Bedrooms { get; set; }
 
 
-
-        [LoadColumn(4)]
+        [LoadColumn(3)]
         public float Bathrooms { get; set; }
 
 
-        [LoadColumn(5)]
+        [LoadColumn(4)]
         public float Sqft_living { get; set; }
 
 
 
-        [LoadColumn(6)]
+        [LoadColumn(5)]
         public float Sqft_lot { get; set; }
 
 
-        [LoadColumn(7)]
+        [LoadColumn(6)]
         public float Floors { get; set; }
 
 
-        [LoadColumn(8)]
+        [LoadColumn(7)]
         public float Waterfronts { get; set; }
 
 
-        [LoadColumn(9)]
+        [LoadColumn(8)]
         public float View { get; set; }
 
 
 
-        [LoadColumn(10)]
+        [LoadColumn(9)]
         public float Condition { get; set; }
 
 
-        [LoadColumn(11)]
+        [LoadColumn(10)]
         public float Grade { get; set; }
 
 
 
-        [LoadColumn(12)]
+        [LoadColumn(11)]
         public float Sqft_above { get; set; }
 
 
 
-        [LoadColumn(13)]
+        [LoadColumn(12)]
         public float Sqft_basement { get; set; }
 
 
-        [LoadColumn(14)]
+        [LoadColumn(13)]
         public float Yr_built { get; set; }
 
 
-        [LoadColumn(15)]
-        public float Yr_renovated { get; set; }
-
-
-        [LoadColumn(16)]
+        [LoadColumn(14)]
         public float Zipcode { get; set; }
 
 
-        [LoadColumn(19)]
+        [LoadColumn(15)]
         public float Sqft_living15 { get; set; }
 
 
 
-        [LoadColumn(20)]
+        [LoadColumn(16)]
         public float Sqft_lot15 { get; set; }
 
 

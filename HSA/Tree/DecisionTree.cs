@@ -180,7 +180,7 @@ namespace HSA.Tree
             IDataView trainData = mlContext.Data.LoadFromTextFile<SaleData>(path, separatorChar: ',', hasHeader: true);
 
             // 3. Add data transformations
-            var dataProcessPipeline = mlContext.Transforms.Concatenate(outputColumnName: "Features", "Price", "Bedrooms", "Bathrooms", "Sqft_living","Sqft_lot", "Floors", "Waterfronts", "View", "Condition", "Grade", "Sqft_above", "Sqft_basement", "Yr_built", "Yr_renovated", "Zipcode", "Sqft_living15","Sqft_lot15");
+            var dataProcessPipeline = mlContext.Transforms.Concatenate(outputColumnName: "Features", "Price", "Bedrooms", "Bathrooms", "Sqft_living","Sqft_lot", "Floors", "Waterfronts", "View", "Condition", "Grade", "Sqft_above", "Sqft_basement", "Yr_built", "Zipcode", "Sqft_living15","Sqft_lot15");
 
             // 4. Add algorithm
             var trainer = mlContext.Regression.Trainers.FastTree(labelColumnName: "Price", featureColumnName: "Features");
@@ -192,7 +192,12 @@ namespace HSA.Tree
             var model = trainingPipeline.Fit(trainData);
 
             // 6. Evaluate model on test data
-            IDataView testData = mlContext.Data.LoadFromTextFile<SaleData>("kc_house_data_test.csv");
+            string pathTest = Directory.GetCurrentDirectory().Replace("HSA\\bin\\", "data\\kc_house_data_ML_test.csv");
+            pathTest = pathTest.Replace("Debug", "");
+            pathTest = pathTest.Replace("x64\\", "");
+            pathTest = pathTest.Replace("x86\\", "");
+
+            IDataView testData = mlContext.Data.LoadFromTextFile<SaleData>(pathTest);
             IDataView predictions = model.Transform(testData);
             var metrics = mlContext.Regression.Evaluate(predictions, "Price");
 
