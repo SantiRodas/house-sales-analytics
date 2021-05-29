@@ -1,4 +1,5 @@
 ﻿using HSA.Tree;
+using Microsoft.ML.Data;
 using System;
 using System.Windows.Forms;
 
@@ -138,9 +139,12 @@ namespace HSA.UserInterface
 
             } else if (implementationOption2.Checked)
             {
-                DecisionTree.generateTreeMLNet();
+                RegressionMetrics metrics = DecisionTree.generateTreeMLNet();
 
-                MessageBox.Show("This option is not yet implemented, please wait for future versions");
+                MessageBox.Show("Mean Absolute Error: " + metrics.MeanAbsoluteError+ "\n"+
+                "Mean Squared Error: " + metrics.MeanSquaredError + "\n" +
+                "Root Mean Squared Error: " + metrics.RootMeanSquaredError + "\n" +
+                "RSquared: "+ metrics.RSquared);
             }
             else
             {

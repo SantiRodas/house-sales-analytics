@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
 using HSA.Model;
@@ -169,20 +170,26 @@ namespace HSA.Tree
 
             // 1. Initialize ML.NET environment
             MLContext mlContext = new MLContext();
+            string path = Directory.GetCurrentDirectory().Replace("HSA\\bin\\", "data\\kc_house_data_ML.csv");
+            path = path.Replace("Debug", "");
+            path = path.Replace("x64\\", "");
+            path = path.Replace("x86\\", "");
 
-
-            // ISSUES WITH PATH
+            
             // 2. Load training data
-            IDataView trainData = mlContext.Data.LoadFromTextFile<SaleData>("kc_house_data.csv", separatorChar: ',', hasHeader: true);
+            IDataView trainData = mlContext.Data.LoadFromTextFile<SaleData>(path, separatorChar: ',', hasHeader: true);
 
             // 3. Add data transformations
             var dataProcessPipeline = mlContext.Transforms.Concatenate(outputColumnName: "Features", "Price", "Bedrooms", "Bathrooms", "Sqft_living","Sqft_lot", "Floors", "Waterfronts", "View", "Condition", "Grade", "Sqft_above", "Sqft_basement", "Yr_built", "Yr_renovated", "Zipcode", "Sqft_living15","Sqft_lot15");
 
             // 4. Add algorithm
-            var pipeline = mlContext.Regression.Trainers.FastTree(labelColumnName: "Price", featureColumnName: "Features");
+            var trainer = mlContext.Regression.Trainers.FastTree(labelColumnName: "Price", featureColumnName: "Features");
 
+            var trainingPipeline = dataProcessPipeline.Append(trainer);
+
+            //AQUI VA EL ERROR
             // 5. Train model
-            var model = pipeline.Fit(trainData);
+            var model = trainingPipeline.Fit(trainData);
 
             // 6. Evaluate model on test data
             IDataView testData = mlContext.Data.LoadFromTextFile<SaleData>("kc_house_data_test.csv");
