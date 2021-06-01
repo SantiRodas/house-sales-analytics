@@ -45,12 +45,14 @@ namespace HSA.Tree
         public DecisionTree(DataTable data, string targetVariableName)
         {
             DataOriginal = data;
+
             TargetVariableName = targetVariableName;
         }
                 
         // ----------------------------------------------------------------------------------------------------
 
         //Overall gini index calculation
+
         //Calculate the gini index/impurity of the whole dataset (in price  ranges)
 
         public void CalculateOverallGiniImpurity()
@@ -64,7 +66,9 @@ namespace HSA.Tree
                 if (TargetVariableCountTraining.ContainsKey(targetValue))
                 {
                     int count = TargetVariableCountTraining[targetValue];
+
                     count++;
+
                     TargetVariableCountTraining[targetValue] = count;
                 }
                 else
@@ -74,6 +78,7 @@ namespace HSA.Tree
             }
 
             int totalRows = DataTraining.Rows.Count; //Total number of rows in the data set
+
             double sumProportionSquared = 0;
 
             foreach (KeyValuePair<object,int> item in TargetVariableCountTraining)
@@ -85,16 +90,22 @@ namespace HSA.Tree
 
             OverallGiniIndex = 1 - sumProportionSquared;
 
-        }      
+        }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method test
 
         public double Test()
         {
             double hits = 0;
+
             double total = DataTest.Rows.Count;
 
             foreach (DataRow register in DataTest.Rows)
             {
                 object predicted = Predict(register).Split(';')[0];
+
                 object actual = register[TargetVariableName];
 
                 if (predicted.Equals(actual))
@@ -108,6 +119,10 @@ namespace HSA.Tree
             return AccuracyTesting;
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method predict
+
         public string Predict(DataRow newDataPoint)
         {
             string treeTraversal = "";
@@ -118,11 +133,11 @@ namespace HSA.Tree
             }
 
             Node parent;
+
             Node currentNode = Root;
 
             while (!currentNode.IsLeaf)
             {
-
                 string attributeName = currentNode.ConditionAttributeName;
 
                 object dataPointAttributeValue = newDataPoint[attributeName];
@@ -150,7 +165,8 @@ namespace HSA.Tree
                     throw new Exception("Unsupported data type");
                 }
 
-                if(currentNode == parent.TrueNode){
+                if(currentNode == parent.TrueNode)
+                {
                     treeTraversal += "True: " + parent.ConditionAttributeName + " " + parent.ConditionOperator + " " + parent.ConditionValue + "\n";
                 }
                 else
@@ -165,81 +181,123 @@ namespace HSA.Tree
             return currentNode.Answer + ";" + treeTraversal;
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method to do the regression metrics
+
         public RegressionMetrics generateTreeMLNet()
         {
 
             // 1. Initialize ML.NET environment
+
             MLContext mlContext = new MLContext();
+
             string path = Directory.GetCurrentDirectory().Replace("HSA\\bin\\", "data\\kc_house_data_ML.csv");
+
             path = path.Replace("Debug", "");
+
             path = path.Replace("x64\\", "");
+
             path = path.Replace("x86\\", "");
 
             
             // 2. Load training data
+            
             IDataView trainData = mlContext.Data.LoadFromTextFile<SaleData>(path, separatorChar: ',', hasHeader: true);
 
             // 3. Add data transformations
+            
             var dataProcessPipeline = mlContext.Transforms.Concatenate(outputColumnName: "Features", "Price", "Bedrooms", "Bathrooms", "Sqft_living","Sqft_lot", "Floors", "Waterfronts", "View", "Condition", "Grade", "Sqft_above", "Sqft_basement", "Yr_built", "Zipcode", "Sqft_living15","Sqft_lot15");
 
             // 4. Add algorithm
+            
             var trainer = mlContext.Regression.Trainers.FastTree(labelColumnName: "Price", featureColumnName: "Features");
 
             var trainingPipeline = dataProcessPipeline.Append(trainer);
 
             //AQUI VA EL ERROR
+            
             // 5. Train model
+            
             var model = trainingPipeline.Fit(trainData);
 
             // 6. Evaluate model on test data
+            
             string pathTest = Directory.GetCurrentDirectory().Replace("HSA\\bin\\", "data\\kc_house_data_ML_test.csv");
+            
             pathTest = pathTest.Replace("Debug", "");
+            
             pathTest = pathTest.Replace("x64\\", "");
+            
             pathTest = pathTest.Replace("x86\\", "");
 
+            
             IDataView testData = mlContext.Data.LoadFromTextFile<SaleData>(pathTest);
+            
             IDataView predictions = model.Transform(testData);
+            
             var metrics = mlContext.Regression.Evaluate(predictions, "Price");
 
             return metrics;
 
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
         // Print some evaluation metrics to regression problems.
+
         private static void PrintMetrics(RegressionMetrics metrics)
         {
             Console.WriteLine("Mean Absolute Error: " + metrics.MeanAbsoluteError);
+
             Console.WriteLine("Mean Squared Error: " + metrics.MeanSquaredError);
-            Console.WriteLine(
-                "Root Mean Squared Error: " + metrics.RootMeanSquaredError);
+
+            Console.WriteLine("Root Mean Squared Error: " + metrics.RootMeanSquaredError);
 
             Console.WriteLine("RSquared: " + metrics.RSquared);
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Mehot to do the split data set train and test
+
         private void SplitDataSetTrainAndTest(double trainingP, double testP)
         {
             int trainingIndex = (int)((double)trainingP * (double)DataOriginal.Rows.Count);
+
             int testIndex = DataOriginal.Rows.Count - (int)((double)testP * (double)DataOriginal.Rows.Count) - 1;
 
             DataView auxDataView = new DataView(DataOriginal);
 
             auxDataView.RowFilter = $"pos <= {trainingIndex}";
+
             DataTraining = auxDataView.ToTable();
+
             auxDataView.RowFilter = $"pos > {testIndex}";
+
             DataTest = auxDataView.ToTable();
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method to generate the tree
 
         public Node GenerateTree(int heightLimit, double trainingP, double testP)
         {
             trainingWrongClassifications = 0;
+
             HeightLimit = heightLimit;
+
             SplitDataSetTrainAndTest(trainingP, testP);
+
             CalculateOverallGiniImpurity();
 
             Root = new Node
             {
                 GiniIndex = OverallGiniIndex,
+
                 ObservationClassCount = TargetVariableCountTraining,
+
                 Partition = DataTraining
             };
             
@@ -250,18 +308,30 @@ namespace HSA.Tree
             return Root;
         }
 
+        // ----------------------------------------------------------------------------------------------------
 
-       
+        // Method to reset
+
         public void Reset()
         {
             DataTraining = null;
+
             DataTest = null;
+
             TargetVariableCountTraining = null;
+
             AccuracyTesting = 0;
+
             AccuracyTraining = 0;
+
             OverallGiniIndex = 0;
+
             Root = null;
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method to process leaf node
 
         private void ProcessLeafNode(Node currentNode)
         {
@@ -270,7 +340,9 @@ namespace HSA.Tree
             Dictionary<object, int> currentNodeTargetVariableCount = currentNode.ObservationClassCount;
 
             int maxCount = -1;
+
             int count = 0;
+
             string maxTargetValue = "";
 
             foreach (KeyValuePair<object, int> priceRangeCount in currentNodeTargetVariableCount)
@@ -280,37 +352,50 @@ namespace HSA.Tree
                 if (priceRangeCount.Value > maxCount)
                 {
                     maxCount = priceRangeCount.Value;
+
                     maxTargetValue = (string)priceRangeCount.Key;
                 }
 
             }
 
             trainingWrongClassifications += count - maxCount;
+
             currentNode.Answer = maxTargetValue + ";" + (double)maxCount / (double)count + " " + count;
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method to generate tree recursive
 
         private void GenerateTreeRecursive(Node currentNode, int currentHeight)
         {
             if(currentNode.Partition.Rows.Count <= 1 || currentHeight >= HeightLimit)
             {
                 ProcessLeafNode(currentNode);
+
                 return;
             }
 
             Console.WriteLine(currentNode.Partition.Rows.Count);
 
             //<giniIndex, [columnName, condition]>
+
             KeyValuePair<double, Tuple<string, object, Dictionary<object, int>, Dictionary<object, int>, double,double>> bestColumnGiniAndCondition = SelectBestColumn(currentNode.Partition);
 
             double infoGain = currentNode.GiniIndex - bestColumnGiniAndCondition.Key;
 
             Console.WriteLine("curent node gini index = " + currentNode.GiniIndex);
+
             Console.WriteLine("best column gini and condition = " + bestColumnGiniAndCondition.Key);
+
             Console.WriteLine("Info gain = " + infoGain);
 
             string columnName = bestColumnGiniAndCondition.Value.Item1;
+
             object conditionObj = bestColumnGiniAndCondition.Value.Item2;
+
             Dictionary<object, int> trueHashtable = bestColumnGiniAndCondition.Value.Item3;
+
             Dictionary<object, int> falseHashtable = bestColumnGiniAndCondition.Value.Item4;
 
             if (trueHashtable.Count > 0 && falseHashtable.Count > 0)//Nodo de decision
@@ -318,9 +403,11 @@ namespace HSA.Tree
                 Type columnDataType = conditionObj.GetType();
 
                 DataView partitionTrue = new DataView(currentNode.Partition);
+
                 DataView partitionFalse = new DataView(currentNode.Partition);
 
                 Node nodeTrue = new Node();
+
                 Node nodeFalse = new Node();
 
                 if (columnDataType.Equals(typeof(double)))
@@ -328,6 +415,7 @@ namespace HSA.Tree
                     double condition = (double)conditionObj;
 
                     partitionTrue.RowFilter = $"{columnName} <= {condition}";
+
                     partitionFalse.RowFilter = $"{columnName} > {condition}";
 
                     currentNode.ConditionOperator = LogicalOperator.SMALLER_EQUALS_THAN;
@@ -338,6 +426,7 @@ namespace HSA.Tree
                     int condition = (int)conditionObj;
 
                     partitionTrue.RowFilter = $"{columnName} <= {condition}";
+
                     partitionFalse.RowFilter = $"{columnName} > {condition}";
 
                     currentNode.ConditionOperator = LogicalOperator.SMALLER_EQUALS_THAN;
@@ -349,11 +438,13 @@ namespace HSA.Tree
                     if (condition)
                     {
                         partitionTrue.RowFilter = $"{columnName} = 1";
+
                         partitionFalse.RowFilter = $"{columnName} = 0";
                     }
                     else
                     {
                         partitionTrue.RowFilter = $"{columnName} = 0";
+
                         partitionFalse.RowFilter = $"{columnName} = 1";
                     }                    
 
@@ -375,21 +466,31 @@ namespace HSA.Tree
                 }
 
                 nodeTrue.Partition = partitionTrue.ToTable();
+
                 nodeTrue.GiniIndex = bestColumnGiniAndCondition.Value.Item5;
+
                 nodeTrue.ObservationClassCount = trueHashtable;
+
                 nodeFalse.Partition = partitionFalse.ToTable();
+
                 nodeFalse.GiniIndex = bestColumnGiniAndCondition.Value.Item6;
+
                 nodeFalse.ObservationClassCount = falseHashtable;
 
                 currentNode.ConditionAttributeName = columnName;
+
                 currentNode.IsLeaf = false;
+
                 currentNode.ConditionValue = conditionObj;
+
                 currentNode.AttributeType = columnDataType;
 
                 currentNode.TrueNode = nodeTrue;
+
                 currentNode.FalseNode = nodeFalse;
 
                 GenerateTreeRecursive(nodeTrue, currentHeight+1);
+
                 GenerateTreeRecursive(nodeFalse,currentHeight+1);
 
             }
@@ -400,9 +501,12 @@ namespace HSA.Tree
 
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method to select the best column
+
         public KeyValuePair<double, Tuple<string, object, Dictionary<object, int>, Dictionary<object, int>, double,double>> SelectBestColumn(DataTable nodePartition)
         {
-
             SortedDictionary<double, Tuple<string, object, Dictionary<object, int>, Dictionary<object, int>, double, double>> columnsGiniImpurity  = CalculateGiniIndexForAllColumns(nodePartition);
 
             return columnsGiniImpurity.First();
@@ -412,29 +516,37 @@ namespace HSA.Tree
 
         // Calculate all gini indexes
 
-
         private SortedDictionary<double, Tuple<string, object, Dictionary<object, int>, Dictionary<object, int>, double, double>> CalculateGiniIndexForAllColumns(DataTable nodePartition)
         {
-
             SortedDictionary<double, Tuple<string, object, Dictionary<object, int>, Dictionary<object, int>, double,double>> columnsGiniImpurity = new SortedDictionary<double, Tuple<string, object, Dictionary<object, int>, Dictionary<object, int>, double,double>>();
 
             for (int i = 0; i < nodePartition.Columns.Count; i++)
             {
                 Console.WriteLine("Column processed = " + i);
+
                 DataColumn column = nodePartition.Columns[i];
+
                 String columnName = column.ColumnName;
+
                 Type columnDataType = column.DataType;
 
                 if (!columnName.Equals("id") && !columnName.Equals("pos") && !columnName.Equals("date")
-                    && !columnName.Equals("lat") && !columnName.Equals("long")
-                    && !columnName.Equals("price") && !columnName.Equals("price_range"))
-                {
 
+                    && !columnName.Equals("lat") && !columnName.Equals("long")
+
+                    && !columnName.Equals("price") && !columnName.Equals("price_range"))
+                
+                {
                     double giniIndexValue;
+
                     object condition;
+
                     Dictionary<object, int> truePartition;
+
                     Dictionary<object, int> falsePartition;
+
                     double giniImpurityTrue;
+
                     double giniImpurityFalse;
 
                     if (columnDataType.Equals(typeof(double)))
@@ -444,10 +556,15 @@ namespace HSA.Tree
                         KeyValuePair<double, Tuple<double, Dictionary<object, int>, Dictionary<object, int>, double,double>> giniIndexAndCondition = ColumnOverallGiniImpurity<Double>(columnName, nodePartition);
 
                         giniIndexValue = giniIndexAndCondition.Key;
+                        
                         condition = giniIndexAndCondition.Value.Item1;
+                        
                         truePartition = giniIndexAndCondition.Value.Item2;
+                        
                         falsePartition = giniIndexAndCondition.Value.Item3;
+                        
                         giniImpurityTrue = giniIndexAndCondition.Value.Item4;
+                        
                         giniImpurityFalse = giniIndexAndCondition.Value.Item5;
 
                     }
@@ -456,10 +573,15 @@ namespace HSA.Tree
                         KeyValuePair<double, Tuple<int, Dictionary<object, int>, Dictionary<object, int>, double, double>> giniIndexAndCondition = ColumnOverallGiniImpurity<Int32>(columnName, nodePartition);
 
                         giniIndexValue = giniIndexAndCondition.Key;
+                        
                         condition = giniIndexAndCondition.Value.Item1;
+                        
                         truePartition = giniIndexAndCondition.Value.Item2;
+                        
                         falsePartition = giniIndexAndCondition.Value.Item3;
+                        
                         giniImpurityTrue = giniIndexAndCondition.Value.Item4;
+                        
                         giniImpurityFalse = giniIndexAndCondition.Value.Item5;
 
                     }
@@ -468,10 +590,15 @@ namespace HSA.Tree
                         KeyValuePair<double, Tuple<bool, Dictionary<object, int>, Dictionary<object, int>, double, double>> giniIndexAndCondition = ColumnOverallGiniImpurity<Boolean>(columnName, nodePartition);
 
                         giniIndexValue = giniIndexAndCondition.Key;
+                        
                         condition = giniIndexAndCondition.Value.Item1;
+                        
                         truePartition = giniIndexAndCondition.Value.Item2;
+                        
                         falsePartition = giniIndexAndCondition.Value.Item3;
+                        
                         giniImpurityTrue = giniIndexAndCondition.Value.Item4;
+                        
                         giniImpurityFalse = giniIndexAndCondition.Value.Item5;
                     }
                     else if (columnDataType.Equals(typeof(string)))
@@ -479,10 +606,15 @@ namespace HSA.Tree
                         KeyValuePair<double, Tuple<string, Dictionary<object, int>, Dictionary<object, int>, double, double>> giniIndexAndCondition = ColumnOverallGiniImpurity<String>(columnName, nodePartition);
 
                         giniIndexValue = giniIndexAndCondition.Key;
+                        
                         condition = giniIndexAndCondition.Value.Item1;
+                        
                         truePartition = giniIndexAndCondition.Value.Item2;
+                        
                         falsePartition = giniIndexAndCondition.Value.Item3;
+                        
                         giniImpurityTrue = giniIndexAndCondition.Value.Item4;
+                        
                         giniImpurityFalse = giniIndexAndCondition.Value.Item5;
                     }
                     else
@@ -504,7 +636,9 @@ namespace HSA.Tree
         // ----------------------------------------------------------------------------------------------------
 
         //Calculate single gini index
+
         //Calculates proportion squared
+
         private double CalculateProportionSquared(int count, int totalRows)
         {
             double proportion = (double)count / (double)totalRows;
@@ -513,7 +647,6 @@ namespace HSA.Tree
 
             return proportionSquared;
         }
-
 
         // ----------------------------------------------------------------------------------------------------
 
@@ -541,25 +674,37 @@ namespace HSA.Tree
         }
 
         // ----------------------------------------------------------------------------------------------------
+
         //Overall column gini index 
+
         //Column overall gini impurity
+
         //Return a pair with the condition that best separates the data and its gini index
+
         //The partition received as a parameter is the current node partition that is going to be split into two
+
         public KeyValuePair<double, Tuple<T, Dictionary<object, int>, Dictionary<object, int>, double, double>> ColumnOverallGiniImpurity<T>(string columnName, DataTable nodePartition) where T : IComparable<T>
         {
             int totalRows = nodePartition.Rows.Count;
 
             //Stores each possible category or numeric value with inner hash table for price range counting of comlying and not complying data
+            
             Hashtable outerHashtable = ObtainPossibleConditions<T>(nodePartition, totalRows, columnName);
+            
             Console.WriteLine("Pass obtain possible conditions");
 
             //Counting
+            
             outerHashtable = CountPriceRangesForPossibleCondition<T>(outerHashtable, nodePartition, columnName, totalRows);
+            
             Console.WriteLine("Pass count price ranges for possible condition");
 
             //Possible gini ipurities calculation
+            
             //<gini impurity, columnValue (condition)>
+            
             SortedDictionary<double, Tuple<T,double,double>> columnValuesGiniImpurities = CalculatePossibleOverallGiniImpurities<T>(outerHashtable, totalRows);
+            
             Console.WriteLine("Pass claculate overall gini impurity");
 
             KeyValuePair<double, Tuple<T,double,double>> minGiniImpurityAndCondition = columnValuesGiniImpurities.First();
@@ -567,15 +712,25 @@ namespace HSA.Tree
             Pair innerHashTables = (Pair)outerHashtable[minGiniImpurityAndCondition.Value.Item1];
 
             Dictionary<object, int> trueInnerHashtable = (Dictionary<object, int>)innerHashTables.Element1;
+            
             Dictionary<object, int> falseInnerHashtable = (Dictionary<object, int>)innerHashTables.Element2;
+            
             T condition = minGiniImpurityAndCondition.Value.Item1;
+            
             double giniImpurityTrue = minGiniImpurityAndCondition.Value.Item2;
+            
             double giniImpurityFalse = minGiniImpurityAndCondition.Value.Item3;
+            
             double overallGiniIMpurity = minGiniImpurityAndCondition.Key;
 
             //Return the gini impurity with a pair that contains the condition and the count of each price range in the partitions
+            
             return new KeyValuePair<double, Tuple<T, Dictionary<object, int>, Dictionary<object, int>, double, double>>(overallGiniIMpurity, new Tuple<T, Dictionary<object, int>, Dictionary<object, int>, double,double>(condition, trueInnerHashtable, falseInnerHashtable,giniImpurityTrue,giniImpurityFalse));
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method to obtain possible conditions
 
         public Hashtable ObtainPossibleConditions<T>(DataTable nodePartition, int totalRows, string columnName) where T : IComparable<T>
         {
@@ -590,6 +745,7 @@ namespace HSA.Tree
                 if (!outerHashtable.ContainsKey(columnValue))
                 {
                     Dictionary<object, int> partitionTrueInnerHashtable = new Dictionary<object, int>();
+                    
                     Dictionary<object, int> partitionFalseInnerHashtable = new Dictionary<object, int>();
 
                     Pair partitionsInnerHashtables = new Pair(partitionTrueInnerHashtable, partitionFalseInnerHashtable);
@@ -597,6 +753,7 @@ namespace HSA.Tree
                     outerHashtable[columnValue] = partitionsInnerHashtables;
                 }
             }
+
             return outerHashtable;
         }
 
@@ -629,7 +786,9 @@ namespace HSA.Tree
                     if (partitionInnerHashtable.ContainsKey(itemPriceRange))
                     {
                         int count = partitionInnerHashtable[itemPriceRange];
+
                         count++;
+
                         partitionInnerHashtable[itemPriceRange] = count;
                     }
                     else
@@ -640,17 +799,22 @@ namespace HSA.Tree
                 }
 
             }
+
             return outerHashtable;
         }
 
+        // ----------------------------------------------------------------------------------------------------
 
         //Return a SortedDictionary with overall gini impurities for each possible column value or possible condition,
+
         //From a hashtable with the values as keys and to inner hash tables for priceRange counting in both true and false partitions
+        
         public SortedDictionary<double, Tuple<T, double, double>> CalculatePossibleOverallGiniImpurities<T>(Hashtable outerHashtable, int totalRows) where T : IComparable<T>
         {
-
             //<gini impurity, columnValue (condition)>
+
             SortedDictionary<double, Tuple<T,double,double>> columnValuesGiniImpurities = new SortedDictionary<double, Tuple<T,double,double>>();
+            
             foreach (DictionaryEntry item in outerHashtable)
             {
                 Pair partitionsInnerHashtables = (Pair)item.Value;
@@ -660,6 +824,7 @@ namespace HSA.Tree
                 Dictionary<object, int> innerHashtableFalse = (Dictionary<object, int>)partitionsInnerHashtables.Element2;
 
                 double sumProportionSquaredTrue = 0;
+                
                 double sumProportionSquaredFalse = 0;
 
                 int trueCount = 0;
@@ -685,6 +850,7 @@ namespace HSA.Tree
                 sumProportionSquaredFalse = totalRows - trueCount > 0? (sumProportionSquaredFalse) * (totalRows / (totalRows - trueCount))* (totalRows / (totalRows - trueCount)) : 0;
 
                 double giniImpurityTrue = 1 - sumProportionSquaredTrue;
+                
                 double giniImpurityFalse = 1 - sumProportionSquaredFalse;
 
                 double overallTrueProportion = (double)trueCount / (double)totalRows;
@@ -692,10 +858,14 @@ namespace HSA.Tree
                 double giniImpurityOverall = giniImpurityTrue * (overallTrueProportion) + giniImpurityFalse * (1 - overallTrueProportion);
 
                 //Item.key is the condition, the column value (assume equals in categorical and <= in numerical)
+                
                 columnValuesGiniImpurities[giniImpurityOverall] = new Tuple<T, double, double>((T)item.Key,giniImpurityTrue,giniImpurityFalse);
             }
+
             return columnValuesGiniImpurities;
         }
+
+        // ----------------------------------------------------------------------------------------------------
 
     }
 }

@@ -14,6 +14,10 @@ namespace HSA.UserInterface
     public partial class PredictControl : UserControl
     {
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Relation with the class decision tree, and attribute bool
+
         private DecisionTree dsTree;
 
         private bool ownImplementation;
@@ -29,26 +33,36 @@ namespace HSA.UserInterface
 
         // ----------------------------------------------------------------------------------------------------
 
-        // Method to generate new tree (Button)
+        // Method to initialize
 
         public void Initialize(DecisionTree dsTree)
         {
             viewComboBox.SelectedIndex = 0;
+
             conditionComboBox.SelectedIndex = 0;
+
             gradeComboBox.SelectedIndex = 0;
+
             sqftLiving15ComboBox.SelectedIndex = 0;
+
             sqftLivingComboBox.SelectedIndex = 0;
+
             sqftAboveComboBox.SelectedIndex = 0;
+
             sqftBsmteComboBox.SelectedIndex = 0;
+
             sqftLiving15ComboBox.SelectedIndex = 0;
+
             sqftLot15ComboBox.SelectedIndex = 0;
+
             sqftLotComboBox.SelectedIndex = 0;
 
             this.dsTree = dsTree;
         }
 
-
         // ----------------------------------------------------------------------------------------------------
+
+        // Method to generate the new tree
 
         private void generateNewTreeButton_Click(object sender, EventArgs e)
         {
@@ -66,9 +80,11 @@ namespace HSA.UserInterface
                 // The system take the information of the house
 
                 int bedrooms = int.Parse(bedroomsText.Text);
+
                 if (bedrooms < 0) throw new FormatException("Bedrooms is less than 0");
 
                 double bathrooms = double.Parse(bathroomsText.Text);
+
                 if (bathrooms < 0) throw new FormatException("Bathrooms is less than 0");
 
                 string sqftLiving = (string)sqftLivingComboBox.SelectedItem;
@@ -76,6 +92,7 @@ namespace HSA.UserInterface
                 string sqftLot = (string) sqftLotComboBox.SelectedItem;
 
                 double floors = double.Parse(floorText.Text);
+
                 if (floors <= 0) throw new FormatException("floors is less or equal than 0");
 
                 // The decision bool take the information of the waterfront
@@ -90,8 +107,7 @@ namespace HSA.UserInterface
                 {
                     throw new Exception("No waterfront option was seleceted");
                 }
-               
-                
+
                 // The system take the information of the house
 
                 string view = (string)viewComboBox.SelectedItem;
@@ -111,6 +127,7 @@ namespace HSA.UserInterface
                 int zipcodeInt = int.Parse(zipCodeText.Text);
 
                 if (zipcodeInt <= 0) throw new FormatException("Zipcode is less or equal than 0");
+
                 string zipcode = zipcodeInt.ToString();
 
                 string sqftLiving15 = (string)sqftLiving15ComboBox.SelectedItem;
@@ -120,19 +137,33 @@ namespace HSA.UserInterface
                 DataRow newDataPoint = dsTree.DataTraining.NewRow();
 
                 newDataPoint["bedrooms"] = bedrooms;
+
                 newDataPoint["bathrooms"] = bathrooms;
+
                 newDataPoint["sqft_living"] = sqftLiving;
+
                 newDataPoint["sqft_lot"] = sqftLot;
+
                 newDataPoint["floors"] = floors;
+
                 newDataPoint["waterfront"] = waterfront;
+
                 newDataPoint["view"] = view;
+
                 newDataPoint["condition"] = condition;
+
                 newDataPoint["grade"] = grade;
+
                 newDataPoint["sqft_above"] = sqftAbove;
+
                 newDataPoint["sqft_basement"] = sqftBasement;
+
                 newDataPoint["yr_built"] = yearBuilt;
+
                 newDataPoint["zipcode"] = zipcode;
+
                 newDataPoint["sqft_living15"] = sqftLiving15;
+
                 newDataPoint["sqft_lot15"] = sqftLot15;
 
                 // With this information the system can work
@@ -140,9 +171,11 @@ namespace HSA.UserInterface
                 string[] prediction = dsTree.Predict(newDataPoint).Split(';');
 
                 string priceRange = prediction[0];
+
                 string treeTraversal = prediction[2];
 
                 treeTraversalRichTxtBox.Text = treeTraversal;
+
                 priceRangeLabel.Text = "Price Range: " + priceRange;
 
                 ClearTextBoxes();
@@ -154,6 +187,10 @@ namespace HSA.UserInterface
             }
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method to clear the text boxes
+
         private void ClearTextBoxes()
         {
             Action<Control.ControlCollection> func = null;
@@ -161,23 +198,31 @@ namespace HSA.UserInterface
             func = (controls) =>
             {
                 foreach (Control control in controls)
+
                     if (control is TextBox)
+
                         (control as TextBox).Clear();
+
                     else
+
                         func(control.Controls);
             };
 
             func(Controls);
         }
 
+        // ----------------------------------------------------------------------------------------------------
+
+        // Method to clear (button)
+
         private void clearButton_Click(object sender, EventArgs e)
         {
             ClearTextBoxes();
+
             Initialize(dsTree);
+
             treeTraversalRichTxtBox.Text = "";
         }
-
-
 
         // ----------------------------------------------------------------------------------------------------
 

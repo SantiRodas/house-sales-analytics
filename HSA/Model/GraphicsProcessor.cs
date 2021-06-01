@@ -27,10 +27,14 @@ namespace HSA.Model
 
         // Method constructor of the graphics processor
 
-        public GraphicsProcessor(DataSetManager data) {
+        public GraphicsProcessor(DataSetManager data) 
+        {
             Data = data;
+
             PricesByZip = new Hashtable();
+
             QuantityPerYear = new Hashtable();
+
             UpdateFilteredData();
         }
 
@@ -121,6 +125,7 @@ namespace HSA.Model
                     arrayForAverage = (double[])objArray;
 
                     arrayForAverage[0] = arrayForAverage[0] + price; //keeps the sum of the prices per zipcode
+
                     arrayForAverage[1] = arrayForAverage[1] + 1; //keeps the sum of the number of sales per zipcode
 
                     PricesByZip[zipcode] = arrayForAverage;
@@ -129,6 +134,7 @@ namespace HSA.Model
             else
             {
                 arrayForAverage[0] = price;
+
                 arrayForAverage[1] = 1;
 
                 PricesByZip.Add(zipcode, arrayForAverage);
@@ -170,17 +176,22 @@ namespace HSA.Model
             foreach (DictionaryEntry i in PricesByZip)
             {
                 double[] dataPoint = new double[2];
+
                 double[] values = (double[])i.Value;
 
                 double a = values[0];
+
                 double b = values[1];
+
                 double c = a / b;
 
                 dataPoint[0] = Int32.Parse(i.Key.ToString());
+
                 dataPoint[1] = c;
 
                 displayData.Add(dataPoint);
             }
+
             return displayData;
         }
 
@@ -204,18 +215,22 @@ namespace HSA.Model
             foreach (DictionaryEntry i in PricesByZip)
             {
                 double[] dataPoint = new double[2];
+
                 double[] values = (double[])i.Value;
 
                 double b = values[1];
+
                 double percentage = b / sum;
 
                 percentage = Math.Round(percentage*100, 2);
                 
                 dataPoint[0] = Int32.Parse(i.Key.ToString());
+
                 dataPoint[1] = percentage;
 
                 displayData.Add(dataPoint);
             }
+
             return displayData;
         }
 
@@ -230,12 +245,15 @@ namespace HSA.Model
             foreach(DataRow dr in FilteredData.Rows)
             {
                 string priceRange = (string)dr["price_range"];
+
                 int priceRangeClassMark = int.Parse(priceRange.Split('-')[0].Replace("[", "").Replace("(", "").Replace("<=", "").Replace(">", ""));
 
                 if (displayData.ContainsKey(priceRangeClassMark))
                 {
                     int currentCount = (int)displayData[priceRangeClassMark].Value;
+
                     currentCount++;
+
                     displayData[priceRangeClassMark] = new KeyValuePair<string, int>(priceRange,currentCount);
                 }
                 else
@@ -244,6 +262,7 @@ namespace HSA.Model
                 }
                 
             }
+
             return displayData;
         }
 
@@ -254,21 +273,25 @@ namespace HSA.Model
         public SortedDictionary<int, double> YearBuiltXAveragePrice()
         {
             SortedDictionary<int, double> displayData = new SortedDictionary<int, double>();
+
             SortedDictionary<int, int> displayDataCount = new SortedDictionary<int, int>();
 
             foreach (DataRow dr in FilteredData.Rows)
             {
                 int buildYear = (int)dr["yr_built"];
+
                 double price = (double)dr["price"];
 
                 if (displayData.ContainsKey(buildYear))
                 {
                     int currentCount = displayDataCount[buildYear];
+
                     currentCount += 1;
 
                     displayDataCount[buildYear] =currentCount;
 
                     double currentSumPrice = displayData[buildYear];
+
                     currentSumPrice += price;
 
                     displayData[buildYear] = currentSumPrice;
@@ -277,11 +300,11 @@ namespace HSA.Model
                 else
                 {
                     displayDataCount[buildYear] =  1;
+
                     displayData[buildYear] = price;
                 }
 
             }
-
 
             foreach(KeyValuePair<int,int> displayDataEntryCount in displayDataCount)
             {

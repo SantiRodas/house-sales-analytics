@@ -48,7 +48,9 @@ namespace HSA.UserInterface
             for (int i = 0; i < columns.Count; i++)
             {
                 string columnName = columns[i].ToString();
+
                 filterColumnSelector.Items.Add(columnName);
+
                 sortCriteriaSelector.Items.Add(columnName);
             }
 
@@ -70,6 +72,7 @@ namespace HSA.UserInterface
         private void nextPageButton_Click(object sender, EventArgs e)
         {
             int page = manager.NextPage();
+
             UpdatePageInfoLabelsAndButtons(page);
         }
 
@@ -80,6 +83,7 @@ namespace HSA.UserInterface
         private void prevousPageButton_Click(object sender, EventArgs e)
         {
             int page = manager.PreviousPage();
+
             UpdatePageInfoLabelsAndButtons(page);
         }
 
@@ -94,10 +98,13 @@ namespace HSA.UserInterface
             if (page > 0)
             {
                 int lowerLimit = manager.LowerLimit;
+
                 int upperLimit = manager.UpperLimit;
+
                 int dataCount = manager.DataCount;
 
                 pageNumberLabel.Text = "Page " + page + "/" + maxPage;
+
                 dataShowingLabel.Text = "Showing " + (lowerLimit + 1) + " to " + (upperLimit) + " of " + dataCount;
             }
 
@@ -114,6 +121,7 @@ namespace HSA.UserInterface
             if(page > 1 && page < maxPage)
             {
                 prevousPageButton.Enabled = true;
+
                 nextPageButton.Enabled = true;
             }
         }
@@ -178,6 +186,7 @@ namespace HSA.UserInterface
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+
                 MessageBox.Show("There was an error filtering the data, please check the following: \n 1. A filter criteria is selected\n 2. Numbers are written and written correctly.\n 3. If in range be sure the upper limit is larger than the lower limit\n 4. If criteria has a drop down list be sure at least a option is selected", "Something went wrong", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -189,12 +198,19 @@ namespace HSA.UserInterface
         private void resetTableButton_Click(object sender, EventArgs e)
         {
             manager.ClearSortFiters();
+
             UpdatePageInfoLabelsAndButtons(1);
+
             graphicsManager.UpdateCharts();
+
             ResetFilteringFields();
+
             UpdateEnable(false, false, false, false);
+
             filterColumnSelector.SelectedIndex = -1;
+
             sortCriteriaSelector.SelectedIndex = -1;
+
             sortOrderSelector.SelectedIndex = 0;
         }
 
@@ -236,10 +252,15 @@ namespace HSA.UserInterface
         private void ResetFilteringFields()
         {
             fromTextBox.Text = "";
+
             toTextBox.Text = "";
+
             stringFilterTextBox.Text = "";
+
             booleanComboBox.SelectedIndex = -1;
+
             startDatePicker.Value = DateTime.Now;
+
             endDatePicker.Value = DateTime.Now;
         }
 
@@ -250,10 +271,15 @@ namespace HSA.UserInterface
         private void UpdateEnable(bool isNumber, bool isString, bool isDate, bool isBool)
         {
             fromTextBox.Enabled = isNumber;
+
             toTextBox.Enabled = isNumber;
+
             startDatePicker.Enabled = isDate;
+
             endDatePicker.Enabled = isDate;
+
             stringFilterTextBox.Enabled = isString;
+
             booleanComboBox.Enabled = isBool;
         }
 

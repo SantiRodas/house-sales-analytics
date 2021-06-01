@@ -152,13 +152,21 @@ namespace HSA.Model
         public DataSetManager()
         {
             culture = new CultureInfo("us");
+
             data = new DataTable();
+
             currentPageData = new DataTable();
+
             data.Locale = culture;
+
             LoadData();
+
             currentPage = 1;
+
             dataFiltered = new DataView(data);
+
             UpdatePageLimits();
+
             RefreshData();
         }
 
@@ -186,6 +194,7 @@ namespace HSA.Model
             for (int i = 0; i < columnsNames.Length; i++)
             {
                 data.Columns.Add(columnsNames[i], Type.GetType("System." + columnsTypes[i]));
+
                 currentPageData.Columns.Add(columnsNames[i], Type.GetType("System." + columnsTypes[i]));
             }
 
@@ -201,6 +210,7 @@ namespace HSA.Model
                     //For special format for some types
 
                     Type columnType = data.Columns[j].DataType;
+
                     String value = row[j].Replace("\"", "");
 
                     if (columnType.Equals(typeof(DateTime)))
@@ -261,6 +271,7 @@ namespace HSA.Model
                 UpdatePageLimits();
 
                 DataRowCollection currentPageRows = currentPageData.Rows;
+
                 currentPageRows.Clear();
 
                 for (int i = lowerLimit; i < upperLimit; i++)
@@ -314,8 +325,11 @@ namespace HSA.Model
         private void UpdatePageLimits()
         {
             dataCount = dataFiltered.Count;
+
             maxPage = (int)Math.Ceiling((dataCount + (0.0d)) / DataCountPerPage);
+
             lowerLimit = currentPage * DataCountPerPage - DataCountPerPage;
+
             upperLimit = (currentPage >= maxPage ? dataCount : lowerLimit + DataCountPerPage);
         }
 
@@ -323,10 +337,12 @@ namespace HSA.Model
 
         // Method filter string data
 
-        public void FilterStringData(String columnName, String subString)//OK
+        public void FilterStringData(String columnName, String subString)
         {
             dataFiltered.RowFilter = $"{columnName} LIKE \'%{subString}%'";
+
             currentPage = 1;
+
             RefreshData();
         }
 
@@ -334,10 +350,12 @@ namespace HSA.Model
 
         // Method filter integer data
 
-        public void FilterIntegerData(String columnName, int from, int to)//OK
+        public void FilterIntegerData(String columnName, int from, int to)
         {
             dataFiltered.RowFilter = $"{columnName} >= {from} AND {columnName} <= {to}";
+
             currentPage = 1;
+
             RefreshData();
         }
 
@@ -348,7 +366,9 @@ namespace HSA.Model
         public void FilterDoubleData(String columnName, double from, double to)//OK
         {
             dataFiltered.RowFilter = $"{columnName} >= {from} AND {columnName}<= {to}";
+
             currentPage = 1;
+
             RefreshData();
         }
 
@@ -359,7 +379,9 @@ namespace HSA.Model
         public void FilterBooleanData(String columnName, bool value)
         {
             dataFiltered.RowFilter = $"{columnName} = {value}";
+
             currentPage = 1;
+
             RefreshData();
         }
 
@@ -367,10 +389,12 @@ namespace HSA.Model
 
         // Method filter date data
 
-        public void FilterDateData(String columnName, DateTime from, DateTime to)//NOT WORKING
+        public void FilterDateData(String columnName, DateTime from, DateTime to)
         {
             dataFiltered.RowFilter = $"{columnName} >= #{from.ToString()}# AND {columnName} <= #{to.ToString()}#";
+
             currentPage = 1;
+
             RefreshData();
         }
 
@@ -390,6 +414,7 @@ namespace HSA.Model
             }
 
             currentPage = 1;
+
             RefreshData();
         }
 
@@ -400,8 +425,11 @@ namespace HSA.Model
         public void ClearSortFiters()
         {
             dataFiltered.RowFilter = "";
+
             dataFiltered.Sort = "";
+
             currentPage = 1;
+
             RefreshData();
         }
 

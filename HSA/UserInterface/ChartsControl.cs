@@ -30,6 +30,7 @@ namespace HSA.UserInterface
         public ChartsControl()
         {
             InitializeComponent();
+
             this.Dock = DockStyle.Fill;
         }
 
@@ -40,6 +41,7 @@ namespace HSA.UserInterface
         public void Initialize(GraphicsProcessor manager)
         {
             this.graphicsManager = manager;
+
             UpdateCharts();
         }
 
@@ -52,11 +54,14 @@ namespace HSA.UserInterface
             graphicsManager.UpdateFilteredData();
 
             UpdateChartZipcodeXAverage();
+
             UpdateChartZipcodeXPercentage();
+
             UpdateChartYearXQuantity();
+
             UpdateChartPriceRangeXHousesSelled();
+
             UpdateChartYearBuiltXAveragePrice();
-            
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -86,8 +91,11 @@ namespace HSA.UserInterface
             List<double[]> chartData = graphicsManager.ZipcodeXPercentage();
 
             chartZipcodeXPercentage.Series["Percentage per Zipcode"].IsValueShownAsLabel = true;
+
             chartZipcodeXPercentage.Series["Percentage per Zipcode"].BorderColor = Color.Black;
+
             chartZipcodeXPercentage.Series["Percentage per Zipcode"]["PieLabelStyle"] = "Outside";
+
             chartZipcodeXPercentage.Series["Percentage per Zipcode"]["PieLabelStyle"] = "";
 
             foreach (double[] i in chartData)
@@ -127,6 +135,7 @@ namespace HSA.UserInterface
             foreach(KeyValuePair<int,KeyValuePair<string,int>> rangeMarkAndCount in chartData)
             {
                 KeyValuePair<string, int> rangeAndCount = rangeMarkAndCount.Value;
+
                 chartHousesSoldPerPriceRange.Series["House Count"].Points.AddXY((string)rangeAndCount.Key, (int)rangeAndCount.Value);                
             }
 

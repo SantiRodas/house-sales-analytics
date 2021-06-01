@@ -39,95 +39,159 @@ namespace HSA.Tree
 
         private Dictionary<object,int> observationClassCount;
 
-        // Getters and Setter
+        // ----------------------------------------------------------------------------------------------------
+
+        // Get and set of the attribute name condition
 
         public string ConditionAttributeName
         {
             get { return conditionAttributeName; }
+
             set { conditionAttributeName = value; }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Get and set of the attribute condition operator
 
         public LogicalOperator ConditionOperator
         {
             get { return conditionOperator; }
+
             set { conditionOperator = value; }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Get and set of the attribute condition value
 
         public object ConditionValue
         {
             get { return conditionValue; }
+
             set { conditionValue = value; }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Get and set of the attribute type
 
         public Type AttributeType
         {
             get { return attributeType; }
+
             set { attributeType = value; }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Get and set of the attribute true node
 
         public Node TrueNode
         {
             get { return trueNode; }
+
             set { trueNode = value; }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Get and set of the attribute false node
 
         public Node FalseNode
         {
             get { return falseNode; }
+
             set { falseNode = value; }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Get and set of the attribute answer
 
         public string Answer
         {
             get { return answer; }
+
             set { answer = value; }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Get and set of the attribute is leaf
 
         public bool IsLeaf
         {
             get { return isLeaf; }
+
             set { isLeaf = value; }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Get and set of the attribute gini index
 
         public double GiniIndex
         {
             get { return giniIndex; }
+
             set { giniIndex = value; }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Get and set of the attribute partition
 
         public DataTable Partition
         {
             get { return partition; }
+
             set { partition = value; }
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Get and set of the attribute observation class count
+
         public Dictionary<object,int> ObservationClassCount
         {
             get { return observationClassCount; }
+
             set { observationClassCount = value; }
         }
 
         // ----------------------------------------------------------------------------------------------------
 
-        // Constructor method
+        // Constructor method 1
 
         public Node(string conditionAttributeName, LogicalOperator conditionOperator, object conditionValue, Type attributeType, bool isLeaf)
         {
             this.conditionAttributeName = conditionAttributeName;
+
             this.conditionOperator = conditionOperator;
+
             this.conditionValue = conditionValue;
+
             this.attributeType = attributeType;
+
             this.isLeaf = isLeaf;
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Constructor method 2
 
         public Node()
         {
 
         }
+
         // ----------------------------------------------------------------------------------------------------
         
-        //Evaluate Condition method
+        // Evaluate Condition method
 
-        //Evaluates the condition stored in this node with a value of type T such as T is the type of the stored attribute
+        // Evaluates the condition stored in this node with a value of type T such as T is the type of the stored attribute
+        
         public Node EvaluateCondition<T>(T value) where T : IComparable<T>
         {
             if (isLeaf)

@@ -8,15 +8,28 @@ namespace HSA.UserInterface
 {
     static class Program
     {
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // First point of the application
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // Main method
+
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainWindow());
         }
+
+        // ----------------------------------------------------------------------------------------------------
+
     }
 }
