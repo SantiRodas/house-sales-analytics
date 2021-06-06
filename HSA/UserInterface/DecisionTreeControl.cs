@@ -13,7 +13,17 @@ namespace HSA.UserInterface
         // Relation with the class decision tree
 
         public DecisionTree DecisionTree {get; set;}
-        
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // 
+        public LibraryDecisionTree LibraryDecisionTree { get; set; }
+
+        // ----------------------------------------------------------------------------------------------------
+
+        // 
+        public PredictControl PredictControl { get; set; }
+
         // ----------------------------------------------------------------------------------------------------
 
         // Constructor method
@@ -27,9 +37,13 @@ namespace HSA.UserInterface
 
         // Initialize method
 
-        public void Initialize(DecisionTree dsTree)
+        public void Initialize(DecisionTree dsTree, LibraryDecisionTree libDsTree, PredictControl pControl)
         {
             DecisionTree = dsTree;
+
+            LibraryDecisionTree = libDsTree;
+
+            PredictControl = pControl;
 
             trainingSizeSelector.SelectedIndex = 8;
 
@@ -69,7 +83,7 @@ namespace HSA.UserInterface
 
                 if (root.FalseNode.ConditionAttributeName != null)
                 {
-                    printValueFalse = root.FalseNode.ConditionAttributeName + " " + root.FalseNode.ConditionOperator.ToString() + " " + root.FalseNode.ConditionValue.ToString() + " " + root.FalseNode.Partition.Rows.Count;
+                    printValueFalse = root.FalseNode.ConditionAttributeName + " " + root.FalseNode.ConditionOperator.ToString() + " " + root.FalseNode.ConditionValue.ToString();
                 }
                 else
                 {
@@ -78,7 +92,7 @@ namespace HSA.UserInterface
 
                 if (root.TrueNode.ConditionAttributeName != null)
                 {
-                    printValueTrue = root.TrueNode.ConditionAttributeName + " " + root.TrueNode.ConditionOperator.ToString() + " " + root.TrueNode.ConditionValue.ToString() +  " " + root.TrueNode.Partition.Rows.Count;
+                    printValueTrue = root.TrueNode.ConditionAttributeName + " " + root.TrueNode.ConditionOperator.ToString() + " " + root.TrueNode.ConditionValue.ToString();
                 }
                 else
                 {
@@ -88,15 +102,6 @@ namespace HSA.UserInterface
                 TreeNode left = new TreeNode("False: " + printValueFalse);
 
                 TreeNode right = new TreeNode("True: " + printValueTrue);
-
-                Node trueNode = root.TrueNode;
-
-                Node falseNode = root.FalseNode;
-
-                if (root.IsLeaf || root.TrueNode.IsLeaf || root.FalseNode.IsLeaf)
-                {
-                    int i = 0;
-                }
 
                 dad.Nodes.Add(left);
 
@@ -130,8 +135,6 @@ namespace HSA.UserInterface
 
                     DecisionTree.GenerateTree(heightLimit, trainingP, testP);
 
-                    Console.WriteLine("Finish generating");
-
                     accuracyLabelTraining.Text = "Accuracy: " + Math.Round(DecisionTree.AccuracyTraining*100, 2) + "%";
 
                     resetTreeButton.Enabled = true;
@@ -141,25 +144,29 @@ namespace HSA.UserInterface
                     LoadTree(DecisionTree.Root);
 
                     testingButton.Enabled = true;
+
+                    PredictControl.OwnImplementation = true;
+
                 }
                 catch(FormatException)
                 {
                     MessageBox.Show("Be sure the number input is correct!","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 }
 
-            } else if (implementationOption2.Checked)
-            {
-                /*
-                RegressionMetrics metrics = DecisionTree.generateTreeMLNet();
+            }
+            else if (implementationOption2.Checked)
+            {               
 
-                MessageBox.Show("Mean Absolute Error: " + metrics.MeanAbsoluteError+ "\n"+
+                LibraryDecisionTree.BuildMultiClassificationTree();
 
-                "Mean Squared Error: " + metrics.MeanSquaredError + "\n" +
+                double accuracyTraining = LibraryDecisionTree.ClassificationTrainingMetrics.MicroAccuracy;
 
-                "Root Mean Squared Error: " + metrics.RootMeanSquaredError + "\n" +
+                double accuracyTesting = LibraryDecisionTree.ClassificationTestMetrics.MicroAccuracy;
+                
+                accuracyLabelTraining.Text = $"Accuracy: {Math.Round(accuracyTraining*100,2)}%";
+                accuracyLabelTest.Text = $"Accuracy: {Math.Round(accuracyTesting * 100, 2)}%";
 
-                "RSquared: "+ metrics.RSquared);
-                */
+                PredictControl.OwnImplementation = false;
             }
             else
             {

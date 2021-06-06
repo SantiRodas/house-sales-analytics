@@ -20,7 +20,9 @@ namespace HSA.UserInterface
 
         private DecisionTree dsTree;
 
-        private bool ownImplementation;
+        private LibraryDecisionTree libDsTree;
+
+        public bool OwnImplementation { get; set; }
 
         // ----------------------------------------------------------------------------------------------------
 
@@ -35,7 +37,7 @@ namespace HSA.UserInterface
 
         // Method to initialize
 
-        public void Initialize(DecisionTree dsTree)
+        public void Initialize(DecisionTree dsTree, LibraryDecisionTree libDsTree)
         {
             viewComboBox.SelectedIndex = 0;
 
@@ -57,16 +59,10 @@ namespace HSA.UserInterface
 
             sqftLotComboBox.SelectedIndex = 0;
 
+            OwnImplementation = true;
+
             this.dsTree = dsTree;
-        }
-
-        // ----------------------------------------------------------------------------------------------------
-
-        // Method to generate the new tree
-
-        private void generateNewTreeButton_Click(object sender, EventArgs e)
-        {
-            // The system have to update the tree decision
+            this.libDsTree = libDsTree;
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -134,47 +130,79 @@ namespace HSA.UserInterface
 
                 string sqftLot15 = (string)sqftLot15ComboBox.SelectedItem;
 
-                DataRow newDataPoint = dsTree.DataTraining.NewRow();
+                string priceRange = "";
 
-                newDataPoint["bedrooms"] = bedrooms;
+                if (OwnImplementation)
+                {
+                    if (dsTree.Root == null) throw new Exception("No own implementation decision tree has been generated");
 
-                newDataPoint["bathrooms"] = bathrooms;
+                    DataRow newDataPoint = dsTree.DataTraining.NewRow();
 
-                newDataPoint["sqft_living"] = sqftLiving;
+                    newDataPoint["bedrooms"] = bedrooms;
 
-                newDataPoint["sqft_lot"] = sqftLot;
+                    newDataPoint["bathrooms"] = bathrooms;
 
-                newDataPoint["floors"] = floors;
+                    newDataPoint["sqft_living"] = sqftLiving;
 
-                newDataPoint["waterfront"] = waterfront;
+                    newDataPoint["sqft_lot"] = sqftLot;
 
-                newDataPoint["view"] = view;
+                    newDataPoint["floors"] = floors;
 
-                newDataPoint["condition"] = condition;
+                    newDataPoint["waterfront"] = waterfront;
 
-                newDataPoint["grade"] = grade;
+                    newDataPoint["view"] = view;
 
-                newDataPoint["sqft_above"] = sqftAbove;
+                    newDataPoint["condition"] = condition;
 
-                newDataPoint["sqft_basement"] = sqftBasement;
+                    newDataPoint["grade"] = grade;
 
-                newDataPoint["yr_built"] = yearBuilt;
+                    newDataPoint["sqft_above"] = sqftAbove;
 
-                newDataPoint["zipcode"] = zipcode;
+                    newDataPoint["sqft_basement"] = sqftBasement;
 
-                newDataPoint["sqft_living15"] = sqftLiving15;
+                    newDataPoint["yr_built"] = yearBuilt;
 
-                newDataPoint["sqft_lot15"] = sqftLot15;
+                    newDataPoint["zipcode"] = zipcode;
 
-                // With this information the system can work
+                    newDataPoint["sqft_living15"] = sqftLiving15;
 
-                string[] prediction = dsTree.Predict(newDataPoint).Split(';');
+                    newDataPoint["sqft_lot15"] = sqftLot15;
 
-                string priceRange = prediction[0];
+                    // With this information the system can work
 
-                string treeTraversal = prediction[2];
+                    string[] prediction = dsTree.Predict(newDataPoint).Split(';');
 
-                treeTraversalRichTxtBox.Text = treeTraversal;
+                    priceRange = prediction[0];
+
+                    string treeTraversal = prediction[1];
+
+                    treeTraversalRichTxtBox.Text = treeTraversal;
+                }
+                else
+                {
+                    if (!libDsTree.ClassificationTreeGenerated) throw new Exception("No library implementation decision tree has been generated");
+
+                    HouseSaleDataClassification houseSale = new HouseSaleDataClassification()
+                    {
+                        Bedrooms = bedrooms,
+                        Bathrooms = (float)bathrooms,
+                        SqftLiving = sqftLiving,
+                        SqftLot = sqftLot,
+                        Floors = (float)floors,
+                        Waterfront = (float)(waterfront?1:0),
+                        View = view,
+                        Condition = condition,
+                        Grade = grade,
+                        SqftAbove = sqftAbove,
+                        SqftBasement = sqftBasement,
+                        YrBuilt = yearBuilt,
+                        Zipcode = zipcode,
+                        SqftLiving15 = sqftLiving15,
+                        SqftLot15 = sqftLot15
+                    };
+
+                    priceRange = libDsTree.PredictClassification(houseSale);
+                }                    
 
                 priceRangeLabel.Text = "Price Range: " + priceRange;
 
@@ -183,7 +211,7 @@ namespace HSA.UserInterface
             }
             catch (Exception ex)
             {
-                MessageBox.Show("The following error ocurred, please check that every fill is filled:\n" + ex.Message, "Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("The following error ocurred, please check that every fill is filled and the tree is generated:\n" + ex.Message, "Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
         }
 
@@ -219,7 +247,7 @@ namespace HSA.UserInterface
         {
             ClearTextBoxes();
 
-            Initialize(dsTree);
+            Initialize(dsTree,libDsTree);
 
             treeTraversalRichTxtBox.Text = "";
         }

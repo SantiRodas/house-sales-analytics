@@ -280,7 +280,7 @@ namespace HSA.Tree
 
             trainingWrongClassifications += count - maxCount;
 
-            currentNode.Answer = maxTargetValue + ";" + (double)maxCount / (double)count + " " + count;
+            currentNode.Answer = maxTargetValue;
         }
 
         // ----------------------------------------------------------------------------------------------------
@@ -296,19 +296,11 @@ namespace HSA.Tree
                 return;
             }
 
-            Console.WriteLine(currentNode.Partition.Rows.Count);
-
             //<giniIndex, [columnName, condition]>
 
             KeyValuePair<double, Tuple<string, object, Dictionary<object, int>, Dictionary<object, int>, double,double>> bestColumnGiniAndCondition = SelectBestColumn(currentNode.Partition);
 
-            double infoGain = currentNode.GiniIndex - bestColumnGiniAndCondition.Key;
-
-            Console.WriteLine("curent node gini index = " + currentNode.GiniIndex);
-
-            Console.WriteLine("best column gini and condition = " + bestColumnGiniAndCondition.Key);
-
-            Console.WriteLine("Info gain = " + infoGain);
+            double infoGain = currentNode.GiniIndex - bestColumnGiniAndCondition.Key;         
 
             string columnName = bestColumnGiniAndCondition.Value.Item1;
 
@@ -442,8 +434,6 @@ namespace HSA.Tree
 
             for (int i = 0; i < nodePartition.Columns.Count; i++)
             {
-                Console.WriteLine("Column processed = " + i);
-
                 DataColumn column = nodePartition.Columns[i];
 
                 String columnName = column.ColumnName;
@@ -471,8 +461,6 @@ namespace HSA.Tree
 
                     if (columnDataType.Equals(typeof(double)))
                     {
-                        Console.WriteLine("Double column");
-
                         KeyValuePair<double, Tuple<double, Dictionary<object, int>, Dictionary<object, int>, double,double>> giniIndexAndCondition = ColumnOverallGiniImpurity<Double>(columnName, nodePartition);
 
                         giniIndexValue = giniIndexAndCondition.Key;
@@ -544,8 +532,6 @@ namespace HSA.Tree
 
                     columnsGiniImpurity[giniIndexValue] = new Tuple<string, object, Dictionary<object, int>, Dictionary<object, int>, double,double>(columnName, condition, truePartition, falsePartition,giniImpurityTrue,giniImpurityFalse);
 
-                    Console.WriteLine(giniIndexValue);
-
                 }
 
             }
@@ -611,22 +597,16 @@ namespace HSA.Tree
             
             Hashtable outerHashtable = ObtainPossibleConditions<T>(nodePartition, totalRows, columnName);
             
-            Console.WriteLine("Pass obtain possible conditions");
-
             //Counting
             
             outerHashtable = CountPriceRangesForPossibleCondition<T>(outerHashtable, nodePartition, columnName, totalRows);
             
-            Console.WriteLine("Pass count price ranges for possible condition");
-
             //Possible gini ipurities calculation
             
             //<gini impurity, columnValue (condition)>
             
             SortedDictionary<double, Tuple<T,double,double>> columnValuesGiniImpurities = CalculatePossibleOverallGiniImpurities<T>(outerHashtable, totalRows);
             
-            Console.WriteLine("Pass claculate overall gini impurity");
-
             KeyValuePair<double, Tuple<T,double,double>> minGiniImpurityAndCondition = columnValuesGiniImpurities.First();
 
             Pair innerHashTables = (Pair)outerHashtable[minGiniImpurityAndCondition.Value.Item1];

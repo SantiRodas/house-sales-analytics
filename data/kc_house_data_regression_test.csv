@@ -1,4 +1,3 @@
-Int32,String,Double,Int32,Double,Double,Double,Double,Boolean,Int32,Int32,Int32,Double,Double,Int32,Int32,Double,Double
 pos,id,price,bedrooms,bathrooms,sqft_living,sqft_lot,floors,waterfront,view,condition,grade,sqft_above,sqft_basement,yr_built,zipcode,sqft_living15,sqft_lot15
 20532,3815500165,396000,5,2.75,2840,12253,1,0,0,3,7,1420,1420,1960,98028,2210,11620
 20533,5379804537,270000,3,2.25,1760,8287,1,0,0,3,7,1160,600,1986,98188,1290,9587

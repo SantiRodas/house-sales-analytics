@@ -6,13 +6,13 @@ using Microsoft.ML.Data;
 
 namespace HSA.Tree
 {
-    class LibraryDecisionTree
+    public class LibraryDecisionTree
     {
         private static string AppPath => Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
-        private static string ClassificationTrainDataPath => Path.Combine(AppPath, "..", "..", "..", "data", "kc_house_data_classification.csv");
-        private static string ClassificationTestDataPath => Path.Combine(AppPath, "..", "..", "..", "data", "kc_house_data_classification_test.csv");
-        private static string RegressionTrainDataPath => Path.Combine(AppPath, "..", "..", "..", "data", "kc_house_data_regression.csv");
-        private static string RegressionTestDataPath => Path.Combine(AppPath, "..", "..", "..", "data", "kc_house_data_regression_test.csv");
+        private static string ClassificationTrainDataPath => Path.Combine(AppPath,"..", "..", "..", "..", "data", "kc_house_data_classification.csv");
+        private static string ClassificationTestDataPath => Path.Combine(AppPath, "..","..", "..", "..", "data", "kc_house_data_classification_test.csv");
+        private static string RegressionTrainDataPath => Path.Combine(AppPath, "..", "..", "..", "..", "data", "kc_house_data_regression.csv");
+        private static string RegressionTestDataPath => Path.Combine(AppPath, "..", "..", "..", "..", "data", "kc_house_data_regression_test.csv");
 
         private MLContext mlContext;
 
@@ -29,6 +29,9 @@ namespace HSA.Tree
         private IDataView regressionTestDataView;
         public RegressionMetrics RegresionTestMetrics { get; private set; }
         public RegressionMetrics RegresionTrainingMetrics { get; private set; }
+
+        public bool ClassificationTreeGenerated { get; private set; }
+        public bool RegressionTreeGenerated { get; private set; }
 
         public void BuildMultiClassificationTree()
         {
@@ -58,6 +61,8 @@ namespace HSA.Tree
             //Evaluate
 
             EvaluateClassificationModel();
+
+            ClassificationTreeGenerated = true;
         }
 
         private IEstimator<ITransformer> ProcessClassificationData()
@@ -128,7 +133,7 @@ namespace HSA.Tree
             // 3. Add data transformations and regression tree algorithm
 
             var pipeline = mlContext.Transforms.CopyColumns(inputColumnName: "Price", outputColumnName: "Label")
-            .Append(mlContext.Transforms.Concatenate(outputColumnName: "Features", "Bedrooms", "Bathrooms", "Sqft_living", "Sqft_lot", "Floors", "Waterfronts", "View", "Condition", "Grade", "Sqft_above", "Sqft_basement", "Yr_built", "Zipcode", "Sqft_living15", "Sqft_lot15"))
+            .Append(mlContext.Transforms.Concatenate(outputColumnName: "Features", "Bedrooms", "Bathrooms", "Sqft_living", "Sqft_lot", "Floors", "Waterfront", "View", "Condition", "Grade", "Sqft_above", "Sqft_basement", "Yr_built", "Zipcode", "Sqft_living15", "Sqft_lot15"))
             .Append(mlContext.Regression.Trainers.FastTree());
 
             // 4. Train model and assign regression prediction engine
@@ -145,6 +150,7 @@ namespace HSA.Tree
 
             RegresionTestMetrics = mlContext.Regression.Evaluate(regressionTrainedModel.Transform(regressionTestDataView), "Label", "Score");
 
+            RegressionTreeGenerated = true;
         }
 
         public float PredictRegression(HouseSaleDataRegression newHouseSale)

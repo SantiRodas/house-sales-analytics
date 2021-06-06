@@ -13,43 +13,28 @@ namespace HSA.UserInterface
 
         // Relation with data set manager
 
-        private DataSetManager manager;
-
-        public DataSetManager Manager
-        {
-            get
-            {
-                return manager;
-            }
-        }
+        public DataSetManager Manager { get; private set; }           
+       
 
         // ----------------------------------------------------------------------------------------------------
 
         // Relation with the graphics processor
 
-        private GraphicsProcessor graphicsManager;
+      
+        public GraphicsProcessor GraphicsManager { get; private set; }
 
-        public GraphicsProcessor GraphicsManager
-        {
-            get
-            {
-                return graphicsManager;
-            }
-        }
 
         // ----------------------------------------------------------------------------------------------------
 
         // Relation with the graphics processor
 
-        private DecisionTree decisionTree;
+        public DecisionTree DecisionTree { get; private set; }
 
-        public DecisionTree DecisionTree
-        {
-            get
-            {
-                return decisionTree;
-            }
-        }
+        // ----------------------------------------------------------------------------------------------------
+
+        // Relation with the graphics processor
+
+        public LibraryDecisionTree LibraryDecisionTree { get; private set; }
 
         // ----------------------------------------------------------------------------------------------------
 
@@ -61,19 +46,21 @@ namespace HSA.UserInterface
 
             mainWindowTabs.DrawItem += new DrawItemEventHandler(mainWindowTabs_DrawItem);
 
-            manager = new DataSetManager();
+            Manager = new DataSetManager();
 
-            graphicsManager = new GraphicsProcessor(manager);
+            GraphicsManager = new GraphicsProcessor(Manager);
 
-            decisionTree = new DecisionTree(manager.Data, "price_range");
+            DecisionTree = new DecisionTree(Manager.Data, "price_range");
 
-            chartsControl1.Initialize(graphicsManager);
+            LibraryDecisionTree = new LibraryDecisionTree();
 
-            dataViewerControl.Initialize(manager, chartsControl1);
+            chartsControl1.Initialize(GraphicsManager);
 
-            decisionTreeControl.Initialize(decisionTree);
+            dataViewerControl.Initialize(Manager, chartsControl1);
 
-            predictControl.Initialize(decisionTree);
+            decisionTreeControl.Initialize(DecisionTree, LibraryDecisionTree,predictControl);
+
+            predictControl.Initialize(DecisionTree, LibraryDecisionTree);
         }
 
         // ----------------------------------------------------------------------------------------------------
