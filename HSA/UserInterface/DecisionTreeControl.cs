@@ -149,6 +149,7 @@ namespace HSA.UserInterface
 
             } else if (implementationOption2.Checked)
             {
+                /*
                 RegressionMetrics metrics = DecisionTree.generateTreeMLNet();
 
                 MessageBox.Show("Mean Absolute Error: " + metrics.MeanAbsoluteError+ "\n"+
@@ -158,6 +159,7 @@ namespace HSA.UserInterface
                 "Root Mean Squared Error: " + metrics.RootMeanSquaredError + "\n" +
 
                 "RSquared: "+ metrics.RSquared);
+                */
             }
             else
             {
