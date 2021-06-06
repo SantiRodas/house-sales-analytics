@@ -4,13 +4,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms.DataVisualization.Charting;
-using HSA.Model;
 using HSA.Utilities;
 using Microsoft.ML;
 using Microsoft.ML.Data;
-using Microsoft.ML.Trainers;
-using static System.Collections.Generic.Dictionary<string, int>;
 
 namespace HSA.Tree
 {
@@ -179,82 +175,6 @@ namespace HSA.Tree
             treeTraversal += currentNode.Answer; 
 
             return currentNode.Answer + ";" + treeTraversal;
-        }
-
-        // ----------------------------------------------------------------------------------------------------
-
-        // Method to do the regression metrics
-
-        public RegressionMetrics generateTreeMLNet()
-        {
-
-            // 1. Initialize ML.NET environment
-
-            MLContext mlContext = new MLContext();
-
-            string path = Directory.GetCurrentDirectory().Replace("HSA\\bin\\", "data\\kc_house_data_ML.csv");
-
-            path = path.Replace("Debug", "");
-
-            path = path.Replace("x64\\", "");
-
-            path = path.Replace("x86\\", "");
-
-            
-            // 2. Load training data
-            
-            IDataView trainData = mlContext.Data.LoadFromTextFile<SaleData>(path, separatorChar: ',', hasHeader: true);
-
-            // 3. Add data transformations
-            
-            var dataProcessPipeline = mlContext.Transforms.Concatenate(outputColumnName: "Features", "Price", "Bedrooms", "Bathrooms", "Sqft_living","Sqft_lot", "Floors", "Waterfronts", "View", "Condition", "Grade", "Sqft_above", "Sqft_basement", "Yr_built", "Zipcode", "Sqft_living15","Sqft_lot15");
-
-            // 4. Add algorithm
-            
-            var trainer = mlContext.Regression.Trainers.FastTree(labelColumnName: "Price", featureColumnName: "Features");
-
-            var trainingPipeline = dataProcessPipeline.Append(trainer);
-
-            //AQUI VA EL ERROR
-            
-            // 5. Train model
-            
-            var model = trainingPipeline.Fit(trainData);
-
-            // 6. Evaluate model on test data
-            
-            string pathTest = Directory.GetCurrentDirectory().Replace("HSA\\bin\\", "data\\kc_house_data_ML_test.csv");
-            
-            pathTest = pathTest.Replace("Debug", "");
-            
-            pathTest = pathTest.Replace("x64\\", "");
-            
-            pathTest = pathTest.Replace("x86\\", "");
-
-            
-            IDataView testData = mlContext.Data.LoadFromTextFile<SaleData>(pathTest);
-            
-            IDataView predictions = model.Transform(testData);
-            
-            var metrics = mlContext.Regression.Evaluate(predictions, "Price");
-
-            return metrics;
-
-        }
-
-        // ----------------------------------------------------------------------------------------------------
-
-        // Print some evaluation metrics to regression problems.
-
-        private static void PrintMetrics(RegressionMetrics metrics)
-        {
-            Console.WriteLine("Mean Absolute Error: " + metrics.MeanAbsoluteError);
-
-            Console.WriteLine("Mean Squared Error: " + metrics.MeanSquaredError);
-
-            Console.WriteLine("Root Mean Squared Error: " + metrics.RootMeanSquaredError);
-
-            Console.WriteLine("RSquared: " + metrics.RSquared);
         }
 
         // ----------------------------------------------------------------------------------------------------
