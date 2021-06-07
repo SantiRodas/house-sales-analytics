@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace HSA.UserInterface
 {
@@ -170,7 +171,14 @@ namespace HSA.UserInterface
 
                     // With this information the system can work
 
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+
                     string[] prediction = dsTree.Predict(newDataPoint).Split(';');
+
+                    sw.Stop();
+
+                    Console.WriteLine("Prediction time(own): " + sw.ElapsedMilliseconds + " ms");
 
                     priceRange = prediction[0];
 
@@ -200,8 +208,12 @@ namespace HSA.UserInterface
                         SqftLiving15 = sqftLiving15,
                         SqftLot15 = sqftLot15
                     };
-
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
                     priceRange = libDsTree.PredictClassification(houseSale);
+                    sw.Stop();
+
+                    Console.WriteLine("Prediction time (library): " + sw.ElapsedMilliseconds + " ms");
                 }                    
 
                 priceRangeLabel.Text = "Price Range: " + priceRange;
