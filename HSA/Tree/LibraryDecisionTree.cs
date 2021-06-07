@@ -85,8 +85,10 @@ namespace HSA.Tree
 
         private void BuildAndTrainClassificationModel(IDataView trainingDataView, IEstimator<ITransformer> pipeline)
         {
-            var trainingPipeline = pipeline.Append(mlContext.MulticlassClassification.Trainers.LightGbm("Label", "Features"))
+            var trainingPipeline = pipeline.Append(mlContext.MulticlassClassification.Trainers.LightGbm("Label", "Features",numberOfIterations:1))
             .Append(mlContext.Transforms.Conversion.MapKeyToValue("PredictedLabel"));
+
+
 
             classificationTrainedModel = trainingPipeline.Fit(trainingDataView);
 

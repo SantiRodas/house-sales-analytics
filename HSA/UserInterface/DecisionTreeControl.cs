@@ -1,7 +1,7 @@
 ﻿using HSA.Tree;
-using Microsoft.ML.Data;
 using System;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace HSA.UserInterface
 {
@@ -133,7 +133,15 @@ namespace HSA.UserInterface
 
                     double testP = double.Parse((string)testSizeSelector.SelectedItem);
 
+                    Stopwatch sw = new Stopwatch();
+
+                    sw.Start();                    
+
                     DecisionTree.GenerateTree(heightLimit, trainingP, testP);
+
+                    sw.Stop();
+
+                    Console.WriteLine("Training time(own): " + sw.ElapsedMilliseconds + " ms");
 
                     accuracyLabelTraining.Text = "Accuracy: " + Math.Round(DecisionTree.AccuracyTraining*100, 2) + "%";
 
@@ -155,9 +163,15 @@ namespace HSA.UserInterface
 
             }
             else if (implementationOption2.Checked)
-            {               
+            {
+                Stopwatch sw = new Stopwatch();
 
+                sw.Start();
                 LibraryDecisionTree.BuildMultiClassificationTree();
+
+                sw.Stop();
+
+                Console.WriteLine("Training time(library): " + sw.ElapsedMilliseconds + " ms");
 
                 double accuracyTraining = LibraryDecisionTree.ClassificationTrainingMetrics.MicroAccuracy;
 

@@ -48,6 +48,7 @@ namespace HSA.UserInterface
             this.testingButton = new System.Windows.Forms.Button();
             this.testingLabel = new System.Windows.Forms.Label();
             this.treeVisualizerLabel = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -144,6 +145,7 @@ namespace HSA.UserInterface
             // 
             // splitContainer2.Panel2
             // 
+            this.splitContainer2.Panel2.Controls.Add(this.label3);
             this.splitContainer2.Panel2.Controls.Add(this.testSizeSelector);
             this.splitContainer2.Panel2.Controls.Add(this.testSizeLabel);
             this.splitContainer2.Panel2.Controls.Add(this.accuracyLabelTest);
@@ -303,6 +305,15 @@ namespace HSA.UserInterface
             this.treeVisualizerLabel.TabIndex = 1;
             this.treeVisualizerLabel.Text = "Tree Visualizer";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(5, 86);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(262, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "On library implementation, testing is done automatically";
+            // 
             // DecisionTreeControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -346,5 +357,6 @@ namespace HSA.UserInterface
         private System.Windows.Forms.Label accuracyLabelTraining;
         private System.Windows.Forms.TextBox heigthLimitTxtBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
