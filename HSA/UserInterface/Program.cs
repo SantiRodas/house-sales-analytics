@@ -24,6 +24,7 @@ namespace HSA.UserInterface
 
         static void Main()
         {
+            Application.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("us");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainWindow());
