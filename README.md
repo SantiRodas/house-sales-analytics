@@ -56,7 +56,11 @@ Reading this data, the system analyze the information by means of autonomous lea
 3. Implementation
 - [HSA](https://github.com/SantiRodas/house-sales-analytics/tree/master/HSA)
 
-4. Explanatory system videos
+4. Experiment
+- [Running Data](https://github.com/SantiRodas/house-sales-analytics/blob/master/experiment/Ejecucion.xlsx)
+- [Analysis](https://github.com/SantiRodas/house-sales-analytics/blob/master/experiment/Experimento.docx)
+
+5. Explanatory system videos
 - [Iteration 1](https://www.youtube.com/watch?v=XCxvp5R_Mas)
 - [Iteration 2](https://youtu.be/BDpMM1mIAD8)
 - [Iteration 3](https://www.youtube.com/watch?v=HaemsB8OJlg)
