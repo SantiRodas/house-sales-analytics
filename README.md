@@ -20,6 +20,10 @@ Reading this data, the system analyze the information by means of autonomous lea
      * Available features:
        * Implementation of an external machine learning library
        * Development of the sorting module
+   * ### Iteration 4:
+     * Available features:
+       * Fixed external library implementation
+       * Experiments regarding training time and accuracy
 
 ## Program Requirements
 * C# (.NET Framework 4.7.2)
